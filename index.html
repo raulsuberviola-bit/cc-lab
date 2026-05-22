@@ -6,6 +6,9 @@
 <title>SegurSalud — Tu seguro dental de confianza</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<script defer src="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/chat-messenger.js"></script>
+<link rel="stylesheet" href="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/themes/chat-messenger-default.css">
+<link rel="stylesheet" href="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/themes/chat-messenger-layout.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -186,6 +189,40 @@ chat-messenger{
   --dfMessenger-button-titlebar-color:#0e3060;
   --dfMessenger-chat-background:white;
   --dfMessenger-font-family:'DM Sans',sans-serif;
+}
+
+/* CHAT BUBBLE */
+#chat-bubble{
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:var(--blue-600);
+  color:white;
+  border:none;
+  border-radius:50px;
+  padding:14px 22px 14px 18px;
+  cursor:pointer;
+  box-shadow:0 8px 32px rgba(30,90,168,0.45);
+  font-family:'DM Sans',sans-serif;
+  font-size:0.9rem;
+  font-weight:600;
+  transition:all .25s;
+  animation:bubble-in .4s .5s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes bubble-in{from{opacity:0;transform:scale(0.6) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+#chat-bubble:hover{background:var(--blue-700);transform:translateY(-2px);box-shadow:0 12px 40px rgba(30,90,168,0.55)}
+#chat-bubble:active{transform:scale(0.97)}
+.bubble-label{white-space:nowrap}
+.bubble-dot{
+  width:9px;height:9px;border-radius:50%;
+  background:#4ade80;
+  position:absolute;top:10px;right:10px;
+  animation:pulse-dot 2s ease-in-out infinite;
+  border:2px solid var(--blue-600);
 }
 
 /* RESPONSIVE */
@@ -520,10 +557,17 @@ chat-messenger{
 <section id="contacto" class="cta-strip">
   <h2 style="color:white;margin-bottom:1rem">¿Tienes dudas? Nuestro asistente te ayuda</h2>
   <p style="color:rgba(255,255,255,0.8);margin-bottom:2rem;font-size:1.05rem">Habla con nuestro asistente dental inteligente y te asesoramos en segundos.</p>
-  <a href="#" class="btn-primary" onclick="event.preventDefault()">
+  <button class="btn-primary" id="open-chat-btn" onclick="openChat()">
     💬 Hablar con el asistente
-  </a>
+  </button>
 </section>
+
+<!-- CHAT BUBBLE BUTTON (siempre visible) -->
+<button id="chat-bubble" onclick="openChat()" title="Abrir chat dental" aria-label="Abrir asistente dental">
+  <svg width="26" height="26" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+  <span class="bubble-label">Asistente dental</span>
+  <span class="bubble-dot"></span>
+</button>
 
 <!-- FOOTER -->
 <footer>
@@ -578,8 +622,6 @@ chat-messenger{
 </footer>
 
 <!-- GOOGLE CCAI CHAT WIDGET -->
-<link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.min.css">
-<script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
 
 <script>
 window.addEventListener("chat-messenger-loaded", () => {
@@ -619,6 +661,32 @@ window.addEventListener("chat-messenger-loaded", () => {
     ></chat-messenger-close-button>
   </chat-messenger-container>
 </chat-messenger>
+
+<script>
+function openChat(){
+  var el = document.querySelector('chat-messenger');
+  if(!el) return;
+  if(typeof el.openDialog === 'function'){
+    el.openDialog();
+  } else if(typeof el.open === 'function'){
+    el.open();
+  } else {
+    var shadow = el.shadowRoot;
+    if(shadow){
+      var btn = shadow.querySelector('button');
+      if(btn) btn.click();
+    }
+  }
+}
+document.addEventListener('df-messenger-opened', function(){
+  var b = document.getElementById('chat-bubble');
+  if(b){ b.querySelector('.bubble-label').textContent='Chat abierto'; b.style.opacity='0.5'; }
+});
+document.addEventListener('df-messenger-closed', function(){
+  var b = document.getElementById('chat-bubble');
+  if(b){ b.querySelector('.bubble-label').textContent='Asistente dental'; b.style.opacity='1'; }
+});
+</script>
 
 </body>
 </html>
