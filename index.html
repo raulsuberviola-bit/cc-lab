@@ -35,13 +35,13 @@ body{font-family:'DM Sans',sans-serif;color:var(--gray-700);background:var(--whi
 img{display:block;max-width:100%}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--white);border-bottom:1px solid var(--gray-300);padding:0 2rem}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--white);border-bottom:1px solid var(--gray-300);padding:0 2rem;box-shadow:0 1px 12px rgba(0,0,0,0.06)}
 .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:68px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-mark{width:36px;height:36px;background:var(--blue-600);border-radius:8px;display:flex;align-items:center;justify-content:center}
-.logo-mark svg{fill:white;width:22px;height:22px}
-.logo-name{font-family:'DM Serif Display',serif;font-size:1.35rem;color:var(--blue-900);letter-spacing:-0.02em}
-.logo-name span{color:var(--blue-600)}
+.logo-mark{width:34px;height:34px;background:var(--blue-600);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-mark svg{fill:white;width:20px;height:20px}
+.logo-name{font-family:'DM Sans',sans-serif;font-size:1.15rem;font-weight:700;color:var(--blue-900);letter-spacing:-0.03em;white-space:nowrap}
+.logo-name span{color:var(--blue-600);font-weight:800}
 .nav-links{display:flex;align-items:center;gap:0}
 .nav-links a{text-decoration:none;color:var(--gray-700);font-size:0.9rem;font-weight:500;padding:0.5rem 1rem;transition:color .2s}
 .nav-links a:hover{color:var(--blue-600)}
@@ -196,15 +196,16 @@ chat-messenger{
    GOOGLE CHAT MESSENGER — TEMA SEGURSALUD
    ============================================= */
 
-/* Forzar widget flotante */
-chat-messenger,
-chat-messenger-container {
+/* Forzar widget flotante — no ocupa espacio en el flujo */
+chat-messenger {
   position: fixed !important;
   bottom: 24px !important;
   right: 24px !important;
   z-index: 9999 !important;
-  width: auto !important;
-  max-width: 400px !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: visible !important;
+  display: block !important;
 }
 
 /* Variables de color del widget */
@@ -272,17 +273,17 @@ chat-messenger {
   <div class="nav-inner">
     <a href="#" class="logo">
       <div class="logo-mark">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/><path d="M7 4a9 9 0 100 16A9 9 0 007 4zm0 2a7 7 0 110 14A7 7 0 017 6z" opacity=".3"/></svg>
+        <svg viewBox="0 0 24 24" fill="none"><rect x="9" y="2" width="6" height="20" rx="2" fill="white"/><rect x="2" y="9" width="20" height="6" rx="2" fill="white"/></svg>
       </div>
       <span class="logo-name">Segur<span>Salud</span></span>
     </a>
-    <nav class="nav-links">
+    <div class="nav-links">
       <a href="#servicios">Servicios</a>
       <a href="#planes">Planes</a>
       <a href="#como-funciona">Cómo funciona</a>
       <a href="#opiniones">Opiniones</a>
       <a href="#contacto" class="nav-cta">Contratar</a>
-    </nav>
+    </div>
     <div class="nav-phone">
       <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.12 1.05.37 2.07.72 3.05a2 2 0 01-.46 2.11L6.09 8.1a16 16 0 006.29 6.29l1.21-1.21a2 2 0 012.11-.46c.98.35 2 .6 3.05.72A2 2 0 0122 15.5v1.42z"/></svg>
       <span>Llámanos: <strong>900 100 100</strong></span>
@@ -591,7 +592,7 @@ chat-messenger {
       <div class="footer-brand">
         <a href="#" class="logo" style="text-decoration:none">
           <div class="logo-mark">
-            <svg viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none"><rect x="9" y="2" width="6" height="20" rx="2" fill="white"/><rect x="2" y="9" width="20" height="6" rx="2" fill="white"/></svg>
           </div>
           <span class="logo-name" style="color:white">Segur<span style="color:#4a8fd4">Salud</span></span>
         </a>
@@ -626,7 +627,7 @@ chat-messenger {
       </div>
     </div>
     <div class="footer-bottom">
-      <span style="font-size:0.7rem;background:var(--blue-800);color:rgba(255,255,255,0.35);padding:2px 8px;border-radius:4px;font-family:monospace;letter-spacing:0.05em">v1.7.0</span>
+      <span style="font-size:0.7rem;background:var(--blue-800);color:rgba(255,255,255,0.35);padding:2px 8px;border-radius:4px;font-family:monospace;letter-spacing:0.05em">v1.9.2</span>
       <span>© 2025 SegurSalud, S.A. — Entidad aseguradora autorizada por la DGS con clave J-0019</span>
       <div class="footer-legal">
         <a href="#">Aviso legal</a>
