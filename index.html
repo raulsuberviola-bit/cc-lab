@@ -678,7 +678,6 @@ window.addEventListener("chat-messenger-loaded", () => {
   </chat-messenger-container>
 </chat-messenger>
 <script>
-// Registrar contexto — el FAB nativo de Google se encarga de todo
 window.addEventListener("chat-messenger-loaded", function(){
   chatSdk.registerContext(
     chatSdk.prebuilts.ces.createContext({
@@ -686,7 +685,102 @@ window.addEventListener("chat-messenger-loaded", function(){
       tokenBroker: { enableTokenBroker: true, enableRecaptcha: false }
     })
   );
+  // Inyectar estilos en shadow DOMs anidados
+  setTimeout(injectStyles, 800);
+  setTimeout(injectStyles, 2000); // segundo intento por si tarda
 });
+
+function injectStyles(){
+  var css = `
+    /* Header */
+    [class*="header"], [class*="Header"],
+    [class*="title-bar"], [class*="titleBar"],
+    [class*="toolbar"], [class*="Toolbar"] {
+      background: #0a2240 !important;
+      color: #ffffff !important;
+    }
+    /* Título */
+    [class*="title"], [class*="Title"] {
+      color: #ffffff !important;
+      font-family: 'DM Sans', sans-serif !important;
+    }
+    /* FAB button */
+    [class*="fab"], [class*="Fab"],
+    [class*="launcher"], [class*="Launcher"] {
+      background: #1e5aa8 !important;
+      border-radius: 28px !important;
+      box-shadow: 0 4px 20px rgba(30,90,168,0.4) !important;
+    }
+    /* Mensajes del bot */
+    [class*="bot-message"], [class*="botMessage"],
+    [class*="agent-message"], [class*="agentMessage"] {
+      background: #e8f2fc !important;
+      color: #0a2240 !important;
+      border-radius: 12px !important;
+    }
+    /* Mensajes del usuario */
+    [class*="user-message"], [class*="userMessage"],
+    [class*="human-message"], [class*="humanMessage"],
+    [class*="customer-message"], [class*="customerMessage"] {
+      background: #1e5aa8 !important;
+      color: #ffffff !important;
+      border-radius: 12px !important;
+    }
+    /* Input */
+    [class*="input-container"], [class*="inputContainer"],
+    [class*="text-input"], [class*="textInput"] {
+      border-color: #b5d4f4 !important;
+      background: #f0f7ff !important;
+    }
+    /* Send button */
+    [class*="send"], [class*="Send"] {
+      color: #1e5aa8 !important;
+    }
+    /* Chips / sugerencias */
+    [class*="chip"], [class*="Chip"],
+    [class*="suggestion"], [class*="Suggestion"] {
+      background: #e8f2fc !important;
+      color: #1e5aa8 !important;
+      border-color: #4a8fd4 !important;
+      border-radius: 20px !important;
+    }
+    /* Contenedor principal */
+    [class*="chat-window"], [class*="chatWindow"],
+    [class*="messenger-container"], [class*="messengerContainer"] {
+      border-radius: 16px !important;
+      box-shadow: 0 8px 40px rgba(10,34,64,0.2) !important;
+      overflow: hidden !important;
+    }
+  `;
+
+  // Función recursiva para inyectar en todos los shadow roots
+  function injectIntoShadow(el, depth) {
+    if (!el || depth > 8) return;
+    if (el.shadowRoot) {
+      // Evitar duplicar
+      if (!el.shadowRoot.querySelector('style[data-segursalud]')) {
+        var s = document.createElement('style');
+        s.setAttribute('data-segursalud', '1');
+        s.textContent = css;
+        el.shadowRoot.appendChild(s);
+        console.log('Estilos inyectados en shadow root de', el.tagName);
+      }
+      // Recursivo dentro del shadow root
+      el.shadowRoot.querySelectorAll('*').forEach(function(child){
+        injectIntoShadow(child, depth + 1);
+      });
+    }
+    // También en hijos normales
+    el.querySelectorAll && el.querySelectorAll('*').forEach(function(child){
+      injectIntoShadow(child, depth + 1);
+    });
+  }
+
+  var messenger = document.querySelector('chat-messenger');
+  if (messenger) {
+    injectIntoShadow(messenger, 0);
+  }
+}
 </script>
 
 </body>
