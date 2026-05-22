@@ -664,7 +664,7 @@ window.addEventListener("chat-messenger-loaded", () => {
 <script>
 var ctx = null;
 
-window.addEventListener("chat-messenger-loaded", function(){
+function initChat(el){
   ctx = chatSdk.registerContext(
     chatSdk.prebuilts.ces.createContext({
       deploymentName: "projects/414797991238/locations/us/apps/1502cba9-dbbc-483a-af4a-40dc7730767d/deployments/3841598e-95f6-41b5-8a75-0f5bd404dd6f",
@@ -674,29 +674,45 @@ window.addEventListener("chat-messenger-loaded", function(){
       }
     })
   );
-  console.log("=== chat-messenger-loaded ===");
-  console.log("ctx:", ctx);
-  console.log("ctx keys:", ctx ? Object.getOwnPropertyNames(Object.getPrototypeOf(ctx)).concat(Object.keys(ctx)) : "null");
-  console.log("chatSdk keys:", Object.getOwnPropertyNames(Object.getPrototypeOf(chatSdk)).concat(Object.keys(chatSdk)));
+  console.log("ctx registrado:", ctx);
+  console.log("ctx métodos:", Object.getOwnPropertyNames(Object.getPrototypeOf(ctx)).concat(Object.keys(ctx)));
+}
+
+// Escuchar en el propio elemento, en document y en window
+document.addEventListener("DOMContentLoaded", function(){
+  var el = document.querySelector("chat-messenger");
+  if(!el){ console.error("No se encontró chat-messenger"); return; }
+
+  // Los tres sitios donde puede dispararse el evento
+  el.addEventListener("chat-messenger-loaded", function(e){ console.log("fired on ELEMENT"); initChat(el); });
+  document.addEventListener("chat-messenger-loaded", function(e){ if(!ctx){ console.log("fired on DOCUMENT"); initChat(el); } });
+  window.addEventListener("chat-messenger-loaded", function(e){ if(!ctx){ console.log("fired on WINDOW"); initChat(el); } });
+
+  // Si chatSdk ya está disponible al cargar, registrar directamente sin esperar evento
+  function tryRegisterNow(){
+    if(typeof chatSdk !== "undefined" && chatSdk.registerContext){
+      console.log("chatSdk disponible sin evento — registrando directamente");
+      if(!ctx) initChat(el);
+    } else {
+      console.log("chatSdk aún no disponible, reintentando...");
+      setTimeout(tryRegisterNow, 300);
+    }
+  }
+  // Esperar un tick para que el script defer termine de ejecutarse
+  setTimeout(tryRegisterNow, 500);
 });
 
 function openChat(){
-  console.log("=== openChat click ===");
-  if(!ctx){ console.error("ctx es null - el evento chat-messenger-loaded no se disparó"); return; }
-  
-  // Intentar TODOS los métodos posibles del prototipo y del objeto
-  var allMethods = Object.getOwnPropertyNames(Object.getPrototypeOf(ctx)).concat(Object.keys(ctx));
-  console.log("Métodos disponibles en ctx:", allMethods);
-  
-  var tryMethods = ["openWidget","open","show","expand","showWidget","launch","start","activate","toggle","showDialog","openDialog","showConversation"];
-  for(var i=0; i<tryMethods.length; i++){
-    if(typeof ctx[tryMethods[i]] === "function"){
-      console.log("Llamando ctx." + tryMethods[i] + "()");
-      ctx[tryMethods[i]]();
+  if(!ctx){ console.error("ctx null"); return; }
+  var methods = ["openWidget","open","show","expand","showWidget","launch","toggle","showDialog","openDialog"];
+  for(var i=0; i<methods.length; i++){
+    if(typeof ctx[methods[i]] === "function"){
+      console.log("Llamando ctx." + methods[i]);
+      ctx[methods[i]]();
       return;
     }
   }
-  console.error("Ningún método conocido encontrado. Ver métodos arriba en consola.");
+  console.error("Sin método. Keys ctx:", Object.getOwnPropertyNames(Object.getPrototypeOf(ctx)).concat(Object.keys(ctx)));
 }
 </script>
 
