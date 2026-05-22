@@ -191,38 +191,19 @@ chat-messenger{
   --dfMessenger-font-family:'DM Sans',sans-serif;
 }
 
-/* CHAT BUBBLE */
-#chat-bubble{
-  position:fixed;
-  bottom:24px;
-  left:24px;
-  z-index:9999;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  background:var(--blue-600);
-  color:white;
-  border:none;
-  border-radius:50px;
-  padding:14px 22px 14px 18px;
-  cursor:pointer;
-  box-shadow:0 8px 32px rgba(30,90,168,0.45);
-  font-family:'DM Sans',sans-serif;
-  font-size:0.9rem;
-  font-weight:600;
-  transition:all .25s;
-  animation:bubble-in .4s .5s cubic-bezier(.34,1.56,.64,1) both;
-}
-@keyframes bubble-in{from{opacity:0;transform:scale(0.6) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
-#chat-bubble:hover{background:var(--blue-700);transform:translateY(-2px);box-shadow:0 12px 40px rgba(30,90,168,0.55)}
-#chat-bubble:active{transform:scale(0.97)}
-.bubble-label{white-space:nowrap}
-.bubble-dot{
-  width:9px;height:9px;border-radius:50%;
-  background:#4ade80;
-  position:absolute;top:10px;right:10px;
-  animation:pulse-dot 2s ease-in-out infinite;
-  border:2px solid var(--blue-600);
+
+/* Estilo del FAB nativo de Google Chat Messenger */
+chat-messenger {
+  --chat-messenger-fab-background: var(--blue-600);
+  --chat-messenger-fab-color: #ffffff;
+  --chat-messenger-header-background: var(--blue-900);
+  --chat-messenger-header-color: #ffffff;
+  --chat-messenger-bot-message-background: var(--blue-50);
+  --chat-messenger-bot-message-color: var(--blue-900);
+  --chat-messenger-human-message-background: var(--blue-600);
+  --chat-messenger-human-message-color: #ffffff;
+  --chat-messenger-send-icon-color: var(--blue-600);
+  --chat-messenger-focus-color: var(--blue-600);
 }
 
 /* RESPONSIVE */
@@ -557,17 +538,11 @@ chat-messenger{
 <section id="contacto" class="cta-strip">
   <h2 style="color:white;margin-bottom:1rem">¿Tienes dudas? Nuestro asistente te ayuda</h2>
   <p style="color:rgba(255,255,255,0.8);margin-bottom:2rem;font-size:1.05rem">Habla con nuestro asistente dental inteligente y te asesoramos en segundos.</p>
-  <button class="btn-primary" id="open-chat-btn" onclick="openChat()">
+  <button class="btn-primary" id="open-chat-btn">
     💬 Hablar con el asistente
   </button>
 </section>
 
-<!-- CHAT BUBBLE BUTTON (siempre visible) -->
-<button id="chat-bubble" onclick="openChat()" title="Abrir chat dental" aria-label="Abrir asistente dental">
-  <svg width="26" height="26" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-  <span class="bubble-label">Asistente dental</span>
-  <span class="bubble-dot"></span>
-</button>
 
 <!-- FOOTER -->
 <footer>
@@ -662,50 +637,14 @@ window.addEventListener("chat-messenger-loaded", () => {
   </chat-messenger-container>
 </chat-messenger>
 <script>
-document.addEventListener("DOMContentLoaded", function(){
-  function tryInit(){
-    if(typeof chatSdk === "undefined"){ setTimeout(tryInit, 400); return; }
-    
-    // 1. Registrar el contexto (devuelve undefined pero lo guarda internamente)
-    chatSdk.registerContext(
-      chatSdk.prebuilts.ces.createContext({
-        deploymentName: "projects/414797991238/locations/us/apps/1502cba9-dbbc-483a-af4a-40dc7730767d/deployments/3841598e-95f6-41b5-8a75-0f5bd404dd6f",
-        tokenBroker: { enableTokenBroker: true, enableRecaptcha: false }
-      })
-    );
-
-    // 2. Recuperar el contexto registrado con getContext
-    var ctx = chatSdk.getContext();
-    console.log("ctx desde getContext:", ctx);
-    if(ctx){
-      var proto = Object.getPrototypeOf(ctx) || {};
-      console.log("ctx métodos:", Object.getOwnPropertyNames(proto).concat(Object.keys(ctx)));
-    }
-
-    // 3. Asignar a botones
-    document.getElementById("chat-bubble").onclick = function(){ doOpen(); };
-    document.getElementById("open-chat-btn").onclick = function(){ doOpen(); };
-  }
-
-  function doOpen(){
-    var ctx = chatSdk.getContext();
-    console.log("doOpen — ctx:", ctx);
-    if(!ctx){ console.error("ctx null"); return; }
-    var proto = Object.getPrototypeOf(ctx) || {};
-    var keys = Object.getOwnPropertyNames(proto).concat(Object.keys(ctx));
-    console.log("ctx métodos:", keys);
-    var methods = ["openWidget","open","show","expand","toggle","showDialog","openDialog","launch","activate","showConversation","openConversation"];
-    for(var i=0; i<methods.length; i++){
-      if(typeof ctx[methods[i]] === "function"){
-        console.log("Llamando ctx." + methods[i] + "()");
-        ctx[methods[i]]();
-        return;
-      }
-    }
-    console.error("Ningún método. Keys disponibles:", keys);
-  }
-
-  setTimeout(tryInit, 600);
+// Registrar contexto — el FAB nativo de Google se encarga de todo
+window.addEventListener("chat-messenger-loaded", function(){
+  chatSdk.registerContext(
+    chatSdk.prebuilts.ces.createContext({
+      deploymentName: "projects/414797991238/locations/us/apps/1502cba9-dbbc-483a-af4a-40dc7730767d/deployments/3841598e-95f6-41b5-8a75-0f5bd404dd6f",
+      tokenBroker: { enableTokenBroker: true, enableRecaptcha: false }
+    })
+  );
 });
 </script>
 
