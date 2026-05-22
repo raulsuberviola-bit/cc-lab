@@ -662,8 +662,10 @@ window.addEventListener("chat-messenger-loaded", () => {
   </chat-messenger-container>
 </chat-messenger>
 <script>
+var ctx = null;
+
 window.addEventListener("chat-messenger-loaded", function(){
-  chatSdk.registerContext(
+  ctx = chatSdk.registerContext(
     chatSdk.prebuilts.ces.createContext({
       deploymentName: "projects/414797991238/locations/us/apps/1502cba9-dbbc-483a-af4a-40dc7730767d/deployments/3841598e-95f6-41b5-8a75-0f5bd404dd6f",
       tokenBroker: {
@@ -672,47 +674,30 @@ window.addEventListener("chat-messenger-loaded", function(){
       }
     })
   );
-  // Una vez cargado, el FAB nativo existe — conectar nuestro botón a él
-  connectOurButton();
+  console.log("=== chat-messenger-loaded ===");
+  console.log("ctx:", ctx);
+  console.log("ctx keys:", ctx ? Object.getOwnPropertyNames(Object.getPrototypeOf(ctx)).concat(Object.keys(ctx)) : "null");
+  console.log("chatSdk keys:", Object.getOwnPropertyNames(Object.getPrototypeOf(chatSdk)).concat(Object.keys(chatSdk)));
 });
 
-function connectOurButton(){
-  // Buscar el botón FAB nativo del widget en su shadow DOM
-  var messenger = document.querySelector('chat-messenger');
-  if(!messenger) return;
-  var fab = findFab(messenger);
-  if(fab){
-    console.log('FAB nativo encontrado:', fab);
-    // Redirigir clicks de nuestros botones al FAB nativo
-    document.getElementById('chat-bubble').onclick = function(){ fab.click(); };
-    document.getElementById('open-chat-btn').onclick = function(){ fab.click(); };
-  } else {
-    console.warn('FAB no encontrado, reintentando...');
-    setTimeout(connectOurButton, 500);
-  }
-}
-
-function findFab(root){
-  if(!root) return null;
-  // buscar en shadow root si existe
-  var sr = root.shadowRoot;
-  if(sr){
-    var btns = sr.querySelectorAll('button, [role="button"]');
-    if(btns.length > 0) return btns[0];
-    // buscar recursivo
-    var children = sr.querySelectorAll('*');
-    for(var i=0; i<children.length; i++){
-      var found = findFab(children[i]);
-      if(found) return found;
+function openChat(){
+  console.log("=== openChat click ===");
+  if(!ctx){ console.error("ctx es null - el evento chat-messenger-loaded no se disparó"); return; }
+  
+  // Intentar TODOS los métodos posibles del prototipo y del objeto
+  var allMethods = Object.getOwnPropertyNames(Object.getPrototypeOf(ctx)).concat(Object.keys(ctx));
+  console.log("Métodos disponibles en ctx:", allMethods);
+  
+  var tryMethods = ["openWidget","open","show","expand","showWidget","launch","start","activate","toggle","showDialog","openDialog","showConversation"];
+  for(var i=0; i<tryMethods.length; i++){
+    if(typeof ctx[tryMethods[i]] === "function"){
+      console.log("Llamando ctx." + tryMethods[i] + "()");
+      ctx[tryMethods[i]]();
+      return;
     }
   }
-  return null;
+  console.error("Ningún método conocido encontrado. Ver métodos arriba en consola.");
 }
-
-// Intentar conectar también al cargar por si el evento ya se disparó
-document.addEventListener('DOMContentLoaded', function(){
-  setTimeout(connectOurButton, 2000);
-});
 </script>
 
 </body>
