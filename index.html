@@ -192,18 +192,47 @@ chat-messenger{
 }
 
 
-/* Estilo del FAB nativo de Google Chat Messenger */
+/* =============================================
+   GOOGLE CHAT MESSENGER — TEMA SEGURSALUD
+   ============================================= */
+
+/* Variables de color del widget */
 chat-messenger {
-  --chat-messenger-fab-background: var(--blue-600);
-  --chat-messenger-fab-color: #ffffff;
-  --chat-messenger-header-background: var(--blue-900);
-  --chat-messenger-header-color: #ffffff;
-  --chat-messenger-bot-message-background: var(--blue-50);
-  --chat-messenger-bot-message-color: var(--blue-900);
-  --chat-messenger-human-message-background: var(--blue-600);
-  --chat-messenger-human-message-color: #ffffff;
-  --chat-messenger-send-icon-color: var(--blue-600);
-  --chat-messenger-focus-color: var(--blue-600);
+  /* FAB button */
+  --chat-messenger-fab-background:      #1e5aa8;
+  --chat-messenger-fab-color:           #ffffff;
+  --chat-messenger-fab-border-radius:   28px;
+
+  /* Header */
+  --chat-messenger-header-background:   #0a2240;
+  --chat-messenger-header-color:        #ffffff;
+  --chat-messenger-header-border-color: transparent;
+
+  /* Mensajes bot */
+  --chat-messenger-bot-message-background:   #e8f2fc;
+  --chat-messenger-bot-message-color:        #0a2240;
+  --chat-messenger-bot-message-border-color: #b5d4f4;
+
+  /* Mensajes usuario */
+  --chat-messenger-human-message-background: #1e5aa8;
+  --chat-messenger-human-message-color:      #ffffff;
+
+  /* Input */
+  --chat-messenger-input-background:    #f0f7ff;
+  --chat-messenger-input-border-color:  #b5d4f4;
+  --chat-messenger-input-color:         #0a2240;
+  --chat-messenger-send-icon-color:     #1e5aa8;
+  --chat-messenger-focus-color:         #1e5aa8;
+
+  /* Chips / sugerencias */
+  --chat-messenger-chip-background:     #e8f2fc;
+  --chat-messenger-chip-color:          #1e5aa8;
+  --chat-messenger-chip-border-color:   #4a8fd4;
+
+  /* General */
+  --chat-messenger-background:          #ffffff;
+  --chat-messenger-border-radius:       16px;
+  --chat-messenger-box-shadow:          0 8px 40px rgba(10,34,64,0.18);
 }
 
 /* RESPONSIVE */
@@ -538,7 +567,7 @@ chat-messenger {
 <section id="contacto" class="cta-strip">
   <h2 style="color:white;margin-bottom:1rem">¿Tienes dudas? Nuestro asistente te ayuda</h2>
   <p style="color:rgba(255,255,255,0.8);margin-bottom:2rem;font-size:1.05rem">Habla con nuestro asistente dental inteligente y te asesoramos en segundos.</p>
-  <button class="btn-primary" id="open-chat-btn">
+  <button class="btn-primary" id="open-chat-btn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">
     💬 Hablar con el asistente
   </button>
 </section>
