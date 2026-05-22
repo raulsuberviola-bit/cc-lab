@@ -191,6 +191,13 @@ chat-messenger{
   --dfMessenger-font-family:'DM Sans',sans-serif;
 }
 
+/* Ocultar el FAB nativo del widget de Google para usar el nuestro */
+chat-messenger::part(fab),
+chat-messenger::part(button),
+chat-messenger [part="fab"]{
+  display: none !important;
+}
+
 /* CHAT BUBBLE */
 #chat-bubble{
   position:fixed;
@@ -663,28 +670,60 @@ window.addEventListener("chat-messenger-loaded", () => {
 </chat-messenger>
 
 <script>
-function openChat(){
-  var el = document.querySelector('chat-messenger');
-  if(!el) return;
-  if(typeof el.openDialog === 'function'){
-    el.openDialog();
-  } else if(typeof el.open === 'function'){
-    el.open();
-  } else {
-    var shadow = el.shadowRoot;
-    if(shadow){
-      var btn = shadow.querySelector('button');
-      if(btn) btn.click();
-    }
-  }
-}
-document.addEventListener('df-messenger-opened', function(){
-  var b = document.getElementById('chat-bubble');
-  if(b){ b.querySelector('.bubble-label').textContent='Chat abierto'; b.style.opacity='0.5'; }
+var chatReady = false;
+window.addEventListener("chat-messenger-loaded", function(){
+  chatReady = true;
+  console.log('Chat Messenger cargado y listo');
 });
-document.addEventListener('df-messenger-closed', function(){
+
+function openChat(){
+  var messenger = document.querySelector('chat-messenger');
+  if(!messenger){ console.warn('chat-messenger no encontrado'); return; }
+  if(!chatReady){ console.warn('Widget aún cargando...'); return; }
+
+  // Método 1: API pública si existe
+  if(typeof messenger.openDialog === 'function'){ messenger.openDialog(); return; }
+  if(typeof messenger.open === 'function'){ messenger.open(); return; }
+
+  // Método 2: buscar el botón FAB dentro del shadow DOM anidado
+  function findAndClick(root, depth){
+    if(!root || depth > 8) return false;
+    var nodes = root.querySelectorAll('*');
+    for(var i = 0; i < nodes.length; i++){
+      var n = nodes[i];
+      // buscar en shadow roots hijos
+      if(n.shadowRoot && findAndClick(n.shadowRoot, depth+1)) return true;
+    }
+    // click en el primer botón visible de este root
+    var btns = root.querySelectorAll('button, [role="button"]');
+    for(var j = 0; j < btns.length; j++){
+      var cs = window.getComputedStyle ? window.getComputedStyle(btns[j]) : null;
+      if(!cs || (cs.display !== 'none' && cs.visibility !== 'hidden' && cs.opacity !== '0')){
+        btns[j].click();
+        return true;
+      }
+    }
+    return false;
+  }
+
+  var sr = messenger.shadowRoot || (messenger.attachShadow ? null : null);
+  // intentar sobre el shadow root del elemento raíz
+  if(sr && findAndClick(sr, 0)) return;
+  // fallback: iterar children directos
+  var children = messenger.querySelectorAll('*');
+  for(var k = 0; k < children.length; k++){
+    if(children[k].shadowRoot && findAndClick(children[k].shadowRoot, 0)) return;
+  }
+  console.warn('No se pudo encontrar el botón del widget');
+}
+
+document.addEventListener('chat-messenger-opened', function(){
   var b = document.getElementById('chat-bubble');
-  if(b){ b.querySelector('.bubble-label').textContent='Asistente dental'; b.style.opacity='1'; }
+  if(b){ b.querySelector('.bubble-label').textContent = 'Chat abierto'; b.style.opacity = '0.4'; }
+});
+document.addEventListener('chat-messenger-closed', function(){
+  var b = document.getElementById('chat-bubble');
+  if(b){ b.querySelector('.bubble-label').textContent = 'Asistente dental'; b.style.opacity = '1'; }
 });
 </script>
 
