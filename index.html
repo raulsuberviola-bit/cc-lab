@@ -32,14 +32,13 @@
 }
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;color:var(--gray-700);background:var(--white);-webkit-font-smoothing:antialiased}
-img{display:block;max-width:100%}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--white);border-bottom:1px solid var(--gray-300);padding:0 2rem;box-shadow:0 1px 12px rgba(0,0,0,0.06)}
 .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:68px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
 .logo-mark{width:34px;height:34px;background:var(--blue-600);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.logo-mark svg{fill:white;width:20px;height:20px}
+.logo-mark svg{width:20px;height:20px}
 .logo-name{font-family:'DM Sans',sans-serif;font-size:1.15rem;font-weight:700;color:var(--blue-900);letter-spacing:-0.03em;white-space:nowrap}
 .logo-name span{color:var(--blue-600);font-weight:800}
 .nav-links{display:flex;align-items:center;gap:0}
@@ -70,10 +69,8 @@ h1 em{font-style:italic;color:rgba(255,255,255,0.75)}
 .hero-trust-text{font-size:0.8rem;color:rgba(255,255,255,0.6)}
 .trust-badges{display:flex;gap:10px}
 .trust-badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:6px 12px;font-size:0.75rem;color:rgba(255,255,255,0.85);font-weight:500}
-
-/* HERO CARD */
 .hero-card-wrap{position:relative}
-.coverage-card{background:white;border-radius:16px;padding:2rem;box-shadow:0 24px 60px rgba(0,0,0,0.25);position:relative;z-index:1}
+.coverage-card{background:white;border-radius:16px;padding:2rem;box-shadow:0 24px 60px rgba(0,0,0,0.25)}
 .coverage-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--gray-100)}
 .coverage-card-title{font-weight:600;color:var(--blue-900);font-size:1rem}
 .coverage-card-badge{background:var(--teal-light);color:var(--teal);font-size:0.75rem;font-weight:600;padding:4px 10px;border-radius:20px}
@@ -93,22 +90,22 @@ h1 em{font-style:italic;color:rgba(255,255,255,0.75)}
 .chip1{top:-20px;right:20px;color:var(--teal)}
 .chip2{bottom:20px;left:-30px;color:var(--orange)}
 
-/* STATS BAR */
+/* STATS */
 .stats-bar{background:var(--blue-50);border-bottom:1px solid var(--blue-100);padding:2.5rem 2rem}
 .stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center}
 .stat-number{font-family:'DM Serif Display',serif;font-size:2.25rem;color:var(--blue-700);letter-spacing:-0.02em;line-height:1}
 .stat-label{font-size:0.85rem;color:var(--gray-500);margin-top:4px}
 
-/* SECTION */
+/* SECTIONS */
 section{padding:5rem 2rem}
 .section-inner{max-width:1200px;margin:0 auto}
 .section-label{font-size:0.8rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue-600);margin-bottom:0.75rem}
 h2{font-family:'DM Serif Display',serif;font-size:2.25rem;color:var(--blue-900);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem}
 .section-sub{font-size:1.05rem;color:var(--gray-500);line-height:1.65;max-width:540px}
 
-/* SERVICES GRID */
+/* SERVICES */
 .services-grid{margin-top:3rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
-.service-card{background:var(--white);border:1px solid var(--gray-300);border-radius:12px;padding:1.75rem;transition:all .25s;cursor:default}
+.service-card{background:var(--white);border:1px solid var(--gray-300);border-radius:12px;padding:1.75rem;transition:all .25s}
 .service-card:hover{border-color:var(--blue-400);box-shadow:0 8px 24px rgba(30,90,168,0.1);transform:translateY(-2px)}
 .service-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1rem}
 .service-icon.blue{background:var(--blue-100)}
@@ -121,7 +118,7 @@ h2{font-family:'DM Serif Display',serif;font-size:2.25rem;color:var(--blue-900);
 .tag-teal{background:var(--teal-light);color:var(--teal)}
 .tag-orange{background:var(--orange-light);color:var(--orange)}
 
-/* HOW IT WORKS */
+/* HOW */
 .how-section{background:var(--gray-100)}
 .steps{margin-top:3rem;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;position:relative}
 .steps::before{content:'';position:absolute;top:28px;left:12%;right:12%;height:1.5px;background:var(--gray-300)}
@@ -165,11 +162,9 @@ h2{font-family:'DM Serif Display',serif;font-size:2.25rem;color:var(--blue-900);
 .author-name{font-size:0.875rem;font-weight:600;color:white}
 .author-city{font-size:0.75rem;color:rgba(255,255,255,0.45)}
 
-/* CTA STRIP */
+/* CTA */
 .cta-strip{background:var(--blue-600);padding:4rem 2rem;text-align:center}
-.cta-strip h2{color:white;margin-bottom:1rem}
 .cta-strip p{color:rgba(255,255,255,0.8);margin-bottom:2rem;font-size:1.05rem}
-.cta-strip .btn-primary{box-shadow:0 4px 20px rgba(0,0,0,0.2)}
 
 /* FOOTER */
 footer{background:var(--blue-900);color:rgba(255,255,255,0.5);padding:3rem 2rem 2rem}
@@ -180,71 +175,16 @@ footer{background:var(--blue-900);color:rgba(255,255,255,0.5);padding:3rem 2rem 
 .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
 .footer-col li a{color:rgba(255,255,255,0.45);text-decoration:none;font-size:0.85rem;transition:color .2s}
 .footer-col li a:hover{color:white}
-.footer-bottom{margin-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:0.78rem}
+.footer-bottom{margin-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;flex-wrap:wrap;gap:1rem}
 .footer-legal{display:flex;gap:1.5rem}
 .footer-legal a{color:rgba(255,255,255,0.35);text-decoration:none}
 
-/* CHAT WIDGET STYLING */
-chat-messenger{
-  --dfMessenger-button-titlebar-color:#0e3060;
-  --dfMessenger-chat-background:white;
-  --dfMessenger-font-family:'DM Sans',sans-serif;
-}
-
-
-/* =============================================
-   GOOGLE CHAT MESSENGER — TEMA SEGURSALUD
-   ============================================= */
-
-/* Forzar widget flotante — no ocupa espacio en el flujo */
+/* Chat widget flotante */
 chat-messenger {
   position: fixed !important;
   bottom: 24px !important;
   right: 24px !important;
   z-index: 9999 !important;
-  width: 0 !important;
-  height: 0 !important;
-  overflow: visible !important;
-  display: block !important;
-}
-
-/* Variables de color del widget */
-chat-messenger {
-  /* FAB button */
-  --chat-messenger-fab-background:      #1e5aa8;
-  --chat-messenger-fab-color:           #ffffff;
-  --chat-messenger-fab-border-radius:   28px;
-
-  /* Header */
-  --chat-messenger-header-background:   #0a2240;
-  --chat-messenger-header-color:        #ffffff;
-  --chat-messenger-header-border-color: transparent;
-
-  /* Mensajes bot */
-  --chat-messenger-bot-message-background:   #e8f2fc;
-  --chat-messenger-bot-message-color:        #0a2240;
-  --chat-messenger-bot-message-border-color: #b5d4f4;
-
-  /* Mensajes usuario */
-  --chat-messenger-human-message-background: #1e5aa8;
-  --chat-messenger-human-message-color:      #ffffff;
-
-  /* Input */
-  --chat-messenger-input-background:    #f0f7ff;
-  --chat-messenger-input-border-color:  #b5d4f4;
-  --chat-messenger-input-color:         #0a2240;
-  --chat-messenger-send-icon-color:     #1e5aa8;
-  --chat-messenger-focus-color:         #1e5aa8;
-
-  /* Chips / sugerencias */
-  --chat-messenger-chip-background:     #e8f2fc;
-  --chat-messenger-chip-color:          #1e5aa8;
-  --chat-messenger-chip-border-color:   #4a8fd4;
-
-  /* General */
-  --chat-messenger-background:          #ffffff;
-  --chat-messenger-border-radius:       16px;
-  --chat-messenger-box-shadow:          0 8px 40px rgba(10,34,64,0.18);
 }
 
 /* RESPONSIVE */
@@ -268,7 +208,6 @@ chat-messenger {
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a href="#" class="logo">
@@ -291,14 +230,10 @@ chat-messenger {
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
     <div>
-      <div class="hero-badge">
-        <div class="hero-badge-dot"></div>
-        Más de 2 millones de asegurados en España
-      </div>
+      <div class="hero-badge"><div class="hero-badge-dot"></div>Más de 2 millones de asegurados en España</div>
       <h1>Tu salud dental, <em>siempre protegida</em></h1>
       <p class="hero-sub">El seguro dental que tus dientes merecen. Clínicas en toda España, cuadro médico extenso, sin copagos ni sorpresas.</p>
       <div class="hero-buttons">
@@ -306,9 +241,7 @@ chat-messenger {
           <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
           Ver planes y precios
         </a>
-        <a href="#como-funciona" class="btn-outline">
-          Cómo funciona →
-        </a>
+        <a href="#como-funciona" class="btn-outline">Cómo funciona →</a>
       </div>
       <div class="hero-trust">
         <span class="hero-trust-text">Certificado por:</span>
@@ -320,161 +253,78 @@ chat-messenger {
       </div>
     </div>
     <div class="hero-card-wrap">
-      <div class="floating-chip chip1">
-        ✓ Sin periodos de espera
-      </div>
+      <div class="floating-chip chip1">✓ Sin periodos de espera</div>
       <div class="coverage-card">
         <div class="coverage-card-header">
           <span class="coverage-card-title">Tu cobertura dental</span>
           <span class="coverage-card-badge">Plan Completo</span>
         </div>
         <div class="coverage-item">
-          <div class="coverage-left">
-            <div class="coverage-icon" style="background:#e0f7f5;font-size:1.1rem">🦷</div>
-            <span class="coverage-label">Revisión anual + limpieza</span>
-          </div>
+          <div class="coverage-left"><div class="coverage-icon" style="background:#e0f7f5">🦷</div><span class="coverage-label">Revisión anual + limpieza</span></div>
           <span class="coverage-price">100% cubierto</span>
         </div>
         <div class="coverage-item">
-          <div class="coverage-left">
-            <div class="coverage-icon" style="background:#e8f2fc;font-size:1.1rem">⚕️</div>
-            <span class="coverage-label">Endodoncia (1 conducto)</span>
-          </div>
+          <div class="coverage-left"><div class="coverage-icon" style="background:#e8f2fc">⚕️</div><span class="coverage-label">Endodoncia (1 conducto)</span></div>
           <span class="coverage-price">75% cubierto</span>
         </div>
         <div class="coverage-item">
-          <div class="coverage-left">
-            <div class="coverage-icon" style="background:#fff3e6;font-size:1.1rem">🔬</div>
-            <span class="coverage-label">Ortodoncia invisible</span>
-          </div>
+          <div class="coverage-left"><div class="coverage-icon" style="background:#fff3e6">🔬</div><span class="coverage-label">Ortodoncia invisible</span></div>
           <span class="coverage-price">50% cubierto</span>
         </div>
         <div class="coverage-item">
-          <div class="coverage-left">
-            <div class="coverage-icon" style="background:#f0fdf4;font-size:1.1rem">🏥</div>
-            <span class="coverage-label">Urgencias 24h</span>
-          </div>
+          <div class="coverage-left"><div class="coverage-icon" style="background:#f0fdf4">🏥</div><span class="coverage-label">Urgencias 24h</span></div>
           <span class="coverage-price">100% cubierto</span>
         </div>
         <div class="card-total">
           <span class="card-total-label">Prima mensual desde</span>
-          <div>
-            <span class="card-total-price">9,90 €</span>
-            <span class="card-total-period"> /mes</span>
-          </div>
+          <div><span class="card-total-price">9,90 €</span><span class="card-total-period"> /mes</span></div>
         </div>
-        <button class="card-cta" onclick="document.querySelector('chat-messenger').style.display='block'">
-          Contratar ahora — sin compromiso
-        </button>
+        <button class="card-cta">Contratar ahora — sin compromiso</button>
       </div>
-      <div class="floating-chip chip2">
-        📍 +4.500 clínicas adheridas
-      </div>
+      <div class="floating-chip chip2">📍 +4.500 clínicas adheridas</div>
     </div>
   </div>
 </section>
 
-<!-- STATS -->
 <div class="stats-bar">
   <div class="stats-inner">
-    <div>
-      <div class="stat-number">2,1M</div>
-      <div class="stat-label">asegurados activos</div>
-    </div>
-    <div>
-      <div class="stat-number">4.500+</div>
-      <div class="stat-label">clínicas dentales</div>
-    </div>
-    <div>
-      <div class="stat-number">98%</div>
-      <div class="stat-label">satisfacción del cliente</div>
-    </div>
-    <div>
-      <div class="stat-number">24h</div>
-      <div class="stat-label">atención de urgencias</div>
-    </div>
+    <div><div class="stat-number">2,1M</div><div class="stat-label">asegurados activos</div></div>
+    <div><div class="stat-number">4.500+</div><div class="stat-label">clínicas dentales</div></div>
+    <div><div class="stat-number">98%</div><div class="stat-label">satisfacción del cliente</div></div>
+    <div><div class="stat-number">24h</div><div class="stat-label">atención de urgencias</div></div>
   </div>
 </div>
 
-<!-- SERVICIOS -->
 <section id="servicios">
   <div class="section-inner">
     <div class="section-label">Coberturas</div>
     <h2>Todo lo que necesitas para tu salud dental</h2>
     <p class="section-sub">Desde revisiones rutinarias hasta tratamientos avanzados, cubrimos a toda tu familia.</p>
     <div class="services-grid">
-      <div class="service-card">
-        <div class="service-icon teal">🦷</div>
-        <h3>Odontología general</h3>
-        <p>Revisiones, empastes, extracciones y tratamiento de caries incluidos sin límite de visitas anuales.</p>
-        <span class="service-tag tag-teal">Sin copago</span>
-      </div>
-      <div class="service-card">
-        <div class="service-icon blue">✨</div>
-        <h3>Ortodoncia y estética</h3>
-        <p>Ortodoncia invisible, carillas de porcelana y blanqueamiento dental con las mejores técnicas actuales.</p>
-        <span class="service-tag tag-blue">Desde 50% cubierto</span>
-      </div>
-      <div class="service-card">
-        <div class="service-icon orange">🔬</div>
-        <h3>Implantología</h3>
-        <p>Implantes dentales con materiales de primera calidad, cirugía y corona incluidos en los planes premium.</p>
-        <span class="service-tag tag-orange">Plan Premium</span>
-      </div>
-      <div class="service-card">
-        <div class="service-icon blue">⚕️</div>
-        <h3>Endodoncia</h3>
-        <p>Tratamientos de conductos con técnicas de última generación y sin dolor en clínicas especializadas.</p>
-        <span class="service-tag tag-blue">Hasta 75% cubierto</span>
-      </div>
-      <div class="service-card">
-        <div class="service-icon teal">👶</div>
-        <h3>Odontopediatría</h3>
-        <p>Atención especializada para los más pequeños desde los 4 años, con revisiones, selladores y flúor.</p>
-        <span class="service-tag tag-teal">Incluido en familia</span>
-      </div>
-      <div class="service-card">
-        <div class="service-icon orange">🚨</div>
-        <h3>Urgencias 24/7</h3>
-        <p>Atención de urgencias cualquier día del año, incluso festivos, en nuestra red de clínicas de guardia.</p>
-        <span class="service-tag tag-orange">Siempre disponible</span>
-      </div>
+      <div class="service-card"><div class="service-icon teal">🦷</div><h3>Odontología general</h3><p>Revisiones, empastes, extracciones y tratamiento de caries incluidos sin límite de visitas anuales.</p><span class="service-tag tag-teal">Sin copago</span></div>
+      <div class="service-card"><div class="service-icon blue">✨</div><h3>Ortodoncia y estética</h3><p>Ortodoncia invisible, carillas de porcelana y blanqueamiento dental con las mejores técnicas actuales.</p><span class="service-tag tag-blue">Desde 50% cubierto</span></div>
+      <div class="service-card"><div class="service-icon orange">🔬</div><h3>Implantología</h3><p>Implantes dentales con materiales de primera calidad, cirugía y corona incluidos en los planes premium.</p><span class="service-tag tag-orange">Plan Premium</span></div>
+      <div class="service-card"><div class="service-icon blue">⚕️</div><h3>Endodoncia</h3><p>Tratamientos de conductos con técnicas de última generación y sin dolor en clínicas especializadas.</p><span class="service-tag tag-blue">Hasta 75% cubierto</span></div>
+      <div class="service-card"><div class="service-icon teal">👶</div><h3>Odontopediatría</h3><p>Atención especializada para los más pequeños desde los 4 años, con revisiones, selladores y flúor.</p><span class="service-tag tag-teal">Incluido en familia</span></div>
+      <div class="service-card"><div class="service-icon orange">🚨</div><h3>Urgencias 24/7</h3><p>Atención de urgencias cualquier día del año, incluso festivos, en nuestra red de clínicas de guardia.</p><span class="service-tag tag-orange">Siempre disponible</span></div>
     </div>
   </div>
 </section>
 
-<!-- CÓMO FUNCIONA -->
 <section id="como-funciona" class="how-section">
   <div class="section-inner">
     <div class="section-label">Proceso</div>
     <h2>Empezar es muy sencillo</h2>
     <p class="section-sub">En menos de 5 minutos tienes tu seguro contratado y listo para usar.</p>
     <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <h3>Elige tu plan</h3>
-        <p>Básico, Completo o Premium. Compara coberturas y elige el que mejor se adapta a ti.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h3>Rellena tus datos</h3>
-        <p>Introduce tus datos personales y los de los beneficiarios. Sin médico de cabecera previo.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h3>Pago seguro</h3>
-        <p>Domiciliación bancaria mensual. Sin permanencia. Cancela cuando quieras sin penalización.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">04</div>
-        <h3>¡Ya puedes usarlo!</h3>
-        <p>Descarga la app, localiza tu clínica más cercana y pide cita. Sin trámites ni esperas.</p>
-      </div>
+      <div class="step"><div class="step-num">01</div><h3>Elige tu plan</h3><p>Básico, Completo o Premium. Compara coberturas y elige el que mejor se adapta a ti.</p></div>
+      <div class="step"><div class="step-num">02</div><h3>Rellena tus datos</h3><p>Introduce tus datos personales y los de los beneficiarios. Sin médico de cabecera previo.</p></div>
+      <div class="step"><div class="step-num">03</div><h3>Pago seguro</h3><p>Domiciliación bancaria mensual. Sin permanencia. Cancela cuando quieras sin penalización.</p></div>
+      <div class="step"><div class="step-num">04</div><h3>¡Ya puedes usarlo!</h3><p>Descarga la app, localiza tu clínica más cercana y pide cita. Sin trámites ni esperas.</p></div>
     </div>
   </div>
 </section>
 
-<!-- PLANES -->
 <section id="planes">
   <div class="section-inner">
     <div class="section-label">Tarifas</div>
@@ -482,48 +332,30 @@ chat-messenger {
     <p class="section-sub">Todos los planes incluyen sin límite de visitas, sin copagos en revisiones y acceso a nuestra red de clínicas.</p>
     <div class="pricing-grid">
       <div class="plan-card">
-        <div class="plan-name">Básico</div>
-        <div class="plan-desc">Lo esencial para tu salud dental</div>
+        <div class="plan-name">Básico</div><div class="plan-desc">Lo esencial para tu salud dental</div>
         <div class="plan-price"><sup>€</sup>6,<span style="font-size:1.4rem">90</span></div>
         <div class="plan-period">al mes por persona</div>
         <ul class="plan-features">
-          <li>Revisión anual + limpieza</li>
-          <li>Extracciones simples</li>
-          <li>Empastes (composita)</li>
-          <li>Radiografías diagnósticas</li>
-          <li class="no">Ortodoncia</li>
-          <li class="no">Implantes</li>
+          <li>Revisión anual + limpieza</li><li>Extracciones simples</li><li>Empastes (composita)</li><li>Radiografías diagnósticas</li><li class="no">Ortodoncia</li><li class="no">Implantes</li>
         </ul>
         <button class="plan-btn ghost">Contratar básico</button>
       </div>
       <div class="plan-card featured">
         <div class="plan-badge">El más elegido</div>
-        <div class="plan-name">Completo</div>
-        <div class="plan-desc">Cobertura amplia para toda la familia</div>
+        <div class="plan-name">Completo</div><div class="plan-desc">Cobertura amplia para toda la familia</div>
         <div class="plan-price"><sup>€</sup>9,<span style="font-size:1.4rem">90</span></div>
         <div class="plan-period">al mes por persona</div>
         <ul class="plan-features">
-          <li>Todo lo del plan Básico</li>
-          <li>Endodoncia (75% cubierto)</li>
-          <li>Periodoncia</li>
-          <li>Urgencias 24h</li>
-          <li>Ortodoncia (50% cubierto)</li>
-          <li class="no">Implantes</li>
+          <li>Todo lo del plan Básico</li><li>Endodoncia (75% cubierto)</li><li>Periodoncia</li><li>Urgencias 24h</li><li>Ortodoncia (50% cubierto)</li><li class="no">Implantes</li>
         </ul>
         <button class="plan-btn solid">Contratar Completo</button>
       </div>
       <div class="plan-card">
-        <div class="plan-name">Premium</div>
-        <div class="plan-desc">Máxima cobertura sin límites</div>
+        <div class="plan-name">Premium</div><div class="plan-desc">Máxima cobertura sin límites</div>
         <div class="plan-price"><sup>€</sup>16,<span style="font-size:1.4rem">90</span></div>
         <div class="plan-period">al mes por persona</div>
         <ul class="plan-features">
-          <li>Todo lo del plan Completo</li>
-          <li>Implantes (60% cubierto)</li>
-          <li>Ortodoncia invisible</li>
-          <li>Blanqueamiento incluido</li>
-          <li>2ª opinión médica digital</li>
-          <li>Asistencia viaje Europa</li>
+          <li>Todo lo del plan Completo</li><li>Implantes (60% cubierto)</li><li>Ortodoncia invisible</li><li>Blanqueamiento incluido</li><li>2ª opinión médica digital</li><li>Asistencia viaje Europa</li>
         </ul>
         <button class="plan-btn ghost">Contratar Premium</button>
       </div>
@@ -531,153 +363,48 @@ chat-messenger {
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
 <section id="opiniones" class="testimonials-section">
   <div class="section-inner">
     <div class="section-label">Opiniones</div>
     <h2>Lo que dicen nuestros asegurados</h2>
     <p class="section-sub">Más de 18.000 opiniones verificadas en Google con una media de 4,8 estrellas.</p>
     <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Me hicieron la revisión el mismo día que llamé. La clínica impecable y el dentista muy amable. Totalmente recomendable."</p>
-        <div class="testimonial-author">
-          <div class="author-avatar">MG</div>
-          <div>
-            <div class="author-name">María García</div>
-            <div class="author-city">Madrid · Plan Completo</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★★</div>
-        <p class="testimonial-text">"Contraté para toda la familia y en el primer mes ya amortizamos el seguro. Los niños encantados con el dentista de pediatría."</p>
-        <div class="testimonial-author">
-          <div class="author-avatar">JR</div>
-          <div>
-            <div class="author-name">Joan Roca</div>
-            <div class="author-city">Barcelona · Plan Premium</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★★★★☆</div>
-        <p class="testimonial-text">"Tuve una urgencia un domingo y en 20 minutos ya tenía cita. La app es muy intuitiva. Repetiría sin duda el próximo año."</p>
-        <div class="testimonial-author">
-          <div class="author-avatar">AL</div>
-          <div>
-            <div class="author-name">Ana López</div>
-            <div class="author-city">Valencia · Plan Básico</div>
-          </div>
-        </div>
-      </div>
+      <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">"Me hicieron la revisión el mismo día que llamé. La clínica impecable y el dentista muy amable. Totalmente recomendable."</p><div class="testimonial-author"><div class="author-avatar">MG</div><div><div class="author-name">María García</div><div class="author-city">Madrid · Plan Completo</div></div></div></div>
+      <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">"Contraté para toda la familia y en el primer mes ya amortizamos el seguro. Los niños encantados con el dentista de pediatría."</p><div class="testimonial-author"><div class="author-avatar">JR</div><div><div class="author-name">Joan Roca</div><div class="author-city">Barcelona · Plan Premium</div></div></div></div>
+      <div class="testimonial-card"><div class="testimonial-stars">★★★★☆</div><p class="testimonial-text">"Tuve una urgencia un domingo y en 20 minutos ya tenía cita. La app es muy intuitiva. Repetiría sin duda el próximo año."</p><div class="testimonial-author"><div class="author-avatar">AL</div><div><div class="author-name">Ana López</div><div class="author-city">Valencia · Plan Básico</div></div></div></div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
 <section id="contacto" class="cta-strip">
   <h2 style="color:white;margin-bottom:1rem">¿Tienes dudas? Nuestro asistente te ayuda</h2>
-  <p style="color:rgba(255,255,255,0.8);margin-bottom:2rem;font-size:1.05rem">Habla con nuestro asistente dental inteligente y te asesoramos en segundos.</p>
-  <button class="btn-primary" id="open-chat-btn" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">
-    💬 Hablar con el asistente
-  </button>
+  <p>Habla con nuestro asistente dental inteligente y te asesoramos en segundos.</p>
+  <a href="#" class="btn-primary" onclick="event.preventDefault()">💬 Hablar con el asistente</a>
 </section>
 
-
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
         <a href="#" class="logo" style="text-decoration:none">
-          <div class="logo-mark">
-            <svg viewBox="0 0 24 24" fill="none"><rect x="9" y="2" width="6" height="20" rx="2" fill="white"/><rect x="2" y="9" width="20" height="6" rx="2" fill="white"/></svg>
-          </div>
+          <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="2" width="6" height="20" rx="2" fill="white"/><rect x="2" y="9" width="20" height="6" rx="2" fill="white"/></svg></div>
           <span class="logo-name" style="color:white">Segur<span style="color:#4a8fd4">Salud</span></span>
         </a>
         <p>El seguro dental de referencia en España. Cobertura en más de 4.500 clínicas y atención 24 horas los 365 días del año.</p>
       </div>
-      <div class="footer-col">
-        <h4>Productos</h4>
-        <ul>
-          <li><a href="#">Plan Básico</a></li>
-          <li><a href="#">Plan Completo</a></li>
-          <li><a href="#">Plan Premium</a></li>
-          <li><a href="#">Seguro familiar</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Empresa</h4>
-        <ul>
-          <li><a href="#">Sobre nosotros</a></li>
-          <li><a href="#">Clínicas adheridas</a></li>
-          <li><a href="#">Blog dental</a></li>
-          <li><a href="#">Trabaja con nosotros</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Soporte</h4>
-        <ul>
-          <li><a href="#">Área de cliente</a></li>
-          <li><a href="#">Preguntas frecuentes</a></li>
-          <li><a href="#">Contáctanos</a></li>
-          <li><a href="#">900 100 100</a></li>
-        </ul>
-      </div>
+      <div class="footer-col"><h4>Plataforma</h4><ul><li><a href="#">Plan Básico</a></li><li><a href="#">Plan Completo</a></li><li><a href="#">Plan Premium</a></li><li><a href="#">Seguro familiar</a></li></ul></div>
+      <div class="footer-col"><h4>Empresa</h4><ul><li><a href="#">Sobre nosotros</a></li><li><a href="#">Clínicas adheridas</a></li><li><a href="#">Blog dental</a></li><li><a href="#">Trabaja con nosotros</a></li></ul></div>
+      <div class="footer-col"><h4>Soporte</h4><ul><li><a href="#">Área de cliente</a></li><li><a href="#">Preguntas frecuentes</a></li><li><a href="#">Contáctanos</a></li><li><a href="#">900 100 100</a></li></ul></div>
     </div>
     <div class="footer-bottom">
-      <span style="font-size:0.7rem;background:var(--blue-800);color:rgba(255,255,255,0.35);padding:2px 8px;border-radius:4px;font-family:monospace;letter-spacing:0.05em">v1.9.2</span>
+      <span style="font-size:0.7rem;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.35);padding:2px 8px;border-radius:4px;font-family:monospace;letter-spacing:0.05em">v2.2.0</span>
       <span>© 2025 SegurSalud, S.A. — Entidad aseguradora autorizada por la DGS con clave J-0019</span>
-      <div class="footer-legal">
-        <a href="#">Aviso legal</a>
-        <a href="#">Privacidad</a>
-        <a href="#">Cookies</a>
-      </div>
+      <div class="footer-legal"><a href="#">Aviso legal</a><a href="#">Privacidad</a><a href="#">Cookies</a></div>
     </div>
   </div>
 </footer>
 
 <!-- GOOGLE CCAI CHAT WIDGET -->
-
-<script>
-window.addEventListener("chat-messenger-loaded", () => {
-  chatSdk.registerContext(
-    chatSdk.prebuilts.ces.createContext({
-      deploymentName: "projects/414797991238/locations/us/apps/1502cba9-dbbc-483a-af4a-40dc7730767d/deployments/3841598e-95f6-41b5-8a75-0f5bd404dd6f",
-      tokenBroker: {
-        enableTokenBroker: true,
-        enableRecaptcha: false
-      }
-    }),
-  );
-});
-</script>
-
-<chat-messenger
-  url-allowlist="*"
->
-  <chat-messenger-container
-    chat-title="Adeslas dental"
-    chat-title-icon="https://gstatic.com/dialogflow-console/common/assets/ccai-favicons/conversational_agents.png"
-    enable-file-upload
-    enable-audio-input
-  >
-    <chat-reset-session-button
-      slot="titlebar-actions"
-      title-text="Start new chat"
-    ></chat-reset-session-button>
-    <chat-toggle-dialog-button
-      slot="titlebar-actions"
-      title-text-expanded="Collapse"
-      title-text-collapsed="Expand"
-    ></chat-toggle-dialog-button>
-    <chat-messenger-close-button
-      slot="titlebar-actions"
-      title-text="Close"
-    ></chat-messenger-close-button>
-  </chat-messenger-container>
-</chat-messenger>
 <script>
 window.addEventListener("chat-messenger-loaded", function(){
   chatSdk.registerContext(
@@ -686,98 +413,92 @@ window.addEventListener("chat-messenger-loaded", function(){
       tokenBroker: { enableTokenBroker: true, enableRecaptcha: false }
     })
   );
-  // Inyectar estilos en shadow DOMs anidados
   setTimeout(injectStyles, 800);
-  setTimeout(injectStyles, 2000); // segundo intento por si tarda
+  setTimeout(injectStyles, 2500);
 });
 
-function injectStyles(){
-  var css = `
-    /* === SEGURSALUD THEME v1.7 — selectores reales === */
+var THEME_CSS = `
+  /* Titlebar */
+  .titlebar-wrapper { background: #0a2240 !important; }
+  .titlebar-content { background: #0a2240 !important; }
+  .titlebar-divider { background: rgba(255,255,255,0.12) !important; }
+  #titlebar-title, .title-text, .title-text h2 {
+    color: #ffffff !important;
+    font-family: 'DM Sans', sans-serif !important;
+  }
+  .title-text h2 { font-size: 1rem !important; font-weight: 600 !important; }
+  .title-button { color: rgba(255,255,255,0.8) !important; }
+  .title-button:hover { color: #fff !important; background: rgba(255,255,255,0.12) !important; }
 
-    /* Titlebar / header */
-    .titlebar-wrapper { background: #0a2240 !important; border-bottom: none !important; }
-    .titlebar-content { background: #0a2240 !important; }
-    .titlebar-divider { background: rgba(255,255,255,0.12) !important; }
-    #titlebar-title, .title-text, .title-text h2 {
-      color: #ffffff !important;
-      font-family: 'DM Sans', sans-serif !important;
-    }
-    .title-text h2 { font-size: 1rem !important; font-weight: 600 !important; }
-    .title-button { color: rgba(255,255,255,0.75) !important; border-radius: 6px !important; }
-    .title-button:hover { color: #fff !important; background: rgba(255,255,255,0.12) !important; }
+  /* Mensajes usuario */
+  .message.user-message {
+    background: #1e5aa8 !important;
+    color: #ffffff !important;
+    border-radius: 14px 14px 2px 14px !important;
+  }
 
-    /* Mensajes usuario */
-    .message.user-message {
-      background: #1e5aa8 !important;
-      color: #ffffff !important;
-      border-radius: 14px 14px 2px 14px !important;
-    }
+  /* Mensajes bot */
+  .message.bot-message {
+    background: #f0f7ff !important;
+    color: #0a2240 !important;
+    border: 1px solid #b5d4f4 !important;
+    border-radius: 14px 14px 14px 2px !important;
+  }
+  .message.bot-message p { color: #0a2240 !important; }
 
-    /* Mensajes bot */
-    .message.bot-message {
-      background: #f0f7ff !important;
-      color: #0a2240 !important;
-      border: 1px solid #b5d4f4 !important;
-      border-radius: 14px 14px 14px 2px !important;
-    }
-    .message.bot-message p { color: #0a2240 !important; margin: 0 !important; }
+  /* Input */
+  .input-container { background: #ffffff !important; border-top: 1px solid #e8f2fc !important; }
+  .input-box-wrapper {
+    background: #f0f7ff !important;
+    border: 1.5px solid #b5d4f4 !important;
+    border-radius: 12px !important;
+  }
+  .input-box { background: transparent !important; color: #0a2240 !important; }
+  .input-box::placeholder { color: #7aabce !important; }
 
-    /* Wrapper del chat */
-    .chat-wrapper { border-radius: 16px !important; overflow: hidden !important; }
+  /* Send button */
+  #send-icon-button:not([disabled]) { background: #1e5aa8 !important; }
 
-    /* Input area */
-    .input-container { background: #ffffff !important; border-top: 1px solid #e8f2fc !important; padding: 12px !important; }
-    .input-box-wrapper {
-      background: #f0f7ff !important;
-      border: 1.5px solid #b5d4f4 !important;
-      border-radius: 12px !important;
-    }
-    .input-box { background: transparent !important; color: #0a2240 !important; font-family: 'DM Sans', sans-serif !important; }
-    .input-box::placeholder { color: #7aabce !important; }
+  /* Acciones */
+  .action-button { color: #4a8fd4 !important; }
 
-    /* Send button activo */
-    #send-icon-button:not([disabled]) { background: #1e5aa8 !important; }
+  /* Fondo mensajes */
+  .message-list-wrapper, #message-list { background: #ffffff !important; }
 
-    /* Botón micrófono y upload */
-    .action-button { color: #4a8fd4 !important; }
+  /* Scroll to bottom */
+  .scroll-to-bottom-button { background: #1e5aa8 !important; color: #fff !important; border-radius: 20px !important; }
+`;
 
-    /* Scroll to bottom */
-    .scroll-to-bottom-button { background: #1e5aa8 !important; color: #fff !important; border-radius: 20px !important; }
-
-    /* Message list background */
-    .message-list-wrapper, #message-list { background: #ffffff !important; }
-  `;
-
-  // Función recursiva para inyectar en todos los shadow roots
-  function injectIntoShadow(el, depth) {
+function injectStyles() {
+  function inject(el, depth) {
     if (!el || depth > 8) return;
     if (el.shadowRoot) {
-      // Evitar duplicar
-      if (!el.shadowRoot.querySelector('style[data-segursalud]')) {
+      if (!el.shadowRoot.querySelector('style[data-ss]')) {
         var s = document.createElement('style');
-        s.setAttribute('data-segursalud', '1');
-        s.textContent = css;
+        s.setAttribute('data-ss', '1');
+        s.textContent = THEME_CSS;
         el.shadowRoot.appendChild(s);
-        console.log('Estilos inyectados en shadow root de', el.tagName);
       }
-      // Recursivo dentro del shadow root
-      el.shadowRoot.querySelectorAll('*').forEach(function(child){
-        injectIntoShadow(child, depth + 1);
-      });
+      el.shadowRoot.querySelectorAll('*').forEach(function(c){ inject(c, depth+1); });
     }
-    // También en hijos normales
-    el.querySelectorAll && el.querySelectorAll('*').forEach(function(child){
-      injectIntoShadow(child, depth + 1);
-    });
   }
-
-  var messenger = document.querySelector('chat-messenger');
-  if (messenger) {
-    injectIntoShadow(messenger, 0);
-  }
+  var m = document.querySelector('chat-messenger');
+  if (m) inject(m, 0);
 }
 </script>
+
+<chat-messenger url-allowlist="*">
+  <chat-messenger-container
+    chat-title="Adeslas dental"
+    chat-title-icon="https://gstatic.com/dialogflow-console/common/assets/ccai-favicons/conversational_agents.png"
+    enable-file-upload
+    enable-audio-input
+  >
+    <chat-reset-session-button slot="titlebar-actions" title-text="Start new chat"></chat-reset-session-button>
+    <chat-toggle-dialog-button slot="titlebar-actions" title-text-expanded="Collapse" title-text-collapsed="Expand"></chat-toggle-dialog-button>
+    <chat-messenger-close-button slot="titlebar-actions" title-text="Close"></chat-messenger-close-button>
+  </chat-messenger-container>
+</chat-messenger>
 
 </body>
 </html>
