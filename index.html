@@ -662,64 +662,51 @@ window.addEventListener("chat-messenger-loaded", () => {
   </chat-messenger-container>
 </chat-messenger>
 <script>
-var ctx = null;
-
 document.addEventListener("DOMContentLoaded", function(){
-  var el = document.querySelector("chat-messenger");
-  if(!el){ return; }
-
   function tryInit(){
     if(typeof chatSdk === "undefined"){ setTimeout(tryInit, 400); return; }
-    console.log("chatSdk encontrado. Keys:", Object.keys(chatSdk));
-    console.log("chatSdk.prebuilts:", chatSdk.prebuilts);
-
-    // registerContext puede necesitar el elemento como primer argumento
-    try {
-      var ctxDef = chatSdk.prebuilts.ces.createContext({
+    
+    // 1. Registrar el contexto (devuelve undefined pero lo guarda internamente)
+    chatSdk.registerContext(
+      chatSdk.prebuilts.ces.createContext({
         deploymentName: "projects/414797991238/locations/us/apps/1502cba9-dbbc-483a-af4a-40dc7730767d/deployments/3841598e-95f6-41b5-8a75-0f5bd404dd6f",
         tokenBroker: { enableTokenBroker: true, enableRecaptcha: false }
-      });
-      console.log("ctxDef:", ctxDef);
-      ctx = chatSdk.registerContext(ctxDef);
-      console.log("ctx tras registerContext:", ctx);
-      if(ctx){
-        var proto = Object.getPrototypeOf(ctx) || {};
-        console.log("ctx métodos:", Object.getOwnPropertyNames(proto).concat(Object.keys(ctx)));
-      } else {
-        // registerContext devuelve undefined — la API puede que no necesite registro previo
-        // y el widget se controla directamente via chatSdk
-        console.log("registerContext devolvió undefined — probando chatSdk directamente");
-        console.log("chatSdk métodos:", Object.getOwnPropertyNames(Object.getPrototypeOf(chatSdk)).concat(Object.keys(chatSdk)));
+      })
+    );
+
+    // 2. Recuperar el contexto registrado con getContext
+    var ctx = chatSdk.getContext();
+    console.log("ctx desde getContext:", ctx);
+    if(ctx){
+      var proto = Object.getPrototypeOf(ctx) || {};
+      console.log("ctx métodos:", Object.getOwnPropertyNames(proto).concat(Object.keys(ctx)));
+    }
+
+    // 3. Asignar a botones
+    document.getElementById("chat-bubble").onclick = function(){ doOpen(); };
+    document.getElementById("open-chat-btn").onclick = function(){ doOpen(); };
+  }
+
+  function doOpen(){
+    var ctx = chatSdk.getContext();
+    console.log("doOpen — ctx:", ctx);
+    if(!ctx){ console.error("ctx null"); return; }
+    var proto = Object.getPrototypeOf(ctx) || {};
+    var keys = Object.getOwnPropertyNames(proto).concat(Object.keys(ctx));
+    console.log("ctx métodos:", keys);
+    var methods = ["openWidget","open","show","expand","toggle","showDialog","openDialog","launch","activate","showConversation","openConversation"];
+    for(var i=0; i<methods.length; i++){
+      if(typeof ctx[methods[i]] === "function"){
+        console.log("Llamando ctx." + methods[i] + "()");
+        ctx[methods[i]]();
+        return;
       }
-    } catch(e){ console.error("Error en initChat:", e); }
+    }
+    console.error("Ningún método. Keys disponibles:", keys);
   }
 
   setTimeout(tryInit, 600);
 });
-
-function openChat(){
-  // Si ctx existe, intentar sus métodos
-  if(ctx){
-    var proto = Object.getPrototypeOf(ctx) || {};
-    var keys = Object.getOwnPropertyNames(proto).concat(Object.keys(ctx));
-    var methods = ["openWidget","open","show","expand","toggle","showDialog","openDialog","launch"];
-    for(var i=0; i<methods.length; i++){
-      if(typeof ctx[methods[i]] === "function"){ ctx[methods[i]](); return; }
-    }
-    console.error("ctx existe pero sin método conocido. Keys:", keys);
-    return;
-  }
-  // Sin ctx — intentar directo en chatSdk
-  if(typeof chatSdk !== "undefined"){
-    var sdkMethods = ["openWidget","open","show","expand","toggle","openDialog"];
-    for(var j=0; j<sdkMethods.length; j++){
-      if(typeof chatSdk[sdkMethods[j]] === "function"){ chatSdk[sdkMethods[j]](); return; }
-    }
-    console.error("chatSdk sin método. Keys:", Object.getOwnPropertyNames(Object.getPrototypeOf(chatSdk)).concat(Object.keys(chatSdk)));
-  } else {
-    console.error("chatSdk no disponible todavía");
-  }
-}
 </script>
 
 </body>
