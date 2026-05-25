@@ -656,7 +656,7 @@ chat-messenger {
       </div>
     </div>
     <div class="footer-bottom">
-      <span style="font-size:0.7rem;background:var(--blue-800);color:rgba(255,255,255,0.35);padding:2px 8px;border-radius:4px;font-family:monospace;letter-spacing:0.05em">v2.9.1</span>
+      <span style="font-size:0.7rem;background:var(--blue-800);color:rgba(255,255,255,0.35);padding:2px 8px;border-radius:4px;font-family:monospace;letter-spacing:0.05em">v2.9.2</span>
       <span>© 2025 SegurSalud, S.A. — Entidad aseguradora autorizada por la DGS con clave J-0019</span>
       <div class="footer-legal">
         <a href="#">Aviso legal</a>
@@ -710,6 +710,33 @@ window.addEventListener("chat-messenger-loaded", function(){
   // Inyectar estilos en shadow DOMs anidados
   setTimeout(injectStyles, 800);
   setTimeout(injectStyles, 2000); // segundo intento por si tarda
+
+  // Forzar color blanco en botones del titlebar via JS directo
+  function forceTitlebarButtonColors() {
+    function applyToShadow(root, depth) {
+      if (!root || depth > 8) return;
+      var sr = root.shadowRoot || root;
+      // Buscar todos los botones y sus SVGs dentro del shadow
+      var btns = sr.querySelectorAll ? sr.querySelectorAll('button, [role="button"]') : [];
+      btns.forEach(function(btn) {
+        btn.style.setProperty('color', '#ffffff', 'important');
+        var svgs = btn.querySelectorAll('svg, svg *');
+        svgs.forEach(function(el) {
+          el.style.setProperty('fill', '#ffffff', 'important');
+          el.style.setProperty('stroke', '#ffffff', 'important');
+          el.style.setProperty('color', '#ffffff', 'important');
+        });
+      });
+      if (root.shadowRoot) {
+        root.shadowRoot.querySelectorAll('*').forEach(function(c){ applyToShadow(c, depth+1); });
+      }
+    }
+    var messenger = document.querySelector('chat-messenger');
+    if (messenger) applyToShadow(messenger, 0);
+  }
+  setTimeout(forceTitlebarButtonColors, 1000);
+  setTimeout(forceTitlebarButtonColors, 2500);
+  setTimeout(forceTitlebarButtonColors, 5000);
 });
 
 function injectStyles(){
@@ -725,12 +752,12 @@ function injectStyles(){
       font-family: 'DM Sans', sans-serif !important;
     }
     .title-text h2 { font-size: 1rem !important; font-weight: 600 !important; }
-    .title-button { color: rgba(255,255,255,0.75) !important; border-radius: 6px !important; }
+    .title-button { color: #ffffff !important; border-radius: 6px !important; }
     .title-button:hover { color: #fff !important; background: rgba(255,255,255,0.12) !important; }
-    .title-button svg { fill: rgba(255,255,255,0.75) !important; stroke: rgba(255,255,255,0.75) !important; }
-    .title-button:hover svg { fill: #fff !important; stroke: #fff !important; }
-    .title-button svg * { fill: rgba(255,255,255,0.75) !important; stroke: rgba(255,255,255,0.75) !important; }
-    .title-button:hover svg * { fill: #fff !important; stroke: #fff !important; }
+    .title-button svg, .title-button svg *, button svg, button svg * { fill: #ffffff !important; stroke: #ffffff !important; color: #ffffff !important; }
+    [class*="titlebar"] button, [class*="titlebar"] button svg, [class*="titlebar"] button svg * { color: #fff !important; fill: #fff !important; stroke: #fff !important; }
+    button[aria-label], button[title] { color: #ffffff !important; }
+    button[aria-label] svg, button[title] svg, button[aria-label] svg *, button[title] svg * { fill: #ffffff !important; stroke: #ffffff !important; }
 
     /* Mensajes usuario */
     .message.user-message {
