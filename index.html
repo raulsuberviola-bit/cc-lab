@@ -656,7 +656,7 @@ chat-messenger {
       </div>
     </div>
     <div class="footer-bottom">
-      <span style="font-size:0.7rem;background:var(--blue-800);color:rgba(255,255,255,0.35);padding:2px 8px;border-radius:4px;font-family:monospace;letter-spacing:0.05em">v2.9.3</span>
+      <span style="font-size:0.7rem;background:var(--blue-800);color:rgba(255,255,255,0.35);padding:2px 8px;border-radius:4px;font-family:monospace;letter-spacing:0.05em">v2.9.5</span>
       <span>© 2025 SegurSalud, S.A. — Entidad aseguradora autorizada por la DGS con clave J-0019</span>
       <div class="footer-legal">
         <a href="#">Aviso legal</a>
@@ -688,9 +688,8 @@ window.addEventListener("chat-messenger-loaded", () => {
 >
   <chat-messenger-container
     chat-title="SegurSalud Dental"
-    input-placeholder="Escribe tu consulta..."
     chat-title-icon="https://gstatic.com/dialogflow-console/common/assets/ccai-favicons/conversational_agents.png"
-    enable-file-upload
+    input-placeholder="Escribe tu consulta..."
     enable-audio-input
   >
     <chat-reset-session-button
@@ -791,7 +790,9 @@ function injectStyles(){
     .input-box::placeholder { color: #7aabce !important; }
 
     /* Send button activo */
-    #send-icon-button:not([disabled]) { background: #1e5aa8 !important; }
+    #send-icon-button:not([disabled]) { background: #1e5aa8 !important; border-radius: 50% !important; }
+    #send-icon-button:not([disabled]) svg, #send-icon-button:not([disabled]) svg * { fill: #ffffff !important; stroke: #ffffff !important; color: #ffffff !important; }
+    #send-icon-button[disabled] { background: transparent !important; }
 
     /* Botón micrófono y upload */
     .action-button { color: #4a8fd4 !important; }
