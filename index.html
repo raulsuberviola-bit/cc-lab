@@ -656,7 +656,7 @@ chat-messenger {
       </div>
     </div>
     <div class="footer-bottom">
-      <span style="font-size:0.7rem;background:var(--blue-800);color:rgba(255,255,255,0.35);padding:2px 8px;border-radius:4px;font-family:monospace;letter-spacing:0.05em">v2.9.2</span>
+      <span style="font-size:0.7rem;background:var(--blue-800);color:rgba(255,255,255,0.35);padding:2px 8px;border-radius:4px;font-family:monospace;letter-spacing:0.05em">v2.9.3</span>
       <span>© 2025 SegurSalud, S.A. — Entidad aseguradora autorizada por la DGS con clave J-0019</span>
       <div class="footer-legal">
         <a href="#">Aviso legal</a>
@@ -720,6 +720,8 @@ window.addEventListener("chat-messenger-loaded", function(){
       var btns = sr.querySelectorAll ? sr.querySelectorAll('button, [role="button"]') : [];
       btns.forEach(function(btn) {
         btn.style.setProperty('color', '#ffffff', 'important');
+        btn.style.setProperty('background', 'rgba(255,255,255,0.15)', 'important');
+        btn.style.setProperty('border-radius', '6px', 'important');
         var svgs = btn.querySelectorAll('svg, svg *');
         svgs.forEach(function(el) {
           el.style.setProperty('fill', '#ffffff', 'important');
@@ -752,12 +754,11 @@ function injectStyles(){
       font-family: 'DM Sans', sans-serif !important;
     }
     .title-text h2 { font-size: 1rem !important; font-weight: 600 !important; }
-    .title-button { color: #ffffff !important; border-radius: 6px !important; }
-    .title-button:hover { color: #fff !important; background: rgba(255,255,255,0.12) !important; }
-    .title-button svg, .title-button svg *, button svg, button svg * { fill: #ffffff !important; stroke: #ffffff !important; color: #ffffff !important; }
-    [class*="titlebar"] button, [class*="titlebar"] button svg, [class*="titlebar"] button svg * { color: #fff !important; fill: #fff !important; stroke: #fff !important; }
-    button[aria-label], button[title] { color: #ffffff !important; }
-    button[aria-label] svg, button[title] svg, button[aria-label] svg *, button[title] svg * { fill: #ffffff !important; stroke: #ffffff !important; }
+    .title-button { color: #ffffff !important; border-radius: 6px !important; background: rgba(255,255,255,0.15) !important; }
+    .title-button:hover { background: rgba(255,255,255,0.28) !important; }
+    .title-button svg, .title-button svg * { fill: #ffffff !important; stroke: #ffffff !important; }
+    [class*="titlebar"] button { background: rgba(255,255,255,0.15) !important; border-radius: 6px !important; }
+    [class*="titlebar"] button svg, [class*="titlebar"] button svg * { fill: #ffffff !important; stroke: #ffffff !important; }
 
     /* Mensajes usuario */
     .message.user-message {
