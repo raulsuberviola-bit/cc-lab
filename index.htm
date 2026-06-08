@@ -341,7 +341,7 @@ window.addEventListener("chat-messenger-loaded", function () {
     }
   }
 
-  // ── 2. INICIALIZAR CES ────────────────────────────────────────
+  // ── 2. INICIALIZAR CES CON CONTEXTO ─────────────────────────
   chatSdk.registerContext(
     chatSdk.prebuilts.ces.createContext({
       deploymentName: "projects/414797991238/locations/us/apps/f40abb99-7b6b-4738-bd4c-fefa9377fcb7/deployments/5e717d61-8012-41a6-9d01-743719370e75",
@@ -349,21 +349,15 @@ window.addEventListener("chat-messenger-loaded", function () {
         enableTokenBroker: true,
         enableRecaptcha:   false
       },
-      enableWelcomeEvent: false
+      enableWelcomeEvent: true,
+      parameters: {
+        asegurado: ctx.asegurado || "",
+        poliza:    ctx.poliza    || "",
+        rol:       ctx.rol       || "invitado",
+        convId:    ctx.convId    || ""
+      }
     })
   );
-
-  // ── 3. ENVIAR JWT COMO PRIMER MENSAJE AL AGENTE ───────────────
-  // El Python tool init_context lo leerá de context.user_content.text
-  // y seteará las variables asegurado, poliza, rol, convId
-  setTimeout(function () {
-    if (token) {
-      chatSdk.sendUserMessage(token);
-    } else {
-      // Sin token: arranque normal sin contexto
-      chatSdk.sendUserMessage("__INIT__");
-    }
-  }, 600);
 
   // ── 4. INYECTAR ESTILOS EN SHADOW DOM ────────────────────────
   setTimeout(injectStyles, 1000);
