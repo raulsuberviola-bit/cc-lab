@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SegurSalud — Tu seguro dental de confianza</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<script defer src="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/chat-messenger.js"></script>
+<link rel="stylesheet" href="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/themes/chat-messenger-default.css">
+<link rel="stylesheet" href="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/themes/chat-messenger-layout.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue-900:#0a2240;
+  --blue-800:#0e3060;
+  --blue-700:#1a4a8a;
+  --blue-600:#1e5aa8;
+  --blue-500:#2470c8;
+  --blue-400:#4a8fd4;
+  --blue-100:#e8f2fc;
+  --blue-50:#f0f7ff;
+  --teal:#00a99d;
+  --teal-light:#e0f7f5;
+  --orange:#f5821f;
+  --orange-light:#fff3e6;
+  --gray-700:#3d4452;
+  --gray-500:#6b7280;
+  --gray-300:#d1d5db;
+  --gray-100:#f3f4f6;
+  --white:#ffffff;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;color:var(--gray-700);background:var(--white);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--white);border-bottom:1px solid var(--gray-300);padding:0 1.5rem}
+.nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:68px;gap:8px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.logo-mark{width:38px;height:38px;background:var(--blue-600);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo-mark svg{width:22px;height:22px}
+.logo-name{font-family:'DM Sans',sans-serif;font-size:1.15rem;font-weight:700;color:var(--blue-900);letter-spacing:-0.03em;white-space:nowrap}
+.logo-name span{color:var(--blue-600);font-weight:800}
+.nav-links{display:flex;align-items:center;gap:0;flex-shrink:0}
+.nav-links a{text-decoration:none;color:var(--gray-700);font-size:0.88rem;font-weight:500;padding:0.5rem 0.75rem;transition:color .2s;white-space:nowrap}
+.nav-links a:hover{color:var(--blue-600)}
+.nav-cta{background:var(--blue-600);color:white!important;border-radius:6px;padding:0.5rem 1.1rem!important;transition:background .2s!important;white-space:nowrap}
+.nav-cta:hover{background:var(--blue-700)!important;color:white!important}
+.nav-phone{font-size:0.82rem;color:var(--gray-500);display:flex;align-items:center;gap:5px;flex-shrink:0;white-space:nowrap}
+.nav-phone strong{color:var(--blue-900)}
+
+/* HERO */
+.hero{margin-top:68px;background:linear-gradient(135deg,var(--blue-900) 0%,var(--blue-700) 60%,var(--blue-500) 100%);padding:5rem 2rem 4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-10%;top:-20%;width:60%;height:140%;background:radial-gradient(ellipse,rgba(255,255,255,0.06) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-30px;left:0;right:0;height:60px;background:var(--white);clip-path:ellipse(55% 100% at 50% 100%)}
+.hero-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:6px 14px;font-size:0.8rem;color:rgba(255,255,255,0.9);font-weight:500;margin-bottom:1.5rem;backdrop-filter:blur(10px)}
+.hero-badge-dot{width:8px;height:8px;border-radius:50%;background:#4ade80;animation:pulse-dot 2s ease-in-out infinite}
+@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
+h1{font-family:'DM Serif Display',serif;font-size:3rem;line-height:1.1;color:white;margin-bottom:1.25rem;letter-spacing:-0.02em}
+h1 em{font-style:italic;color:rgba(255,255,255,0.75)}
+.hero-sub{font-size:1.1rem;color:rgba(255,255,255,0.75);line-height:1.65;margin-bottom:2rem;max-width:480px}
+.hero-buttons{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:var(--white);color:var(--blue-700);border:none;padding:0.85rem 1.75rem;border-radius:8px;font-size:0.95rem;font-weight:600;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;font-family:'DM Sans',sans-serif}
+.btn-primary:hover{background:var(--blue-50);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,0.15)}
+.btn-outline{background:transparent;color:white;border:1.5px solid rgba(255,255,255,0.5);padding:0.85rem 1.75rem;border-radius:8px;font-size:0.95rem;font-weight:500;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;font-family:'DM Sans',sans-serif}
+.btn-outline:hover{background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.8)}
+.hero-trust{margin-top:2.5rem;display:flex;align-items:center;gap:1.5rem}
+.hero-trust-text{font-size:0.8rem;color:rgba(255,255,255,0.6)}
+.trust-badges{display:flex;gap:10px}
+.trust-badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:6px 12px;font-size:0.75rem;color:rgba(255,255,255,0.85);font-weight:500}
+
+/* HERO CARD */
+.hero-card-wrap{position:relative}
+.coverage-card{background:white;border-radius:16px;padding:2rem;box-shadow:0 24px 60px rgba(0,0,0,0.25);position:relative;z-index:1}
+.coverage-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--gray-100)}
+.coverage-card-title{font-weight:600;color:var(--blue-900);font-size:1rem}
+.coverage-card-badge{background:var(--teal-light);color:var(--teal);font-size:0.75rem;font-weight:600;padding:4px 10px;border-radius:20px}
+.coverage-item{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--gray-100)}
+.coverage-item:last-child{border-bottom:none}
+.coverage-left{display:flex;align-items:center;gap:10px}
+.coverage-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.coverage-label{font-size:0.875rem;font-weight:500;color:var(--gray-700)}
+.coverage-price{font-size:0.875rem;font-weight:600;color:var(--blue-600)}
+.card-total{background:var(--blue-50);border-radius:10px;padding:1rem;margin-top:1rem;display:flex;justify-content:space-between;align-items:center}
+.card-total-label{font-size:0.85rem;color:var(--gray-500)}
+.card-total-price{font-size:1.3rem;font-weight:700;color:var(--blue-900)}
+.card-total-period{font-size:0.75rem;color:var(--gray-500);font-weight:400}
+.card-cta{width:100%;margin-top:1rem;background:var(--blue-600);color:white;border:none;padding:0.9rem;border-radius:8px;font-size:0.95rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .2s}
+.card-cta:hover{background:var(--blue-700)}
+.floating-chip{position:absolute;background:white;border-radius:10px;padding:8px 14px;box-shadow:0 8px 24px rgba(0,0,0,0.15);display:flex;align-items:center;gap:8px;font-size:0.8rem;font-weight:600;white-space:nowrap}
+.chip1{top:-20px;right:20px;color:var(--teal)}
+.chip2{bottom:20px;left:-30px;color:var(--orange)}
+
+/* STATS BAR */
+.stats-bar{background:var(--blue-50);border-bottom:1px solid var(--blue-100);padding:2.5rem 2rem}
+.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center}
+.stat-number{font-family:'DM Serif Display',serif;font-size:2.25rem;color:var(--blue-700);letter-spacing:-0.02em;line-height:1}
+.stat-label{font-size:0.85rem;color:var(--gray-500);margin-top:4px}
+
+/* SECTION */
+section{padding:5rem 2rem}
+.section-inner{max-width:1200px;margin:0 auto}
+.section-label{font-size:0.8rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue-600);margin-bottom:0.75rem}
+h2{font-family:'DM Serif Display',serif;font-size:2.25rem;color:var(--blue-900);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem}
+.section-sub{font-size:1.05rem;color:var(--gray-500);line-height:1.65;max-width:540px}
+
+/* SERVICES GRID */
+.services-grid{margin-top:3rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.service-card{background:var(--white);border:1px solid var(--gray-300);border-radius:12px;padding:1.75rem;transition:all .25s;cursor:default}
+.service-card:hover{border-color:var(--blue-400);box-shadow:0 8px 24px rgba(30,90,168,0.1);transform:translateY(-2px)}
+.service-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1rem}
+.service-icon.blue{background:var(--blue-100)}
+.service-icon.teal{background:var(--teal-light)}
+.service-icon.orange{background:var(--orange-light)}
+.service-card h3{font-size:1rem;font-weight:600;color:var(--blue-900);margin-bottom:0.5rem}
+.service-card p{font-size:0.875rem;color:var(--gray-500);line-height:1.6}
+.service-tag{display:inline-block;margin-top:1rem;font-size:0.75rem;font-weight:600;padding:3px 10px;border-radius:20px}
+.tag-blue{background:var(--blue-100);color:var(--blue-700)}
+.tag-teal{background:var(--teal-light);color:var(--teal)}
+.tag-orange{background:var(--orange-light);color:var(--orange)}
+
+/* HOW IT WORKS */
+.how-section{background:var(--gray-100)}
+.steps{margin-top:3rem;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;position:relative}
+.steps::before{content:'';position:absolute;top:28px;left:12%;right:12%;height:1.5px;background:var(--gray-300)}
+.step{text-align:center;position:relative}
+.step-num{width:56px;height:56px;border-radius:50%;background:var(--blue-600);color:white;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;position:relative;z-index:1;font-family:'DM Serif Display',serif}
+.step h3{font-size:0.95rem;font-weight:600;color:var(--blue-900);margin-bottom:0.4rem}
+.step p{font-size:0.82rem;color:var(--gray-500);line-height:1.55}
+
+/* PRICING */
+.pricing-grid{margin-top:3rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.plan-card{border:1.5px solid var(--gray-300);border-radius:14px;padding:2rem;position:relative;transition:all .25s}
+.plan-card.featured{border-color:var(--blue-600);background:var(--blue-50)}
+.plan-badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--blue-600);color:white;font-size:0.75rem;font-weight:600;padding:4px 14px;border-radius:20px;white-space:nowrap}
+.plan-name{font-family:'DM Serif Display',serif;font-size:1.25rem;color:var(--blue-900);margin-bottom:0.25rem}
+.plan-desc{font-size:0.82rem;color:var(--gray-500);margin-bottom:1.5rem}
+.plan-price{font-size:2.5rem;font-weight:700;color:var(--blue-900);line-height:1;font-family:'DM Serif Display',serif}
+.plan-price sup{font-size:1rem;font-weight:600;vertical-align:top;margin-top:6px;display:inline-block}
+.plan-period{font-size:0.8rem;color:var(--gray-500);margin-bottom:1.5rem;margin-top:4px}
+.plan-features{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:1.75rem}
+.plan-features li{font-size:0.875rem;color:var(--gray-700);display:flex;align-items:center;gap:8px}
+.plan-features li::before{content:'✓';font-weight:700;color:var(--teal);font-size:0.85rem;flex-shrink:0}
+.plan-features li.no::before{content:'✕';color:var(--gray-300)}
+.plan-features li.no{color:var(--gray-300)}
+.plan-btn{width:100%;padding:0.8rem;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;border:1.5px solid var(--blue-600);transition:all .2s}
+.plan-btn.solid{background:var(--blue-600);color:white}
+.plan-btn.solid:hover{background:var(--blue-700)}
+.plan-btn.ghost{background:transparent;color:var(--blue-600)}
+.plan-btn.ghost:hover{background:var(--blue-100)}
+
+/* TESTIMONIALS */
+.testimonials-section{background:var(--blue-900)}
+.testimonials-section h2{color:white}
+.testimonials-section .section-label{color:rgba(255,255,255,0.5)}
+.testimonials-section .section-sub{color:rgba(255,255,255,0.6)}
+.testimonials-grid{margin-top:3rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.testimonial-card{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:1.75rem}
+.testimonial-stars{color:#fbbf24;font-size:0.9rem;margin-bottom:1rem}
+.testimonial-text{font-size:0.9rem;color:rgba(255,255,255,0.8);line-height:1.65;margin-bottom:1.25rem;font-style:italic}
+.testimonial-author{display:flex;align-items:center;gap:10px}
+.author-avatar{width:36px;height:36px;border-radius:50%;background:var(--blue-600);color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center}
+.author-name{font-size:0.875rem;font-weight:600;color:white}
+.author-city{font-size:0.75rem;color:rgba(255,255,255,0.45)}
+
+/* CTA STRIP */
+.cta-strip{background:var(--blue-600);padding:4rem 2rem;text-align:center}
+.cta-strip h2{color:white;margin-bottom:1rem}
+.cta-strip p{color:rgba(255,255,255,0.8);margin-bottom:2rem;font-size:1.05rem}
+.cta-strip .btn-primary{box-shadow:0 4px 20px rgba(0,0,0,0.2)}
+
+/* FOOTER */
+footer{background:var(--blue-900);color:rgba(255,255,255,0.5);padding:3rem 2rem 2rem}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.1)}
+.footer-brand p{font-size:0.85rem;line-height:1.65;margin-top:1rem;color:rgba(255,255,255,0.45)}
+.footer-col h4{font-size:0.8rem;font-weight:600;color:rgba(255,255,255,0.8);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:1rem}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.footer-col li a{color:rgba(255,255,255,0.45);text-decoration:none;font-size:0.85rem;transition:color .2s}
+.footer-col li a:hover{color:white}
+.footer-bottom{margin-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:0.78rem}
+.footer-legal{display:flex;gap:1.5rem}
+.footer-legal a{color:rgba(255,255,255,0.35);text-decoration:none}
+
+/* CHAT WIDGET STYLING */
+chat-messenger{
+  --dfMessenger-button-titlebar-color:#0e3060;
+  --dfMessenger-chat-background:white;
+  --dfMessenger-font-family:'DM Sans',sans-serif;
+}
+
+/* =============================================
+   GOOGLE CHAT MESSENGER — TEMA SEGURSALUD
+   ============================================= */
+chat-messenger,
+chat-messenger-container {
+  position: fixed !important;
+  bottom: 24px !important;
+  right: 24px !important;
+  z-index: 9999 !important;
+  width: 400px !important;
+  max-width: 400px !important;
+  height: 600px !important;
+  max-height: 80vh !important;
+}
+chat-messenger {
+  --chat-messenger-fab-background:      #1e5aa8;
+  --chat-messenger-fab-color:           #ffffff;
+  --chat-messenger-fab-border-radius:   28px;
+  --chat-messenger-header-background:   #0a2240;
+  --chat-messenger-header-color:        #ffffff;
+  --chat-messenger-header-border-color: transparent;
+  --chat-messenger-bot-message-background:   #e8f2fc;
+  --chat-messenger-bot-message-color:        #0a2240;
+  --chat-messenger-bot-message-border-color: #b5d4f4;
+  --chat-messenger-human-message-background: #1e5aa8;
+  --chat-messenger-human-message-color:      #ffffff;
+  --chat-messenger-input-background:    #f0f7ff;
+  --chat-messenger-input-border-color:  #b5d4f4;
+  --chat-messenger-input-color:         #0a2240;
+  --chat-messenger-send-icon-color:     #1e5aa8;
+  --chat-messenger-focus-color:         #1e5aa8;
+  --chat-messenger-chip-background:     #e8f2fc;
+  --chat-messenger-chip-color:          #1e5aa8;
+  --chat-messenger-chip-border-color:   #4a8fd4;
+  --chat-messenger-background:          #ffffff;
+  --chat-messenger-border-radius:       16px;
+  --chat-messenger-box-shadow:          0 8px 40px rgba(10,34,64,0.18);
+}
+
+/* DEBUG BANNER — visible solo si viene token en la URL */
+#ctx-debug{display:none;position:fixed;top:72px;left:50%;transform:translateX(-50%);background:#0a2240;color:#9FE1CB;font-family:monospace;font-size:11px;padding:6px 14px;border-radius:6px;z-index:99999;white-space:nowrap;border:1px solid #028090}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-card-wrap{display:none}
+  h1{font-size:2.25rem}
+  .stats-inner{grid-template-columns:repeat(2,1fr)}
+  .services-grid,.pricing-grid,.testimonials-grid{grid-template-columns:1fr}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .steps::before{display:none}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  nav{padding:0 1rem}
+  .nav-links{display:none}
+  section{padding:3rem 1rem}
+  h2{font-size:1.75rem}
+}
+</style>
+</head>
+<body>
+
+<!-- DEBUG BANNER -->
+<div id="ctx-debug"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none"><rect x="9" y="2" width="6" height="20" rx="2" fill="white"/><rect x="2" y="9" width="20" height="6" rx="2" fill="white"/></svg>
+      </div>
+      <span class="logo-name">Segur<span>Salud</span></span>
+    </a>
+    <div class="nav-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#planes">Planes</a>
+      <a href="#como-funciona">Cómo funciona</a>
+      <a href="#opiniones">Opiniones</a>
+      <a href="#contacto" class="nav-cta">Contratar</a>
+    </div>
+    <div class="nav-phone">
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 0h3a2 2 0 012 1.72c.12 1.05.37 2.07.72 3.05a2 2 0 01-.46 2.11L6.09 8.1a16 16 0 006.29 6.29l1.21-1.21a2 2 0 012.11-.46c.98.35 2 .6 3.05.72A2 2 0 0122 15.5v1.42z"/></svg>
+      <span>Llámanos: <strong>900 100 100</strong></span>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        Más de 2 millones de asegurados en España
+      </div>
+      <h1>Tu salud dental, <em>siempre protegida</em></h1>
+      <p class="hero-sub">El seguro dental que tus dientes merecen. Clínicas en toda España, cuadro médico extenso, sin copagos ni sorpresas.</p>
+      <div class="hero-buttons">
+        <a href="#planes" class="btn-primary">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Ver planes y precios
+        </a>
+        <a href="#como-funciona" class="btn-outline">Cómo funciona →</a>
+      </div>
+      <div class="hero-trust">
+        <span class="hero-trust-text">Certificado por:</span>
+        <div class="trust-badges">
+          <span class="trust-badge">ISO 9001</span>
+          <span class="trust-badge">DGS Reg. J-0019</span>
+          <span class="trust-badge">UNESPA</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card-wrap">
+      <div class="floating-chip chip1">✓ Sin periodos de espera</div>
+      <div class="coverage-card">
+        <div class="coverage-card-header">
+          <span class="coverage-card-title">Tu cobertura dental</span>
+          <span class="coverage-card-badge">Plan Completo</span>
+        </div>
+        <div class="coverage-item">
+          <div class="coverage-left">
+            <div class="coverage-icon" style="background:#e0f7f5;font-size:1.1rem">🦷</div>
+            <span class="coverage-label">Revisión anual + limpieza</span>
+          </div>
+          <span class="coverage-price">100% cubierto</span>
+        </div>
+        <div class="coverage-item">
+          <div class="coverage-left">
+            <div class="coverage-icon" style="background:#e8f2fc;font-size:1.1rem">⚕️</div>
+            <span class="coverage-label">Endodoncia (1 conducto)</span>
+          </div>
+          <span class="coverage-price">75% cubierto</span>
+        </div>
+        <div class="coverage-item">
+          <div class="coverage-left">
+            <div class="coverage-icon" style="background:#fff3e6;font-size:1.1rem">🔬</div>
+            <span class="coverage-label">Ortodoncia invisible</span>
+          </div>
+          <span class="coverage-price">50% cubierto</span>
+        </div>
+        <div class="coverage-item">
+          <div class="coverage-left">
+            <div class="coverage-icon" style="background:#f0fdf4;font-size:1.1rem">🏥</div>
+            <span class="coverage-label">Urgencias 24h</span>
+          </div>
+          <span class="coverage-price">100% cubierto</span>
+        </div>
+        <div class="card-total">
+          <span class="card-total-label">Prima mensual desde</span>
+          <div>
+            <span class="card-total-price">9,90 €</span>
+            <span class="card-total-period"> /mes</span>
+          </div>
+        </div>
+        <button class="card-cta">Contratar ahora — sin compromiso</button>
+      </div>
+      <div class="floating-chip chip2">📍 +4.500 clínicas adheridas</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div><div class="stat-number">2,1M</div><div class="stat-label">asegurados activos</div></div>
+    <div><div class="stat-number">4.500+</div><div class="stat-label">clínicas dentales</div></div>
+    <div><div class="stat-number">98%</div><div class="stat-label">satisfacción del cliente</div></div>
+    <div><div class="stat-number">24h</div><div class="stat-label">atención de urgencias</div></div>
+  </div>
+</div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-inner">
+    <div class="section-label">Coberturas</div>
+    <h2>Todo lo que necesitas para tu salud dental</h2>
+    <p class="section-sub">Desde revisiones rutinarias hasta tratamientos avanzados, cubrimos a toda tu familia.</p>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-icon teal">🦷</div><h3>Odontología general</h3><p>Revisiones, empastes, extracciones y tratamiento de caries incluidos sin límite de visitas anuales.</p><span class="service-tag tag-teal">Sin copago</span></div>
+      <div class="service-card"><div class="service-icon blue">✨</div><h3>Ortodoncia y estética</h3><p>Ortodoncia invisible, carillas de porcelana y blanqueamiento dental con las mejores técnicas actuales.</p><span class="service-tag tag-blue">Desde 50% cubierto</span></div>
+      <div class="service-card"><div class="service-icon orange">🔬</div><h3>Implantología</h3><p>Implantes dentales con materiales de primera calidad, cirugía y corona incluidos en los planes premium.</p><span class="service-tag tag-orange">Plan Premium</span></div>
+      <div class="service-card"><div class="service-icon blue">⚕️</div><h3>Endodoncia</h3><p>Tratamientos de conductos con técnicas de última generación y sin dolor en clínicas especializadas.</p><span class="service-tag tag-blue">Hasta 75% cubierto</span></div>
+      <div class="service-card"><div class="service-icon teal">👶</div><h3>Odontopediatría</h3><p>Atención especializada para los más pequeños desde los 4 años, con revisiones, selladores y flúor.</p><span class="service-tag tag-teal">Incluido en familia</span></div>
+      <div class="service-card"><div class="service-icon orange">🚨</div><h3>Urgencias 24/7</h3><p>Atención de urgencias cualquier día del año, incluso festivos, en nuestra red de clínicas de guardia.</p><span class="service-tag tag-orange">Siempre disponible</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CÓMO FUNCIONA -->
+<section id="como-funciona" class="how-section">
+  <div class="section-inner">
+    <div class="section-label">Proceso</div>
+    <h2>Empezar es muy sencillo</h2>
+    <p class="section-sub">En menos de 5 minutos tienes tu seguro contratado y listo para usar.</p>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><h3>Elige tu plan</h3><p>Básico, Completo o Premium. Compara coberturas y elige el que mejor se adapta a ti.</p></div>
+      <div class="step"><div class="step-num">02</div><h3>Rellena tus datos</h3><p>Introduce tus datos personales y los de los beneficiarios. Sin médico de cabecera previo.</p></div>
+      <div class="step"><div class="step-num">03</div><h3>Pago seguro</h3><p>Domiciliación bancaria mensual. Sin permanencia. Cancela cuando quieras sin penalización.</p></div>
+      <div class="step"><div class="step-num">04</div><h3>¡Ya puedes usarlo!</h3><p>Descarga la app, localiza tu clínica más cercana y pide cita. Sin trámites ni esperas.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANES -->
+<section id="planes">
+  <div class="section-inner">
+    <div class="section-label">Tarifas</div>
+    <h2>Planes para cada necesidad</h2>
+    <p class="section-sub">Todos los planes incluyen sin límite de visitas, sin copagos en revisiones y acceso a nuestra red de clínicas.</p>
+    <div class="pricing-grid">
+      <div class="plan-card">
+        <div class="plan-name">Básico</div>
+        <div class="plan-desc">Lo esencial para tu salud dental</div>
+        <div class="plan-price"><sup>€</sup>6,<span style="font-size:1.4rem">90</span></div>
+        <div class="plan-period">al mes por persona</div>
+        <ul class="plan-features">
+          <li>Revisión anual + limpieza</li><li>Extracciones simples</li><li>Empastes (composita)</li><li>Radiografías diagnósticas</li><li class="no">Ortodoncia</li><li class="no">Implantes</li>
+        </ul>
+        <button class="plan-btn ghost">Contratar básico</button>
+      </div>
+      <div class="plan-card featured">
+        <div class="plan-badge">El más elegido</div>
+        <div class="plan-name">Completo</div>
+        <div class="plan-desc">Cobertura amplia para toda la familia</div>
+        <div class="plan-price"><sup>€</sup>9,<span style="font-size:1.4rem">90</span></div>
+        <div class="plan-period">al mes por persona</div>
+        <ul class="plan-features">
+          <li>Todo lo del plan Básico</li><li>Endodoncia (75% cubierto)</li><li>Periodoncia</li><li>Urgencias 24h</li><li>Ortodoncia (50% cubierto)</li><li class="no">Implantes</li>
+        </ul>
+        <button class="plan-btn solid">Contratar Completo</button>
+      </div>
+      <div class="plan-card">
+        <div class="plan-name">Premium</div>
+        <div class="plan-desc">Máxima cobertura sin límites</div>
+        <div class="plan-price"><sup>€</sup>16,<span style="font-size:1.4rem">90</span></div>
+        <div class="plan-period">al mes por persona</div>
+        <ul class="plan-features">
+          <li>Todo lo del plan Completo</li><li>Implantes (60% cubierto)</li><li>Ortodoncia invisible</li><li>Blanqueamiento incluido</li><li>2ª opinión médica digital</li><li>Asistencia viaje Europa</li>
+        </ul>
+        <button class="plan-btn ghost">Contratar Premium</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="opiniones" class="testimonials-section">
+  <div class="section-inner">
+    <div class="section-label">Opiniones</div>
+    <h2>Lo que dicen nuestros asegurados</h2>
+    <p class="section-sub">Más de 18.000 opiniones verificadas en Google con una media de 4,8 estrellas.</p>
+    <div class="testimonials-grid">
+      <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">"Me hicieron la revisión el mismo día que llamé. La clínica impecable y el dentista muy amable. Totalmente recomendable."</p><div class="testimonial-author"><div class="author-avatar">MG</div><div><div class="author-name">María García</div><div class="author-city">Madrid · Plan Completo</div></div></div></div>
+      <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">"Contraté para toda la familia y en el primer mes ya amortizamos el seguro. Los niños encantados con el dentista de pediatría."</p><div class="testimonial-author"><div class="author-avatar">JR</div><div><div class="author-name">Joan Roca</div><div class="author-city">Barcelona · Plan Premium</div></div></div></div>
+      <div class="testimonial-card"><div class="testimonial-stars">★★★★☆</div><p class="testimonial-text">"Tuve una urgencia un domingo y en 20 minutos ya tenía cita. La app es muy intuitiva. Repetiría sin duda el próximo año."</p><div class="testimonial-author"><div class="author-avatar">AL</div><div><div class="author-name">Ana López</div><div class="author-city">Valencia · Plan Básico</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contacto" class="cta-strip">
+  <h2 style="color:white;margin-bottom:1rem">¿Tienes dudas? Nuestro asistente te ayuda</h2>
+  <p style="color:rgba(255,255,255,0.8);margin-bottom:2rem;font-size:1.05rem">Habla con nuestro asistente dental inteligente y te asesoramos en segundos.</p>
+  <button class="btn-primary" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">💬 Hablar con el asistente</button>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo"><div class="logo-mark"><svg viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg></div><span class="logo-name" style="color:white">Segur<span style="color:#4a8fd4">Salud</span></span></a>
+        <p>El seguro dental de referencia en España. Cobertura en más de 4.500 clínicas y atención 24 horas los 365 días del año.</p>
+      </div>
+      <div class="footer-col"><h4>Productos</h4><ul><li><a href="#">Plan Básico</a></li><li><a href="#">Plan Completo</a></li><li><a href="#">Plan Premium</a></li><li><a href="#">Seguro familiar</a></li></ul></div>
+      <div class="footer-col"><h4>Empresa</h4><ul><li><a href="#">Sobre nosotros</a></li><li><a href="#">Clínicas adheridas</a></li><li><a href="#">Blog dental</a></li><li><a href="#">Trabaja con nosotros</a></li></ul></div>
+      <div class="footer-col"><h4>Soporte</h4><ul><li><a href="#">Área de cliente</a></li><li><a href="#">Preguntas frecuentes</a></li><li><a href="#">Contáctanos</a></li><li><a href="#">900 100 100</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span style="font-size:0.7rem;background:var(--blue-800);color:rgba(255,255,255,0.35);padding:2px 8px;border-radius:4px;font-family:monospace;letter-spacing:0.05em">v3.0.0</span>
+      <span>© 2025 SegurSalud, S.A. — Entidad aseguradora autorizada por la DGS con clave J-0019</span>
+      <div class="footer-legal"><a href="#">Aviso legal</a><a href="#">Privacidad</a><a href="#">Cookies</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- GOOGLE CCAI CHAT WIDGET -->
+<chat-messenger url-allowlist="*">
+  <chat-messenger-container
+    chat-title="SegurSalud Dental"
+    chat-title-icon="https://gstatic.com/dialogflow-console/common/assets/ccai-favicons/conversational_agents.png"
+    input-placeholder="Escribe tu consulta..."
+    enable-audio-input
+  >
+    <chat-reset-session-button slot="titlebar-actions" title-text="Start new chat"></chat-reset-session-button>
+  </chat-messenger-container>
+</chat-messenger>
+
+<script>
+window.addEventListener("chat-messenger-loaded", function () {
+
+  // ── LEER JWT DE LA URL ──────────────────────────────────────────
+  var params = new URLSearchParams(window.location.search);
+  var token  = params.get("token");
+  var ctx    = {};
+
+  if (token) {
+    try {
+      ctx = JSON.parse(atob(token.split(".")[1]));
+    } catch (e) {
+      console.warn("[CES] JWT decode error", e);
+    }
+    // Banner debug — solo visible con ?token=
+    var banner = document.getElementById("ctx-debug");
+    if (banner) {
+      banner.style.display = "block";
+      banner.textContent   = "ctx: poliza=" + (ctx.poliza || "-")
+        + "  asegurado=" + (ctx.asegurado || "-")
+        + "  rol=" + (ctx.rol || "-")
+        + "  convId=" + (ctx.convId || "-");
+    }
+  }
+
+  // ── INICIALIZAR CES CON CONTEXTO ────────────────────────────────
+  chatSdk.registerContext(
+    chatSdk.prebuilts.ces.createContext({
+      deploymentName: "projects/414797991238/locations/us/apps/f40abb99-7b6b-4738-bd4c-fefa9377fcb7/deployments/5e717d61-8012-41a6-9d01-743719370e75",
+      tokenBroker: {
+        enableTokenBroker: true,
+        enableRecaptcha:   false
+      },
+      enableWelcomeEvent: true,
+      parameters: {
+        poliza:    ctx.poliza    || "",
+        convId:    ctx.convId    || "",
+        asegurado: ctx.asegurado || "",
+        rol:       ctx.rol       || "invitado",
+        cm:        ctx.cm        || "general"
+      }
+    })
+  );
+
+  // ── INYECTAR ESTILOS EN SHADOW DOM ──────────────────────────────
+  setTimeout(injectStyles, 800);
+  setTimeout(injectStyles, 2500);
+
+  function injectStyles() {
+    var css = "\n    .titlebar-wrapper{background:#0a2240!important;border-bottom:none!important}\n    .titlebar-content{background:#0a2240!important}\n    #titlebar-title,.title-text,.title-text h2{color:#ffffff!important;font-family:'DM Sans',sans-serif!important}\n    .title-button{color:#ffffff!important;border-radius:6px!important;background:rgba(255,255,255,0.15)!important}\n    .title-button:hover{background:rgba(255,255,255,0.28)!important}\n    .title-button svg,.title-button svg *{fill:#ffffff!important;stroke:#ffffff!important}\n    .message.user-message{background:#1e5aa8!important;color:#ffffff!important;border-radius:14px 14px 2px 14px!important}\n    .message.bot-message{background:#f0f7ff!important;color:#0a2240!important;border:1px solid #b5d4f4!important;border-radius:14px 14px 14px 2px!important}\n    .message.bot-message p{color:#0a2240!important;margin:0!important}\n    .input-container{background:#ffffff!important;border-top:1px solid #e8f2fc!important;padding:12px!important}\n    .input-box-wrapper{background:#f0f7ff!important;border:1.5px solid #b5d4f4!important;border-radius:12px!important}\n    .input-box{background:transparent!important;color:#0a2240!important;font-family:'DM Sans',sans-serif!important}\n    .input-box::placeholder{color:#7aabce!important}\n    #send-icon-button:not([disabled]){background:#1e5aa8!important;border-radius:50%!important}\n    #send-icon-button:not([disabled]) svg,#send-icon-button:not([disabled]) svg *{fill:#ffffff!important}\n    .message-list-wrapper,#message-list{background:#ffffff!important}\n  ";
+    function inject(el, depth) {
+      if (!el || depth > 8) return;
+      if (el.shadowRoot && !el.shadowRoot.querySelector("style[data-ss]")) {
+        var s = document.createElement("style");
+        s.setAttribute("data-ss", "1");
+        s.textContent = css;
+        el.shadowRoot.appendChild(s);
+      }
+      if (el.shadowRoot) el.shadowRoot.querySelectorAll("*").forEach(function(c){ inject(c, depth+1); });
+      if (el.querySelectorAll) el.querySelectorAll("*").forEach(function(c){ inject(c, depth+1); });
+    }
+    var m = document.querySelector("chat-messenger");
+    if (m) inject(m, 0);
+  }
+});
+</script>
+
+</body>
+</html>
