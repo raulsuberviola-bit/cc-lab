@@ -12,29 +12,14 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --blue-900:#0a2240;
-  --blue-800:#0e3060;
-  --blue-700:#1a4a8a;
-  --blue-600:#1e5aa8;
-  --blue-500:#2470c8;
-  --blue-400:#4a8fd4;
-  --blue-100:#e8f2fc;
-  --blue-50:#f0f7ff;
-  --teal:#00a99d;
-  --teal-light:#e0f7f5;
-  --orange:#f5821f;
-  --orange-light:#fff3e6;
-  --gray-700:#3d4452;
-  --gray-500:#6b7280;
-  --gray-300:#d1d5db;
-  --gray-100:#f3f4f6;
-  --white:#ffffff;
+  --blue-900:#0a2240;--blue-800:#0e3060;--blue-700:#1a4a8a;--blue-600:#1e5aa8;
+  --blue-500:#2470c8;--blue-400:#4a8fd4;--blue-100:#e8f2fc;--blue-50:#f0f7ff;
+  --teal:#00a99d;--teal-light:#e0f7f5;--orange:#f5821f;--orange-light:#fff3e6;
+  --gray-700:#3d4452;--gray-500:#6b7280;--gray-300:#d1d5db;--gray-100:#f3f4f6;--white:#ffffff;
 }
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;color:var(--gray-700);background:var(--white);-webkit-font-smoothing:antialiased}
 img{display:block;max-width:100%}
-
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--white);border-bottom:1px solid var(--gray-300);padding:0 1.5rem}
 .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:68px;gap:8px}
 .logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
@@ -49,8 +34,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--white);bor
 .nav-cta:hover{background:var(--blue-700)!important;color:white!important}
 .nav-phone{font-size:0.82rem;color:var(--gray-500);display:flex;align-items:center;gap:5px;flex-shrink:0;white-space:nowrap}
 .nav-phone strong{color:var(--blue-900)}
-
-/* HERO */
 .hero{margin-top:68px;background:linear-gradient(135deg,var(--blue-900) 0%,var(--blue-700) 60%,var(--blue-500) 100%);padding:5rem 2rem 4rem;position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;right:-10%;top:-20%;width:60%;height:140%;background:radial-gradient(ellipse,rgba(255,255,255,0.06) 0%,transparent 70%);pointer-events:none}
 .hero::after{content:'';position:absolute;bottom:-30px;left:0;right:0;height:60px;background:var(--white);clip-path:ellipse(55% 100% at 50% 100%)}
@@ -70,8 +53,6 @@ h1 em{font-style:italic;color:rgba(255,255,255,0.75)}
 .hero-trust-text{font-size:0.8rem;color:rgba(255,255,255,0.6)}
 .trust-badges{display:flex;gap:10px}
 .trust-badge{background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:6px 12px;font-size:0.75rem;color:rgba(255,255,255,0.85);font-weight:500}
-
-/* HERO CARD */
 .hero-card-wrap{position:relative}
 .coverage-card{background:white;border-radius:16px;padding:2rem;box-shadow:0 24px 60px rgba(0,0,0,0.25);position:relative;z-index:1}
 .coverage-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid var(--gray-100)}
@@ -92,36 +73,24 @@ h1 em{font-style:italic;color:rgba(255,255,255,0.75)}
 .floating-chip{position:absolute;background:white;border-radius:10px;padding:8px 14px;box-shadow:0 8px 24px rgba(0,0,0,0.15);display:flex;align-items:center;gap:8px;font-size:0.8rem;font-weight:600;white-space:nowrap}
 .chip1{top:-20px;right:20px;color:var(--teal)}
 .chip2{bottom:20px;left:-30px;color:var(--orange)}
-
-/* STATS BAR */
 .stats-bar{background:var(--blue-50);border-bottom:1px solid var(--blue-100);padding:2.5rem 2rem}
 .stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;text-align:center}
 .stat-number{font-family:'DM Serif Display',serif;font-size:2.25rem;color:var(--blue-700);letter-spacing:-0.02em;line-height:1}
 .stat-label{font-size:0.85rem;color:var(--gray-500);margin-top:4px}
-
-/* SECTION */
 section{padding:5rem 2rem}
 .section-inner{max-width:1200px;margin:0 auto}
 .section-label{font-size:0.8rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue-600);margin-bottom:0.75rem}
 h2{font-family:'DM Serif Display',serif;font-size:2.25rem;color:var(--blue-900);line-height:1.2;letter-spacing:-0.02em;margin-bottom:1rem}
 .section-sub{font-size:1.05rem;color:var(--gray-500);line-height:1.65;max-width:540px}
-
-/* SERVICES GRID */
 .services-grid{margin-top:3rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 .service-card{background:var(--white);border:1px solid var(--gray-300);border-radius:12px;padding:1.75rem;transition:all .25s;cursor:default}
 .service-card:hover{border-color:var(--blue-400);box-shadow:0 8px 24px rgba(30,90,168,0.1);transform:translateY(-2px)}
 .service-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:1rem}
-.service-icon.blue{background:var(--blue-100)}
-.service-icon.teal{background:var(--teal-light)}
-.service-icon.orange{background:var(--orange-light)}
+.service-icon.blue{background:var(--blue-100)}.service-icon.teal{background:var(--teal-light)}.service-icon.orange{background:var(--orange-light)}
 .service-card h3{font-size:1rem;font-weight:600;color:var(--blue-900);margin-bottom:0.5rem}
 .service-card p{font-size:0.875rem;color:var(--gray-500);line-height:1.6}
 .service-tag{display:inline-block;margin-top:1rem;font-size:0.75rem;font-weight:600;padding:3px 10px;border-radius:20px}
-.tag-blue{background:var(--blue-100);color:var(--blue-700)}
-.tag-teal{background:var(--teal-light);color:var(--teal)}
-.tag-orange{background:var(--orange-light);color:var(--orange)}
-
-/* HOW IT WORKS */
+.tag-blue{background:var(--blue-100);color:var(--blue-700)}.tag-teal{background:var(--teal-light);color:var(--teal)}.tag-orange{background:var(--orange-light);color:var(--orange)}
 .how-section{background:var(--gray-100)}
 .steps{margin-top:3rem;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;position:relative}
 .steps::before{content:'';position:absolute;top:28px;left:12%;right:12%;height:1.5px;background:var(--gray-300)}
@@ -129,8 +98,6 @@ h2{font-family:'DM Serif Display',serif;font-size:2.25rem;color:var(--blue-900);
 .step-num{width:56px;height:56px;border-radius:50%;background:var(--blue-600);color:white;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;position:relative;z-index:1;font-family:'DM Serif Display',serif}
 .step h3{font-size:0.95rem;font-weight:600;color:var(--blue-900);margin-bottom:0.4rem}
 .step p{font-size:0.82rem;color:var(--gray-500);line-height:1.55}
-
-/* PRICING */
 .pricing-grid{margin-top:3rem;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
 .plan-card{border:1.5px solid var(--gray-300);border-radius:14px;padding:2rem;position:relative;transition:all .25s}
 .plan-card.featured{border-color:var(--blue-600);background:var(--blue-50)}
@@ -143,15 +110,10 @@ h2{font-family:'DM Serif Display',serif;font-size:2.25rem;color:var(--blue-900);
 .plan-features{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:1.75rem}
 .plan-features li{font-size:0.875rem;color:var(--gray-700);display:flex;align-items:center;gap:8px}
 .plan-features li::before{content:'✓';font-weight:700;color:var(--teal);font-size:0.85rem;flex-shrink:0}
-.plan-features li.no::before{content:'✕';color:var(--gray-300)}
-.plan-features li.no{color:var(--gray-300)}
+.plan-features li.no::before{content:'✕';color:var(--gray-300)}.plan-features li.no{color:var(--gray-300)}
 .plan-btn{width:100%;padding:0.8rem;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;border:1.5px solid var(--blue-600);transition:all .2s}
-.plan-btn.solid{background:var(--blue-600);color:white}
-.plan-btn.solid:hover{background:var(--blue-700)}
-.plan-btn.ghost{background:transparent;color:var(--blue-600)}
-.plan-btn.ghost:hover{background:var(--blue-100)}
-
-/* TESTIMONIALS */
+.plan-btn.solid{background:var(--blue-600);color:white}.plan-btn.solid:hover{background:var(--blue-700)}
+.plan-btn.ghost{background:transparent;color:var(--blue-600)}.plan-btn.ghost:hover{background:var(--blue-100)}
 .testimonials-section{background:var(--blue-900)}
 .testimonials-section h2{color:white}
 .testimonials-section .section-label{color:rgba(255,255,255,0.5)}
@@ -164,14 +126,7 @@ h2{font-family:'DM Serif Display',serif;font-size:2.25rem;color:var(--blue-900);
 .author-avatar{width:36px;height:36px;border-radius:50%;background:var(--blue-600);color:white;font-weight:700;font-size:0.8rem;display:flex;align-items:center;justify-content:center}
 .author-name{font-size:0.875rem;font-weight:600;color:white}
 .author-city{font-size:0.75rem;color:rgba(255,255,255,0.45)}
-
-/* CTA STRIP */
 .cta-strip{background:var(--blue-600);padding:4rem 2rem;text-align:center}
-.cta-strip h2{color:white;margin-bottom:1rem}
-.cta-strip p{color:rgba(255,255,255,0.8);margin-bottom:2rem;font-size:1.05rem}
-.cta-strip .btn-primary{box-shadow:0 4px 20px rgba(0,0,0,0.2)}
-
-/* FOOTER */
 footer{background:var(--blue-900);color:rgba(255,255,255,0.5);padding:3rem 2rem 2rem}
 .footer-inner{max-width:1200px;margin:0 auto}
 .footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.1)}
@@ -183,94 +138,26 @@ footer{background:var(--blue-900);color:rgba(255,255,255,0.5);padding:3rem 2rem 
 .footer-bottom{margin-top:1.5rem;display:flex;justify-content:space-between;align-items:center;font-size:0.78rem}
 .footer-legal{display:flex;gap:1.5rem}
 .footer-legal a{color:rgba(255,255,255,0.35);text-decoration:none}
-
-/* CHAT WIDGET STYLING */
-chat-messenger{
-  --dfMessenger-button-titlebar-color:#0e3060;
-  --dfMessenger-chat-background:white;
-  --dfMessenger-font-family:'DM Sans',sans-serif;
-}
-
-/* =============================================
-   GOOGLE CHAT MESSENGER — TEMA SEGURSALUD
-   ============================================= */
-chat-messenger,
-chat-messenger-container {
-  position: fixed !important;
-  bottom: 24px !important;
-  right: 24px !important;
-  z-index: 9999 !important;
-  width: 400px !important;
-  max-width: 400px !important;
-  height: 600px !important;
-  max-height: 80vh !important;
-}
-chat-messenger {
-  --chat-messenger-fab-background:      #1e5aa8;
-  --chat-messenger-fab-color:           #ffffff;
-  --chat-messenger-fab-border-radius:   28px;
-  --chat-messenger-header-background:   #0a2240;
-  --chat-messenger-header-color:        #ffffff;
-  --chat-messenger-header-border-color: transparent;
-  --chat-messenger-bot-message-background:   #e8f2fc;
-  --chat-messenger-bot-message-color:        #0a2240;
-  --chat-messenger-bot-message-border-color: #b5d4f4;
-  --chat-messenger-human-message-background: #1e5aa8;
-  --chat-messenger-human-message-color:      #ffffff;
-  --chat-messenger-input-background:    #f0f7ff;
-  --chat-messenger-input-border-color:  #b5d4f4;
-  --chat-messenger-input-color:         #0a2240;
-  --chat-messenger-send-icon-color:     #1e5aa8;
-  --chat-messenger-focus-color:         #1e5aa8;
-  --chat-messenger-chip-background:     #e8f2fc;
-  --chat-messenger-chip-color:          #1e5aa8;
-  --chat-messenger-chip-border-color:   #4a8fd4;
-  --chat-messenger-background:          #ffffff;
-  --chat-messenger-border-radius:       16px;
-  --chat-messenger-box-shadow:          0 8px 40px rgba(10,34,64,0.18);
-}
-
-/* DEBUG BANNER — visible solo si viene token en la URL */
+chat-messenger,chat-messenger-container{position:fixed!important;bottom:24px!important;right:24px!important;z-index:9999!important;width:400px!important;max-width:400px!important;height:600px!important;max-height:80vh!important}
+chat-messenger{--chat-messenger-fab-background:#1e5aa8;--chat-messenger-fab-color:#ffffff;--chat-messenger-fab-border-radius:28px;--chat-messenger-header-background:#0a2240;--chat-messenger-header-color:#ffffff;--chat-messenger-header-border-color:transparent;--chat-messenger-bot-message-background:#e8f2fc;--chat-messenger-bot-message-color:#0a2240;--chat-messenger-bot-message-border-color:#b5d4f4;--chat-messenger-human-message-background:#1e5aa8;--chat-messenger-human-message-color:#ffffff;--chat-messenger-input-background:#f0f7ff;--chat-messenger-input-border-color:#b5d4f4;--chat-messenger-input-color:#0a2240;--chat-messenger-send-icon-color:#1e5aa8;--chat-messenger-focus-color:#1e5aa8;--chat-messenger-chip-background:#e8f2fc;--chat-messenger-chip-color:#1e5aa8;--chat-messenger-chip-border-color:#4a8fd4;--chat-messenger-background:#ffffff;--chat-messenger-border-radius:16px;--chat-messenger-box-shadow:0 8px 40px rgba(10,34,64,0.18)}
 #ctx-debug{display:none;position:fixed;top:72px;left:50%;transform:translateX(-50%);background:#0a2240;color:#9FE1CB;font-family:monospace;font-size:11px;padding:6px 14px;border-radius:6px;z-index:99999;white-space:nowrap;border:1px solid #028090}
-
-/* RESPONSIVE */
-@media(max-width:900px){
-  .hero-inner{grid-template-columns:1fr}
-  .hero-card-wrap{display:none}
-  h1{font-size:2.25rem}
-  .stats-inner{grid-template-columns:repeat(2,1fr)}
-  .services-grid,.pricing-grid,.testimonials-grid{grid-template-columns:1fr}
-  .steps{grid-template-columns:repeat(2,1fr)}
-  .steps::before{display:none}
-  .footer-top{grid-template-columns:1fr 1fr}
-}
-@media(max-width:600px){
-  nav{padding:0 1rem}
-  .nav-links{display:none}
-  section{padding:3rem 1rem}
-  h2{font-size:1.75rem}
-}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr}.hero-card-wrap{display:none}h1{font-size:2.25rem}.stats-inner{grid-template-columns:repeat(2,1fr)}.services-grid,.pricing-grid,.testimonials-grid{grid-template-columns:1fr}.steps{grid-template-columns:repeat(2,1fr)}.steps::before{display:none}.footer-top{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){nav{padding:0 1rem}.nav-links{display:none}section{padding:3rem 1rem}h2{font-size:1.75rem}}
 </style>
 </head>
 <body>
 
-<!-- DEBUG BANNER -->
 <div id="ctx-debug"></div>
 
-<!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a href="#" class="logo">
-      <div class="logo-mark">
-        <svg viewBox="0 0 24 24" fill="none"><rect x="9" y="2" width="6" height="20" rx="2" fill="white"/><rect x="2" y="9" width="20" height="6" rx="2" fill="white"/></svg>
-      </div>
+      <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="2" width="6" height="20" rx="2" fill="white"/><rect x="2" y="9" width="20" height="6" rx="2" fill="white"/></svg></div>
       <span class="logo-name">Segur<span>Salud</span></span>
     </a>
     <div class="nav-links">
-      <a href="#servicios">Servicios</a>
-      <a href="#planes">Planes</a>
-      <a href="#como-funciona">Cómo funciona</a>
-      <a href="#opiniones">Opiniones</a>
+      <a href="#servicios">Servicios</a><a href="#planes">Planes</a>
+      <a href="#como-funciona">Cómo funciona</a><a href="#opiniones">Opiniones</a>
       <a href="#contacto" class="nav-cta">Contratar</a>
     </div>
     <div class="nav-phone">
@@ -280,74 +167,30 @@ chat-messenger {
   </div>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
     <div>
-      <div class="hero-badge">
-        <div class="hero-badge-dot"></div>
-        Más de 2 millones de asegurados en España
-      </div>
+      <div class="hero-badge"><div class="hero-badge-dot"></div>Más de 2 millones de asegurados en España</div>
       <h1>Tu salud dental, <em>siempre protegida</em></h1>
       <p class="hero-sub">El seguro dental que tus dientes merecen. Clínicas en toda España, cuadro médico extenso, sin copagos ni sorpresas.</p>
       <div class="hero-buttons">
-        <a href="#planes" class="btn-primary">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-          Ver planes y precios
-        </a>
+        <a href="#planes" class="btn-primary"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Ver planes y precios</a>
         <a href="#como-funciona" class="btn-outline">Cómo funciona →</a>
       </div>
       <div class="hero-trust">
         <span class="hero-trust-text">Certificado por:</span>
-        <div class="trust-badges">
-          <span class="trust-badge">ISO 9001</span>
-          <span class="trust-badge">DGS Reg. J-0019</span>
-          <span class="trust-badge">UNESPA</span>
-        </div>
+        <div class="trust-badges"><span class="trust-badge">ISO 9001</span><span class="trust-badge">DGS Reg. J-0019</span><span class="trust-badge">UNESPA</span></div>
       </div>
     </div>
     <div class="hero-card-wrap">
       <div class="floating-chip chip1">✓ Sin periodos de espera</div>
       <div class="coverage-card">
-        <div class="coverage-card-header">
-          <span class="coverage-card-title">Tu cobertura dental</span>
-          <span class="coverage-card-badge">Plan Completo</span>
-        </div>
-        <div class="coverage-item">
-          <div class="coverage-left">
-            <div class="coverage-icon" style="background:#e0f7f5;font-size:1.1rem">🦷</div>
-            <span class="coverage-label">Revisión anual + limpieza</span>
-          </div>
-          <span class="coverage-price">100% cubierto</span>
-        </div>
-        <div class="coverage-item">
-          <div class="coverage-left">
-            <div class="coverage-icon" style="background:#e8f2fc;font-size:1.1rem">⚕️</div>
-            <span class="coverage-label">Endodoncia (1 conducto)</span>
-          </div>
-          <span class="coverage-price">75% cubierto</span>
-        </div>
-        <div class="coverage-item">
-          <div class="coverage-left">
-            <div class="coverage-icon" style="background:#fff3e6;font-size:1.1rem">🔬</div>
-            <span class="coverage-label">Ortodoncia invisible</span>
-          </div>
-          <span class="coverage-price">50% cubierto</span>
-        </div>
-        <div class="coverage-item">
-          <div class="coverage-left">
-            <div class="coverage-icon" style="background:#f0fdf4;font-size:1.1rem">🏥</div>
-            <span class="coverage-label">Urgencias 24h</span>
-          </div>
-          <span class="coverage-price">100% cubierto</span>
-        </div>
-        <div class="card-total">
-          <span class="card-total-label">Prima mensual desde</span>
-          <div>
-            <span class="card-total-price">9,90 €</span>
-            <span class="card-total-period"> /mes</span>
-          </div>
-        </div>
+        <div class="coverage-card-header"><span class="coverage-card-title">Tu cobertura dental</span><span class="coverage-card-badge">Plan Completo</span></div>
+        <div class="coverage-item"><div class="coverage-left"><div class="coverage-icon" style="background:#e0f7f5;font-size:1.1rem">🦷</div><span class="coverage-label">Revisión anual + limpieza</span></div><span class="coverage-price">100% cubierto</span></div>
+        <div class="coverage-item"><div class="coverage-left"><div class="coverage-icon" style="background:#e8f2fc;font-size:1.1rem">⚕️</div><span class="coverage-label">Endodoncia (1 conducto)</span></div><span class="coverage-price">75% cubierto</span></div>
+        <div class="coverage-item"><div class="coverage-left"><div class="coverage-icon" style="background:#fff3e6;font-size:1.1rem">🔬</div><span class="coverage-label">Ortodoncia invisible</span></div><span class="coverage-price">50% cubierto</span></div>
+        <div class="coverage-item"><div class="coverage-left"><div class="coverage-icon" style="background:#f0fdf4;font-size:1.1rem">🏥</div><span class="coverage-label">Urgencias 24h</span></div><span class="coverage-price">100% cubierto</span></div>
+        <div class="card-total"><span class="card-total-label">Prima mensual desde</span><div><span class="card-total-price">9,90 €</span><span class="card-total-period"> /mes</span></div></div>
         <button class="card-cta">Contratar ahora — sin compromiso</button>
       </div>
       <div class="floating-chip chip2">📍 +4.500 clínicas adheridas</div>
@@ -355,7 +198,6 @@ chat-messenger {
   </div>
 </section>
 
-<!-- STATS -->
 <div class="stats-bar">
   <div class="stats-inner">
     <div><div class="stat-number">2,1M</div><div class="stat-label">asegurados activos</div></div>
@@ -365,7 +207,6 @@ chat-messenger {
   </div>
 </div>
 
-<!-- SERVICIOS -->
 <section id="servicios">
   <div class="section-inner">
     <div class="section-label">Coberturas</div>
@@ -382,7 +223,6 @@ chat-messenger {
   </div>
 </section>
 
-<!-- CÓMO FUNCIONA -->
 <section id="como-funciona" class="how-section">
   <div class="section-inner">
     <div class="section-label">Proceso</div>
@@ -397,7 +237,6 @@ chat-messenger {
   </div>
 </section>
 
-<!-- PLANES -->
 <section id="planes">
   <div class="section-inner">
     <div class="section-label">Tarifas</div>
@@ -405,41 +244,28 @@ chat-messenger {
     <p class="section-sub">Todos los planes incluyen sin límite de visitas, sin copagos en revisiones y acceso a nuestra red de clínicas.</p>
     <div class="pricing-grid">
       <div class="plan-card">
-        <div class="plan-name">Básico</div>
-        <div class="plan-desc">Lo esencial para tu salud dental</div>
-        <div class="plan-price"><sup>€</sup>6,<span style="font-size:1.4rem">90</span></div>
-        <div class="plan-period">al mes por persona</div>
-        <ul class="plan-features">
-          <li>Revisión anual + limpieza</li><li>Extracciones simples</li><li>Empastes (composita)</li><li>Radiografías diagnósticas</li><li class="no">Ortodoncia</li><li class="no">Implantes</li>
-        </ul>
+        <div class="plan-name">Básico</div><div class="plan-desc">Lo esencial para tu salud dental</div>
+        <div class="plan-price"><sup>€</sup>6,<span style="font-size:1.4rem">90</span></div><div class="plan-period">al mes por persona</div>
+        <ul class="plan-features"><li>Revisión anual + limpieza</li><li>Extracciones simples</li><li>Empastes (composita)</li><li>Radiografías diagnósticas</li><li class="no">Ortodoncia</li><li class="no">Implantes</li></ul>
         <button class="plan-btn ghost">Contratar básico</button>
       </div>
       <div class="plan-card featured">
         <div class="plan-badge">El más elegido</div>
-        <div class="plan-name">Completo</div>
-        <div class="plan-desc">Cobertura amplia para toda la familia</div>
-        <div class="plan-price"><sup>€</sup>9,<span style="font-size:1.4rem">90</span></div>
-        <div class="plan-period">al mes por persona</div>
-        <ul class="plan-features">
-          <li>Todo lo del plan Básico</li><li>Endodoncia (75% cubierto)</li><li>Periodoncia</li><li>Urgencias 24h</li><li>Ortodoncia (50% cubierto)</li><li class="no">Implantes</li>
-        </ul>
+        <div class="plan-name">Completo</div><div class="plan-desc">Cobertura amplia para toda la familia</div>
+        <div class="plan-price"><sup>€</sup>9,<span style="font-size:1.4rem">90</span></div><div class="plan-period">al mes por persona</div>
+        <ul class="plan-features"><li>Todo lo del plan Básico</li><li>Endodoncia (75% cubierto)</li><li>Periodoncia</li><li>Urgencias 24h</li><li>Ortodoncia (50% cubierto)</li><li class="no">Implantes</li></ul>
         <button class="plan-btn solid">Contratar Completo</button>
       </div>
       <div class="plan-card">
-        <div class="plan-name">Premium</div>
-        <div class="plan-desc">Máxima cobertura sin límites</div>
-        <div class="plan-price"><sup>€</sup>16,<span style="font-size:1.4rem">90</span></div>
-        <div class="plan-period">al mes por persona</div>
-        <ul class="plan-features">
-          <li>Todo lo del plan Completo</li><li>Implantes (60% cubierto)</li><li>Ortodoncia invisible</li><li>Blanqueamiento incluido</li><li>2ª opinión médica digital</li><li>Asistencia viaje Europa</li>
-        </ul>
+        <div class="plan-name">Premium</div><div class="plan-desc">Máxima cobertura sin límites</div>
+        <div class="plan-price"><sup>€</sup>16,<span style="font-size:1.4rem">90</span></div><div class="plan-period">al mes por persona</div>
+        <ul class="plan-features"><li>Todo lo del plan Completo</li><li>Implantes (60% cubierto)</li><li>Ortodoncia invisible</li><li>Blanqueamiento incluido</li><li>2ª opinión médica digital</li><li>Asistencia viaje Europa</li></ul>
         <button class="plan-btn ghost">Contratar Premium</button>
       </div>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
 <section id="opiniones" class="testimonials-section">
   <div class="section-inner">
     <div class="section-label">Opiniones</div>
@@ -453,14 +279,12 @@ chat-messenger {
   </div>
 </section>
 
-<!-- CTA -->
 <section id="contacto" class="cta-strip">
   <h2 style="color:white;margin-bottom:1rem">¿Tienes dudas? Nuestro asistente te ayuda</h2>
   <p style="color:rgba(255,255,255,0.8);margin-bottom:2rem;font-size:1.05rem">Habla con nuestro asistente dental inteligente y te asesoramos en segundos.</p>
   <button class="btn-primary" onclick="window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'})">💬 Hablar con el asistente</button>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
@@ -473,7 +297,7 @@ chat-messenger {
       <div class="footer-col"><h4>Soporte</h4><ul><li><a href="#">Área de cliente</a></li><li><a href="#">Preguntas frecuentes</a></li><li><a href="#">Contáctanos</a></li><li><a href="#">900 100 100</a></li></ul></div>
     </div>
     <div class="footer-bottom">
-      <span style="font-size:0.7rem;background:var(--blue-800);color:rgba(255,255,255,0.35);padding:2px 8px;border-radius:4px;font-family:monospace;letter-spacing:0.05em">v3.0.0</span>
+      <span style="font-size:0.7rem;background:var(--blue-800);color:rgba(255,255,255,0.35);padding:2px 8px;border-radius:4px;font-family:monospace;letter-spacing:0.05em">v3.1.0</span>
       <span>© 2025 SegurSalud, S.A. — Entidad aseguradora autorizada por la DGS con clave J-0019</span>
       <div class="footer-legal"><a href="#">Aviso legal</a><a href="#">Privacidad</a><a href="#">Cookies</a></div>
     </div>
@@ -495,29 +319,29 @@ chat-messenger {
 <script>
 window.addEventListener("chat-messenger-loaded", function () {
 
-  // ── LEER JWT DE LA URL ──────────────────────────────────────────
+  // ── 1. LEER JWT DE LA URL ─────────────────────────────────────
   var params = new URLSearchParams(window.location.search);
   var token  = params.get("token");
   var ctx    = {};
 
   if (token) {
     try {
-      ctx = JSON.parse(atob(token.split(".")[1]));
+      var padding = 4 - (token.split(".")[1].length % 4);
+      ctx = JSON.parse(atob(token.split(".")[1] + "=".repeat(padding === 4 ? 0 : padding)));
     } catch (e) {
       console.warn("[CES] JWT decode error", e);
     }
-    // Banner debug — solo visible con ?token=
     var banner = document.getElementById("ctx-debug");
     if (banner) {
       banner.style.display = "block";
-      banner.textContent   = "ctx: poliza=" + (ctx.poliza || "-")
+      banner.textContent = "ctx: poliza=" + (ctx.poliza || "-")
         + "  asegurado=" + (ctx.asegurado || "-")
         + "  rol=" + (ctx.rol || "-")
         + "  convId=" + (ctx.convId || "-");
     }
   }
 
-  // ── INICIALIZAR CES CON CONTEXTO ────────────────────────────────
+  // ── 2. INICIALIZAR CES ────────────────────────────────────────
   chatSdk.registerContext(
     chatSdk.prebuilts.ces.createContext({
       deploymentName: "projects/414797991238/locations/us/apps/f40abb99-7b6b-4738-bd4c-fefa9377fcb7/deployments/5e717d61-8012-41a6-9d01-743719370e75",
@@ -525,23 +349,28 @@ window.addEventListener("chat-messenger-loaded", function () {
         enableTokenBroker: true,
         enableRecaptcha:   false
       },
-      enableWelcomeEvent: true,
-      parameters: {
-        poliza:    ctx.poliza    || "",
-        convId:    ctx.convId    || "",
-        asegurado: ctx.asegurado || "",
-        rol:       ctx.rol       || "invitado",
-        cm:        ctx.cm        || "general"
-      }
+      enableWelcomeEvent: false
     })
   );
 
-  // ── INYECTAR ESTILOS EN SHADOW DOM ──────────────────────────────
-  setTimeout(injectStyles, 800);
+  // ── 3. ENVIAR JWT COMO PRIMER MENSAJE AL AGENTE ───────────────
+  // El Python tool init_context lo leerá de context.user_content.text
+  // y seteará las variables asegurado, poliza, rol, convId
+  setTimeout(function () {
+    if (token) {
+      chatSdk.sendUserMessage(token);
+    } else {
+      // Sin token: arranque normal sin contexto
+      chatSdk.sendUserMessage("__INIT__");
+    }
+  }, 600);
+
+  // ── 4. INYECTAR ESTILOS EN SHADOW DOM ────────────────────────
+  setTimeout(injectStyles, 1000);
   setTimeout(injectStyles, 2500);
 
   function injectStyles() {
-    var css = "\n    .titlebar-wrapper{background:#0a2240!important;border-bottom:none!important}\n    .titlebar-content{background:#0a2240!important}\n    #titlebar-title,.title-text,.title-text h2{color:#ffffff!important;font-family:'DM Sans',sans-serif!important}\n    .title-button{color:#ffffff!important;border-radius:6px!important;background:rgba(255,255,255,0.15)!important}\n    .title-button:hover{background:rgba(255,255,255,0.28)!important}\n    .title-button svg,.title-button svg *{fill:#ffffff!important;stroke:#ffffff!important}\n    .message.user-message{background:#1e5aa8!important;color:#ffffff!important;border-radius:14px 14px 2px 14px!important}\n    .message.bot-message{background:#f0f7ff!important;color:#0a2240!important;border:1px solid #b5d4f4!important;border-radius:14px 14px 14px 2px!important}\n    .message.bot-message p{color:#0a2240!important;margin:0!important}\n    .input-container{background:#ffffff!important;border-top:1px solid #e8f2fc!important;padding:12px!important}\n    .input-box-wrapper{background:#f0f7ff!important;border:1.5px solid #b5d4f4!important;border-radius:12px!important}\n    .input-box{background:transparent!important;color:#0a2240!important;font-family:'DM Sans',sans-serif!important}\n    .input-box::placeholder{color:#7aabce!important}\n    #send-icon-button:not([disabled]){background:#1e5aa8!important;border-radius:50%!important}\n    #send-icon-button:not([disabled]) svg,#send-icon-button:not([disabled]) svg *{fill:#ffffff!important}\n    .message-list-wrapper,#message-list{background:#ffffff!important}\n  ";
+    var css = ".titlebar-wrapper{background:#0a2240!important;border-bottom:none!important}.titlebar-content{background:#0a2240!important}#titlebar-title,.title-text,.title-text h2{color:#ffffff!important;font-family:'DM Sans',sans-serif!important}.title-button{color:#ffffff!important;border-radius:6px!important;background:rgba(255,255,255,0.15)!important}.title-button:hover{background:rgba(255,255,255,0.28)!important}.title-button svg,.title-button svg *{fill:#ffffff!important;stroke:#ffffff!important}.message.user-message{background:#1e5aa8!important;color:#ffffff!important;border-radius:14px 14px 2px 14px!important}.message.bot-message{background:#f0f7ff!important;color:#0a2240!important;border:1px solid #b5d4f4!important;border-radius:14px 14px 14px 2px!important}.message.bot-message p{color:#0a2240!important;margin:0!important}.input-container{background:#ffffff!important;border-top:1px solid #e8f2fc!important;padding:12px!important}.input-box-wrapper{background:#f0f7ff!important;border:1.5px solid #b5d4f4!important;border-radius:12px!important}.input-box{background:transparent!important;color:#0a2240!important;font-family:'DM Sans',sans-serif!important}.input-box::placeholder{color:#7aabce!important}#send-icon-button:not([disabled]){background:#1e5aa8!important;border-radius:50%!important}#send-icon-button:not([disabled]) svg,#send-icon-button:not([disabled]) svg *{fill:#ffffff!important}.message-list-wrapper,#message-list{background:#ffffff!important}";
     function inject(el, depth) {
       if (!el || depth > 8) return;
       if (el.shadowRoot && !el.shadowRoot.querySelector("style[data-ss]")) {
