@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Regalis Seguros — Tu seguro de confianza</title>
+  <style>
+    :root {
+      --navy:    #003B73;
+      --navy-dk: #002850;
+      --amber:   #DCA11D;
+      --amber-lt:#F5E6B8;
+      --cream:   #FBF8F2;
+      --white:   #ffffff;
+      --grey:    #F2F5F9;
+      --text:    #1A2636;
+      --muted:   #5A6878;
+      --border:  #D8E2EE;
+      --radius:  12px;
+      --shadow:  0 4px 24px rgba(0,59,115,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: var(--white);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--navy);
+      color: rgba(255,255,255,0.75);
+      font-size: 13px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .topbar-inner {
+      max-width: 1220px; margin: 0 auto; padding: 0 24px;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .topbar a { color: rgba(255,255,255,0.75); }
+    .topbar a:hover { color: var(--amber); }
+    .topbar-links { display: flex; gap: 24px; }
+    .topbar-phone { font-weight: 700; font-size: 14px; color: var(--white) !important; letter-spacing: 0.5px; }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,59,115,0.07);
+    }
+    .header-inner {
+      max-width: 1220px; margin: 0 auto; padding: 0 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px; gap: 32px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 26px; font-weight: 900; color: var(--navy);
+      letter-spacing: -0.5px;
+    }
+    .logo-icon {
+      width: 42px; height: 42px;
+      background: var(--navy);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon svg { width: 26px; height: 26px; fill: var(--white); }
+
+    nav { display: flex; gap: 4px; }
+    nav a {
+      padding: 8px 14px;
+      font-size: 15px; font-weight: 500; color: var(--text);
+      border-radius: 8px;
+      transition: background 0.15s, color 0.15s;
+    }
+    nav a:hover, nav a.active {
+      background: var(--grey); color: var(--navy);
+    }
+
+    .header-actions { display: flex; gap: 10px; align-items: center; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+      padding: 10px 20px; border-radius: var(--radius);
+      font-size: 14px; font-weight: 700; cursor: pointer;
+      border: none; transition: all 0.15s;
+    }
+    .btn-primary {
+      background: var(--amber); color: var(--navy-dk);
+      box-shadow: 0 2px 8px rgba(220,161,29,0.30);
+    }
+    .btn-primary:hover { background: #c8921a; }
+    .btn-outline {
+      background: transparent; color: var(--navy);
+      border: 2px solid var(--navy);
+    }
+    .btn-outline:hover { background: var(--navy); color: var(--white); }
+    .btn-lg { padding: 14px 28px; font-size: 16px; border-radius: 14px; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--navy-dk) 0%, var(--navy) 55%, #1a5fa8 100%);
+      color: var(--white);
+      padding: 72px 24px 80px;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; right: -80px; top: -80px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(220,161,29,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 1220px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 420px; gap: 48px; align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(220,161,29,0.18);
+      border: 1px solid rgba(220,161,29,0.4);
+      color: var(--amber); font-size: 13px; font-weight: 700;
+      padding: 5px 14px; border-radius: 99px;
+      margin-bottom: 20px; letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 900; line-height: 1.05;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+    }
+    .hero h1 em { color: var(--amber); font-style: normal; }
+    .hero-sub {
+      font-size: 18px; line-height: 1.65;
+      color: rgba(255,255,255,0.82);
+      max-width: 520px; margin-bottom: 36px;
+    }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* Hero card */
+    .hero-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 32px;
+      position: relative; z-index: 1;
+    }
+    .hero-card-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--amber);
+      margin-bottom: 16px;
+    }
+    .hero-card h3 {
+      font-size: 22px; font-weight: 800; margin-bottom: 12px;
+      line-height: 1.25;
+    }
+    .hero-card p {
+      font-size: 15px; color: rgba(255,255,255,0.75);
+      line-height: 1.6; margin-bottom: 24px;
+    }
+    .vera-badge {
+      display: flex; align-items: center; gap: 14px;
+      background: rgba(255,255,255,0.10);
+      border: 1px solid rgba(255,255,255,0.20);
+      border-radius: 14px; padding: 14px 18px;
+    }
+    .vera-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--amber), #f0b429);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+    }
+    .vera-info strong { display: block; font-size: 16px; color: var(--white); }
+    .vera-info span { font-size: 13px; color: rgba(255,255,255,0.65); }
+    .vera-dot {
+      display: inline-block; width: 8px; height: 8px;
+      border-radius: 50%; background: #22c55e;
+      margin-right: 5px; animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    /* ── BAND ── */
+    .band {
+      background: var(--amber);
+      padding: 20px 24px;
+    }
+    .band-inner {
+      max-width: 1220px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 20px;
+      flex-wrap: wrap;
+    }
+    .band-text { font-size: 16px; font-weight: 700; color: var(--navy-dk); }
+    .band-text span { font-weight: 400; }
+    .btn-navy { background: var(--navy); color: var(--white); }
+    .btn-navy:hover { background: var(--navy-dk); }
+
+    /* ── SECTION ── */
+    .section { padding: 72px 24px; }
+    .section-alt { background: var(--grey); }
+    .section-cream { background: var(--cream); }
+    .container { max-width: 1220px; margin: 0 auto; }
+    .section-head { text-align: center; margin-bottom: 48px; }
+    .section-label {
+      display: inline-block;
+      font-size: 12px; font-weight: 800; letter-spacing: 1px;
+      text-transform: uppercase; color: var(--amber);
+      border-bottom: 2px solid var(--amber); padding-bottom: 4px;
+      margin-bottom: 14px;
+    }
+    .section-head h2 {
+      font-size: clamp(28px, 3.5vw, 44px); font-weight: 900;
+      color: var(--navy); letter-spacing: -0.8px; margin-bottom: 14px;
+    }
+    .section-head p {
+      font-size: 17px; color: var(--muted); max-width: 640px; margin: 0 auto;
+    }
+
+    /* ── PRODUCT CARDS ── */
+    .products { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .product-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 16px; padding: 32px 28px;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex; flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(0,59,115,0.13);
+    }
+    .product-icon {
+      width: 56px; height: 56px; border-radius: 14px;
+      background: var(--grey);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; margin-bottom: 20px;
+    }
+    .product-card h3 { font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 10px; }
+    .product-card p  { font-size: 15px; color: var(--muted); line-height: 1.6; flex: 1; margin-bottom: 24px; }
+    .product-link {
+      font-size: 14px; font-weight: 700; color: var(--navy);
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .product-link:hover { color: var(--amber); }
+
+    /* ── SINIESTROS CTA ── */
+    .siniestro-band {
+      background: linear-gradient(90deg, var(--navy-dk) 0%, var(--navy) 100%);
+      border-radius: 20px; padding: 48px 48px;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 32px; align-items: center; color: var(--white);
+    }
+    .siniestro-band h2 {
+      font-size: 30px; font-weight: 900; margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+    .siniestro-band p { font-size: 16px; color: rgba(255,255,255,0.78); max-width: 520px; }
+    .siniestro-actions { display: flex; flex-direction: column; gap: 12px; }
+
+    /* ── HOW IT WORKS ── */
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .step {
+      text-align: center; padding: 28px 20px;
+      background: var(--white); border-radius: 16px;
+      border: 1px solid var(--border);
+    }
+    .step-num {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--navy); color: var(--white);
+      font-size: 18px; font-weight: 900;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+    }
+    .step h4 { font-size: 16px; font-weight: 800; color: var(--navy); margin-bottom: 8px; }
+    .step p  { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+    /* ── MEDIADORES ── */
+    .mediadores-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }
+    .mediadores-copy h2 {
+      font-size: clamp(26px, 3vw, 38px); font-weight: 900; color: var(--navy);
+      letter-spacing: -0.6px; margin-bottom: 16px;
+    }
+    .mediadores-copy p { font-size: 16px; color: var(--muted); margin-bottom: 24px; }
+    .mediadores-stats { display: flex; gap: 32px; margin-bottom: 28px; }
+    .stat strong { display: block; font-size: 32px; font-weight: 900; color: var(--navy); }
+    .stat span   { font-size: 13px; color: var(--muted); }
+    .mediadores-img {
+      background: linear-gradient(135deg, #e8f0fb 0%, #dce8f8 100%);
+      border-radius: 20px; height: 320px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 80px;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--navy-dk); color: rgba(255,255,255,0.65);
+      padding: 48px 24px 24px;
+    }
+    .footer-grid {
+      max-width: 1220px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+      padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+    .footer-brand { font-size: 22px; font-weight: 900; color: var(--white); margin-bottom: 12px; }
+    .footer-desc { font-size: 14px; line-height: 1.65; max-width: 260px; }
+    .footer-col h4 { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--white); margin-bottom: 14px; }
+    .footer-col a  { display: block; font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
+    .footer-col a:hover { color: var(--amber); }
+    .footer-bottom {
+      max-width: 1220px; margin: 0 auto;
+      padding-top: 20px; font-size: 13px;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px;
+    }
+
+    /* ── WIDGET ── */
+    elevenlabs-convai {
+      position: fixed;
+      right: 28px; bottom: 28px;
+      z-index: 9999;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-card { max-width: 480px; }
+      .products { grid-template-columns: repeat(2, 1fr); }
+      .steps { grid-template-columns: repeat(2, 1fr); }
+      .mediadores-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      .products { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .siniestro-band { grid-template-columns: 1fr; padding: 32px 24px; }
+      .footer-grid { grid-template-columns: 1fr; }
+      nav { display: none; }
+      .topbar-links { display: none; }
+      .mediadores-stats { flex-wrap: wrap; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-links">
+        <a href="#">Buzón de denuncias</a>
+        <a href="#">Proveedores</a>
+        <a href="#">Mediadores</a>
+      </div>
+      <a href="tel:914547400" class="topbar-phone">91 454 74 00</a>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <a href="#" class="logo">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18L20 8.5v7L12 19.82 4 15.5v-7L12 4.18z"/></svg>
+        </div>
+        REGALIS
+      </a>
+
+      <nav>
+        <a href="#">Seguros</a>
+        <a href="#" class="active">Siniestros</a>
+        <a href="#">Mediadores</a>
+        <a href="#">Quiénes somos</a>
+        <a href="#">Noticias</a>
+      </nav>
+
+      <div class="header-actions">
+        <a href="#" class="btn btn-outline">Área de clientes</a>
+        <a href="#siniestros" class="btn btn-primary">Notificar siniestro</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">✦ Grupo Regalis · Desde 1954</div>
+        <h1>Tu seguro,<br><em>siempre contigo.</em></h1>
+        <p class="hero-sub">
+          Protegemos lo que más te importa con soluciones adaptadas a ti. Abre tu siniestro en minutos con Vera, nuestra asistente virtual disponible las veinticuatro horas.
+        </p>
+        <div class="hero-ctas">
+          <a href="#siniestros" class="btn btn-primary btn-lg">Notificar siniestro</a>
+          <a href="#productos" class="btn btn-lg" style="background:rgba(255,255,255,0.12);color:#fff;border:1px solid rgba(255,255,255,0.25);">Ver seguros</a>
+        </div>
+      </div>
+
+      <div class="hero-card">
+        <div class="hero-card-label">✦ Asistente virtual IA</div>
+        <h3>Abre tu siniestro sin esperas</h3>
+        <p>Vera recoge todos los datos de tu incidente y lo tramita al instante. Sin formularios, sin colas, sin repetirte.</p>
+        <div class="vera-badge">
+          <div class="vera-avatar">🤖</div>
+          <div class="vera-info">
+            <strong>Vera · Regalis Seguros</strong>
+            <span><span class="vera-dot"></span>Disponible ahora · Habla con ella</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BAND -->
+  <div class="band">
+    <div class="band-inner">
+      <div class="band-text">
+        📋 <strong>Declaración de siniestros</strong> <span>— Gestiona la apertura de tu siniestro de auto de forma rápida y sin esperas.</span>
+      </div>
+      <a href="#siniestros" class="btn btn-navy">Notificar siniestro →</a>
+    </div>
+  </div>
+
+  <!-- PRODUCTOS -->
+  <section id="productos" class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">Nuestros seguros</span>
+        <h2>Cobertura para cada momento</h2>
+        <p>Seguros diseñados para adaptarse a tu vida, con la tranquilidad que mereces.</p>
+      </div>
+      <div class="products">
+        <div class="product-card">
+          <div class="product-icon">🚗</div>
+          <h3>Seguro de Automóvil</h3>
+          <p>Desde terceros básico hasta todo riesgo. Incluye asistencia en carretera, coches de sustitución y gestión de siniestros con Vera.</p>
+          <a href="#" class="product-link">Calcular precio →</a>
+        </div>
+        <div class="product-card">
+          <div class="product-icon">🏠</div>
+          <h3>Seguro de Hogar</h3>
+          <p>Protección integral para tu vivienda frente a daños, robos e incidentes. Cobertura desde el primer día.</p>
+          <a href="#" class="product-link">Más información →</a>
+        </div>
+        <div class="product-card">
+          <div class="product-icon">❤️</div>
+          <h3>Seguro de Salud</h3>
+          <p>Acceso a los mejores especialistas sin listas de espera. Cobertura completa para toda la familia.</p>
+          <a href="#" class="product-link">Ver coberturas →</a>
+        </div>
+        <div class="product-card">
+          <div class="product-icon">✈️</div>
+          <h3>Seguro de Viaje</h3>
+          <p>Viaja sin preocupaciones. Asistencia médica, cancelación y equipaje cubiertos en todo el mundo.</p>
+          <a href="#" class="product-link">Contratar →</a>
+        </div>
+        <div class="product-card">
+          <div class="product-icon">🏢</div>
+          <h3>Seguro de Empresa</h3>
+          <p>Soluciones para autónomos y pymes. Responsabilidad civil, daños materiales y cobertura de empleados.</p>
+          <a href="#" class="product-link">Solicitar oferta →</a>
+        </div>
+        <div class="product-card">
+          <div class="product-icon">🐾</div>
+          <h3>Seguro de Mascotas</h3>
+          <p>Cuida la salud de tu mascota con cobertura veterinaria, intervenciones y asistencia urgente.</p>
+          <a href="#" class="product-link">Descubrir →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SINIESTROS CTA -->
+  <section id="siniestros" class="section section-alt">
+    <div class="container">
+      <div class="siniestro-band">
+        <div>
+          <div style="font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:12px;">✦ Apertura de siniestros</div>
+          <h2>¿Has tenido un accidente?<br>Vera te ayuda ahora mismo.</h2>
+          <p>Nuestra asistente virtual recoge todos los datos de tu siniestro de automóvil, verifica tu identidad y abre el expediente sin esperas. Disponible las veinticuatro horas, todos los días del año.</p>
+        </div>
+        <div class="siniestro-actions">
+          <a href="#" class="btn btn-primary btn-lg" onclick="document.querySelector('elevenlabs-convai').click?.(); return false;">
+            🎙️ Hablar con Vera
+          </a>
+          <a href="#" class="btn btn-lg" style="background:rgba(255,255,255,0.12);color:#fff;border:1px solid rgba(255,255,255,0.25);text-align:center;">
+            📋 Formulario web
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CÓMO FUNCIONA -->
+  <section class="section section-cream">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-label">Así de fácil</span>
+        <h2>Abre tu siniestro en cuatro pasos</h2>
+        <p>Sin papeles, sin esperas. Vera guía la conversación de principio a fin.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h4>Llama o inicia la conversación</h4>
+          <p>Vera está disponible por teléfono o directamente desde esta web.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h4>Vera verifica tu identidad</h4>
+          <p>Confirma tu nombre, DNI y matrícula de forma segura en segundos.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h4>Describe el incidente</h4>
+          <p>Cuéntale qué ha pasado con tu vehículo. Vera recoge todos los datos.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h4>Expediente abierto</h4>
+          <p>Recibes tu número de expediente al instante. Un gestor te contactará en breve.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEDIADORES -->
+  <section class="section">
+    <div class="container">
+      <div class="mediadores-grid">
+        <div class="mediadores-copy">
+          <span class="section-label">Red de mediadores</span>
+          <h2>Tu mediador, tu mayor aliado</h2>
+          <p>Contamos con una red de más de dos mil mediadores especializados en toda España. Cerca de ti, cuando más lo necesitas.</p>
+          <div class="mediadores-stats">
+            <div class="stat">
+              <strong>2.000+</strong>
+              <span>Mediadores en España</span>
+            </div>
+            <div class="stat">
+              <strong>97%</strong>
+              <span>Satisfacción de clientes</span>
+            </div>
+            <div class="stat">
+              <strong>70 años</strong>
+              <span>De experiencia</span>
+            </div>
+          </div>
+          <a href="#" class="btn btn-primary">Encontrar mediador →</a>
+        </div>
+        <div class="mediadores-img">🤝</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">REGALIS</div>
+        <p class="footer-desc">Regalis Seguros, S.A. — Compañía del Grupo Regalis. Entidad aseguradora autorizada y supervisada por la Dirección General de Seguros y Fondos de Pensiones.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Seguros</h4>
+        <a href="#">Automóvil</a>
+        <a href="#">Hogar</a>
+        <a href="#">Salud</a>
+        <a href="#">Viaje</a>
+        <a href="#">Empresa</a>
+      </div>
+      <div class="footer-col">
+        <h4>Ayuda</h4>
+        <a href="#">Notificar siniestro</a>
+        <a href="#">Área de clientes</a>
+        <a href="#">Mediadores</a>
+        <a href="#">Preguntas frecuentes</a>
+        <a href="#">Contacto</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="#">Aviso legal</a>
+        <a href="#">Política de privacidad</a>
+        <a href="#">Política de cookies</a>
+        <a href="#">Buzón de denuncias</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Regalis Seguros, S.A. Todos los derechos reservados.</span>
+      <span>Demo · Proyecto AI Contact Center · Accenture</span>
+    </div>
+  </footer>
+
+  <!-- WIDGET ELEVENLABS -->
+  <elevenlabs-convai
+    agent-id="agent_4201kvk00tbgfknb40v56v0enkg5"
+    server-location="eu-residency">
+  </elevenlabs-convai>
+  <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+
+</body>
+</html>
