@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<title>Grupo Seguros — Analítica IA v6</title>
+<style>
+:root{--navy:#003B73;--navy2:#1a5fa8;--amber:#DCA11D;--gold:#F0B500;--bg:#F4F6FA;--surface:#ffffff;--sf2:#F9FAFB;--text:#1A2636;--muted:#6B7A8E;--border:#DDE3EC;--green:#1A8A5A;--red:#C0392B;--orange:#D97706;--r:10px;--sh:0 1px 4px rgba(0,59,115,0.08)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.5}
+.topbar{background:var(--navy);height:42px;display:flex;align-items:center;border-bottom:2px solid var(--amber);padding:0 20px;gap:12px;position:sticky;top:0;z-index:50}
+.logo{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.3px}.logo span{color:var(--amber)}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:11px;color:rgba(255,255,255,.6)}
+.live-dot{display:inline-flex;align-items:center;gap:5px;color:#4ade80;font-weight:600}
+.live-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.layout{display:flex;flex-direction:column;min-height:calc(100vh - 42px)}
+.sidebar{width:100%;background:var(--surface);border-bottom:2px solid var(--border);padding:0;flex-shrink:0;position:sticky;top:42px;z-index:40;display:flex;flex-direction:row;align-items:center;flex-wrap:nowrap;overflow-x:auto;height:40px}
+.sidebar-section{display:flex;flex-direction:row;align-items:center;margin-bottom:0}
+.sidebar-label{font-size:9px;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;color:var(--navy);padding:0 8px 0 16px;border-left:1px solid var(--border);line-height:40px;white-space:nowrap}
+.nav-item{display:flex;align-items:center;gap:6px;padding:0 10px;cursor:pointer;font-size:11px;color:var(--muted);border-left:none;border-bottom:2px solid transparent;height:40px;white-space:nowrap;transition:all .15s;user-select:none}
+.nav-item:hover{background:var(--sf2);color:var(--navy)}
+.nav-item.active{background:rgba(0,59,115,.05);color:var(--navy);font-weight:600;border-bottom-color:var(--amber);border-left-color:transparent}
+.nav-badge{margin-left:4px;background:var(--navy);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:99px}
+.main{flex:1;padding:20px 24px 20px 344px;min-width:0;overflow-x:hidden}
+.page{display:none;animation:fadeIn .3s ease}.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.page-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px}
+.page-title h1{font-size:20px;font-weight:800;color:var(--navy);letter-spacing:-.4px}
+.page-title p{font-size:11px;color:var(--muted);margin-top:2px}
+.header-controls{display:flex;gap:8px;align-items:center}
+.filter-select,.filter-input{border:1px solid var(--border);border-radius:6px;padding:5px 9px;font-size:11px;color:var(--text);background:var(--surface);cursor:pointer;font-family:inherit}
+.btn{border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:11px;font-weight:600;cursor:pointer;background:var(--surface);font-family:inherit;color:var(--text);transition:all .12s}
+.btn-primary{background:var(--navy);color:#fff;border-color:var(--navy)}.btn-primary:hover{background:#002a5a}
+.hero{background:var(--navy);border-radius:var(--r);padding:22px 24px 20px;margin-bottom:16px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(220,161,29,.07)}
+.hero-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:4px}
+.hero-sub{font-size:11px;color:rgba(255,255,255,.5);margin-bottom:18px}
+.hero-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:0}
+.hk{border-right:1px solid rgba(255,255,255,.1);padding:0 16px 0 0;margin-right:16px}
+.hk:last-child{border-right:none}
+.hk-label{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
+.hk-val{font-size:28px;font-weight:700;color:#fff;line-height:1;letter-spacing:-1.5px}
+.hk-val.g{color:#4ade80}.hk-val.a{color:var(--gold)}.hk-val.r{color:#f87171}
+.hk-sub{font-size:10px;color:rgba(255,255,255,.35);margin-top:3px}
+.section-title{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.card{background:var(--surface);border-radius:var(--r);padding:16px 18px;border:1px solid var(--border);box-shadow:var(--sh)}
+.card-title{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.card-title span{font-weight:400;font-size:10px;color:var(--muted);text-transform:none;letter-spacing:0}
+.chart-wrap{position:relative;height:180px}
+canvas{max-height:180px!important}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:14px}
+.grid-big{display:grid;grid-template-columns:2fr 1fr;gap:12px;margin-bottom:14px}
+.grid-big2{display:grid;grid-template-columns:1fr 2fr;gap:12px;margin-bottom:14px}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.kpi-card{background:var(--surface);border-radius:var(--r);padding:14px 16px;border:1px solid var(--border);box-shadow:var(--sh);position:relative;overflow:hidden}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--navy)}
+.kpi-card.a::before{background:var(--amber)}.kpi-card.g::before{background:var(--green)}.kpi-card.r::before{background:var(--red)}
+.kpi-label{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:5px}
+.kpi-value{font-size:26px;font-weight:700;color:var(--navy);line-height:1;letter-spacing:-.5px}
+.kpi-value.a{color:var(--amber)}.kpi-value.g{color:var(--green)}.kpi-value.r{color:var(--red)}
+.kpi-sub{font-size:10px;color:var(--muted);margin-top:3px}
+.calls-section{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--sh);overflow:hidden}
+.calls-header{padding:12px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
+.calls-header h3{font-size:13px;font-weight:700;color:var(--navy)}
+.calls-filters{display:flex;gap:6px;flex-wrap:wrap}
+.table-wrap{overflow-x:auto;max-height:420px;overflow-y:auto}
+table{width:100%;border-collapse:collapse;font-size:11px}
+th{background:var(--sf2);padding:8px 10px;text-align:left;font-weight:700;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2}
+td{padding:7px 10px;border-bottom:1px solid var(--border);color:var(--text)}
+tr:hover td{background:var(--sf2)}
+.badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:4px;white-space:nowrap}
+.badge-y{background:#D1FAE5;color:#065F46}.badge-n{background:#FEE2E2;color:#7F1D1D}
+.badge-pro{background:#EEF2FF;color:#3730A3}.badge-pas{background:#F3F4F6;color:#374151}.badge-det{background:#FEF3C7;color:#92400E}
+.pagination{padding:10px 18px;display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);border-top:1px solid var(--border)}
+.page-btns{display:flex;gap:4px}
+.page-btn{border:1px solid var(--border);border-radius:5px;padding:3px 9px;cursor:pointer;background:var(--surface);font-size:11px;color:var(--muted);font-family:inherit}
+.page-btn.active,.page-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.maslow-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:12px}
+.maslow-label{width:80px;font-size:11px;color:var(--muted);flex-shrink:0}
+.maslow-bar{flex:1;height:22px;background:var(--sf2);border-radius:5px;overflow:hidden;position:relative}
+.maslow-fill{height:100%;border-radius:5px;display:flex;align-items:center;padding:0 8px;font-size:10px;font-weight:700;color:#fff;transition:width .8s}
+.maslow-pct{min-width:36px;text-align:right;font-weight:700;font-size:11px;color:var(--navy)}
+.alert-row{display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s}
+.alert-row:hover{background:var(--sf2)}
+.alert-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.detail-panel{background:var(--sf2);border-radius:8px;padding:14px;margin-top:12px;font-size:11px;line-height:1.7;color:var(--text)}
+.agents-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}
+.agent-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;cursor:pointer;transition:all .15s;box-shadow:var(--sh)}
+.agent-card:hover,.agent-card.active{border-color:var(--amber);box-shadow:0 4px 16px rgba(220,161,29,.15)}
+.agent-head{background:var(--navy);padding:10px 12px;display:flex;align-items:center;gap:8px}
+.agent-head.lite{background:#EFF4FB}
+.agent-initials{width:28px;height:28px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--navy);flex-shrink:0}
+.agent-name{font-size:12px;font-weight:700;color:#fff;line-height:1.2}
+.agent-card.active .agent-name{color:var(--navy)}
+.agent-desc{font-size:10px;color:rgba(255,255,255,.55);margin-top:1px}
+.agent-card.active .agent-desc{color:var(--muted)}
+.agent-body{padding:10px 12px}
+.agent-score{font-size:20px;font-weight:700;color:var(--navy)}
+.agent-bar{height:4px;background:var(--border);border-radius:99px;margin:6px 0}
+.agent-bar-fill{height:4px;border-radius:99px;background:linear-gradient(90deg,var(--navy),var(--amber))}
+.agent-tags{display:flex;gap:3px;flex-wrap:wrap}
+.tag{font-size:9px;font-weight:600;padding:2px 5px;border-radius:4px;background:rgba(0,59,115,.07);color:var(--navy)}
+.agent-detail{background:var(--surface);border-radius:var(--r);padding:18px;border:1px solid var(--border);box-shadow:var(--sh);margin-bottom:14px;display:none}
+.agent-detail.visible{display:block}
+.detail-header{display:flex;align-items:center;gap:14px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.detail-badge{width:44px;height:44px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff}
+.geo-map{position:relative;width:100%;height:320px}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:var(--r);padding:22px;max-width:560px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.sparkline-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)}
+.sparkline-row:last-child{border-bottom:none}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="logo">Grupo <span>Seguros</span></div>
+  <span style="color:rgba(255,255,255,.3);font-size:11px">Analítica IA · Contact Center</span>
+  <div class="topbar-right">
+    
+    <span id="ts" style="font-size:10px"></span>
+  </div>
+</div>
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label" style="border-left:none;padding-left:12px;font-weight:900;color:var(--navy)">Principal</div>
+      <div class="nav-item active" data-page="resumen">Resumen ejecutivo</div>
+      <div class="nav-item" data-page="agentes">5 Agentes IA<span class="nav-badge">5</span></div>
+      <div class="nav-item" data-page="llamadas">Detalle llamadas</div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Métricas</div>
+      <div class="nav-item" data-page="calidad">Calidad</div>
+      <div class="nav-item" data-page="experiencia">Experiencia CX</div>
+      <div class="nav-item" data-page="ventas">Venta cruzada</div>
+      <div class="nav-item" data-page="audio">Análisis audio</div>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Análisis</div>
+      <div class="nav-item" data-page="geo">Distribución geo</div>
+      <div class="nav-item" data-page="riesgos">Alertas y riesgos</div>
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- RESUMEN EJECUTIVO -->
+    <div class="page active" id="page-resumen">
+      <div class="page-header">
+        <div class="page-title"><h1>Resumen ejecutivo</h1><p>Junio 2026 · 180 llamadas · 5 Agentes IA · BigQuery ccaiglobalv01</p></div>
+        <div class="header-controls">
+          <select class="filter-select" id="geo-f" onchange="globalFilter()"><option value="">Todas las geografías</option><option>Madrid</option><option>Valencia</option><option>Barcelona</option><option>Málaga</option><option>Sevilla</option><option>Zaragoza</option><option>Bilbao</option></select>
+          <select class="filter-select" id="mot-f" onchange="globalFilter()"><option value="">Todos los motivos</option><option>Siniestro</option><option>Seguimiento</option><option>Asistencia</option><option>Incidencia</option><option>Consulta</option><option>Diversos</option></select>
+          <button class="btn btn-primary" onclick="exportCSV()">↓ CSV</button>
+        </div>
+      </div>
+      <div class="hero" id="hero-block"></div>
+      <div class="grid-big">
+        <div class="card"><div class="card-title">Evolución diaria — Llamadas & FCR <span id="chart-fl">Todas las llamadas</span></div><div class="chart-wrap"><canvas id="lineC" role="img" aria-label="Evolución diaria llamadas y FCR">Gráfico de evolución diaria.</canvas></div></div>
+        <div class="card"><div class="card-title">Distribución por motivo</div><div class="chart-wrap"><canvas id="donutC" role="img" aria-label="Distribución por motivo">Gráfico motivos.</canvas></div></div>
+      </div>
+      <div class="grid-3">
+        <div class="card"><div class="card-title">NPS por geografía</div><div class="chart-wrap"><canvas id="geoC" role="img" aria-label="NPS por ciudad">NPS geo.</canvas></div></div>
+        <div class="card"><div class="card-title">Scores Agentes IA</div><div class="chart-wrap"><canvas id="agentC" role="img" aria-label="Scores agentes">Scores.</canvas></div></div>
+        <div class="card"><div class="card-title">Duración & silencios</div><div class="chart-wrap"><canvas id="durC" role="img" aria-label="Duración y silencios">Duración.</canvas></div></div>
+      </div>
+    </div>
+
+    <!-- AGENTES IA -->
+    <div class="page" id="page-agentes">
+      <div class="page-header"><div class="page-title"><h1>5 Agentes IA especializados</h1><p>Rendimiento individual y análisis dimensional por agente</p></div></div>
+      <div class="agents-grid" id="agents-grid"></div>
+      <div class="agent-detail" id="agent-detail"></div>
+      <div class="grid-2">
+        <div class="card"><div class="card-title">Comparativa de scores</div><div class="chart-wrap"><canvas id="agentBarC" role="img" aria-label="Comparativa scores agentes">Comparativa.</canvas></div></div>
+        <div class="card"><div class="card-title">Distribución de evaluaciones</div><div class="chart-wrap"><canvas id="evalDistC" role="img" aria-label="Distribución evaluaciones">Distribución.</canvas></div></div>
+      </div>
+    </div>
+
+    <!-- DETALLE LLAMADAS -->
+    <div class="page" id="page-llamadas">
+      <div class="page-header"><div class="page-title"><h1>Detalle de llamadas</h1><p>Registro completo filtrable · <span id="llam-count"></span></p></div></div>
+      <div class="kpi-row" id="llam-kpis"></div>
+      <div class="calls-section">
+        <div class="calls-header">
+          <h3>Registro de interacciones</h3>
+          <div class="calls-filters">
+            <input type="text" id="srch" class="filter-input" placeholder="Buscar resumen..." style="width:160px" oninput="renderTable()">
+            <select id="llam-geo" class="filter-select" onchange="renderTable()"><option value="">Geo: todas</option><option>Madrid</option><option>Valencia</option><option>Barcelona</option><option>Málaga</option><option>Sevilla</option><option>Zaragoza</option><option>Bilbao</option></select>
+            <select id="llam-mot" class="filter-select" onchange="renderTable()"><option value="">Motivo: todos</option><option>Siniestro</option><option>Seguimiento</option><option>Asistencia</option><option>Incidencia</option><option>Consulta</option><option>Diversos</option></select>
+            <select id="llam-fcr" class="filter-select" onchange="renderTable()"><option value="">FCR: todos</option><option>SI</option><option>NO</option></select>
+            <select id="llam-nps" class="filter-select" onchange="renderTable()"><option value="">NPS: todos</option><option>Promotor</option><option>Pasivo</option><option>Detractor</option></select>
+            <select id="llam-churn" class="filter-select" onchange="renderTable()"><option value="">Churn: todos</option><option value="SI">Con riesgo</option><option value="NO">Sin riesgo</option></select>
+          </div>
+        </div>
+        <div class="table-wrap"><table><thead><tr><th>#</th><th>Fecha</th><th>Motivo</th><th>Submotivo</th><th>Geo</th><th>Producto</th><th>FCR</th><th>NPS</th><th>Churn</th><th>Frustración</th><th>Calidad</th><th>Maslow</th><th>Venta</th><th>Dur.</th></tr></thead><tbody id="llam-tbody"></tbody></table></div>
+        <div class="pagination"><span id="llam-info"></span><div class="page-btns" id="llam-btns"></div></div>
+      </div>
+    </div>
+
+    <!-- CALIDAD -->
+    <div class="page" id="page-calidad">
+      <div class="page-header"><div class="page-title"><h1>Calidad — Evaluación QA</h1><p>Auditoría 100% de llamadas · Agente A3</p></div></div>
+      <div class="kpi-row" id="cal-kpis"></div>
+      <div class="grid-big">
+        <div class="card"><div class="card-title">Score por dimensión evaluada</div>
+          <div id="cal-dims" style="padding-top:6px"></div>
+        </div>
+        <div class="card"><div class="card-title">Distribución de scores QA</div><div class="chart-wrap"><canvas id="calDistC" role="img" aria-label="Distribución scores QA">Distribución QA.</canvas></div></div>
+      </div>
+      <div class="card" style="margin-bottom:14px"><div class="card-title">Evolución semanal de calidad</div><div class="chart-wrap"><canvas id="calEvolC" role="img" aria-label="Evolución calidad semanal">Evolución calidad.</canvas></div></div>
+      <div class="card"><div class="card-title">Llamadas con score crítico <span style="background:#FEE2E2;color:#7F1D1D;padding:2px 8px;border-radius:4px;font-weight:700">Requieren revisión</span></div>
+        <div class="table-wrap" style="max-height:220px"><table><thead><tr><th>#</th><th>Fecha</th><th>Motivo</th><th>Geo</th><th>Score</th><th>Motivo crítico</th></tr></thead><tbody id="cal-crit-tbody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- EXPERIENCIA CX -->
+    <div class="page" id="page-experiencia">
+      <div class="page-header"><div class="page-title"><h1>Experiencia CX — Maslow & NPS</h1><p>Análisis emocional y satisfacción de cliente · Agente A2</p></div></div>
+      <div class="kpi-row" id="exp-kpis"></div>
+      <div class="grid-big">
+        <div class="card"><div class="card-title">Pirámide de Maslow — Puntuación media <span>Evaluación por nivel según comportamiento en llamada</span></div><div id="maslow-chart" style="padding-top:8px"></div></div>
+        <div class="card"><div class="card-title">Evolución NPS diaria</div><div class="chart-wrap"><canvas id="npsEvolC" role="img" aria-label="Evolución NPS diaria">NPS evolución.</canvas></div></div>
+      </div>
+      <div class="grid-3">
+        <div class="card"><div class="card-title">NPS por motivo de llamada</div><div class="chart-wrap"><canvas id="npsMotC" role="img" aria-label="NPS por motivo">NPS motivo.</canvas></div></div>
+        <div class="card"><div class="card-title">Engagement distribution</div><div class="chart-wrap"><canvas id="engC" role="img" aria-label="Engagement">Engagement.</canvas></div></div>
+        <div class="card"><div class="card-title">Frustración & transferencia</div><div class="chart-wrap"><canvas id="frustC" role="img" aria-label="Frustración y transferencia">Frustración.</canvas></div></div>
+      </div>
+    </div>
+
+    <!-- VENTA CRUZADA -->
+    <div class="page" id="page-ventas">
+      <div class="page-header"><div class="page-title"><h1>Venta cruzada</h1><p>Oportunidades detectadas por Agente A4</p></div></div>
+      <div class="kpi-row" id="vc-kpis"></div>
+      <div class="grid-big">
+        <div class="card"><div class="card-title">Score de venta cruzada por motivo</div><div class="chart-wrap"><canvas id="vcMotC" role="img" aria-label="Venta cruzada por motivo">VC motivo.</canvas></div></div>
+        <div class="card"><div class="card-title">Dimensiones del score VC</div><div class="chart-wrap" style="height:200px"><canvas id="vcRadarC" role="img" aria-label="Radar dimensiones VC">Radar VC.</canvas></div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card"><div class="card-title">Propensión VC por antigüedad de cliente</div><div class="chart-wrap"><canvas id="vcAntC" role="img" aria-label="VC por antigüedad">VC antigüedad.</canvas></div></div>
+        <div class="card"><div class="card-title">Oportunidades no explotadas por geografía</div><div class="chart-wrap"><canvas id="vcGeoC" role="img" aria-label="VC por geografía">VC geo.</canvas></div></div>
+      </div>
+    </div>
+
+    <!-- AUDIO -->
+    <div class="page" id="page-audio">
+      <div class="page-header"><div class="page-title"><h1>Análisis de audio</h1><p>Silencios, música en espera y AHT · Agente A5</p></div></div>
+      <div class="kpi-row" id="aud-kpis"></div>
+      <div class="grid-big">
+        <div class="card"><div class="card-title">Distribución de duración de llamadas (AHT)</div><div class="chart-wrap"><canvas id="ahtC" role="img" aria-label="AHT distribución">AHT.</canvas></div></div>
+        <div class="card"><div class="card-title">Silencios promedio por motivo</div><div class="chart-wrap"><canvas id="silC" role="img" aria-label="Silencios por motivo">Silencios.</canvas></div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card"><div class="card-title">Llamadas con música en espera detectada</div><div class="chart-wrap"><canvas id="musC" role="img" aria-label="Música en espera">Música.</canvas></div></div>
+        <div class="card"><div class="card-title">AHT promedio por motivo (segundos)</div>
+          <div id="aht-bars" style="padding-top:8px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GEO -->
+    <div class="page" id="page-geo">
+      <div class="page-header"><div class="page-title"><h1>Distribución geográfica</h1><p>Análisis de rendimiento por ciudad</p></div></div>
+      <div class="kpi-row" id="geo-kpis"></div>
+      <div class="grid-big">
+        <div class="card"><div class="card-title">Mapa de España — Volumen de llamadas</div><div class="geo-map" id="geo-map-container"></div></div>
+        <div class="card"><div class="card-title">Ranking por ciudad</div><div id="geo-ranking" style="padding-top:8px"></div></div>
+      </div>
+      <div class="grid-3">
+        <div class="card"><div class="card-title">FCR por ciudad</div><div class="chart-wrap"><canvas id="geoFcrC" role="img" aria-label="FCR por ciudad">FCR geo.</canvas></div></div>
+        <div class="card"><div class="card-title">Score calidad por ciudad</div><div class="chart-wrap"><canvas id="geoQC" role="img" aria-label="Score calidad por ciudad">Calidad geo.</canvas></div></div>
+        <div class="card"><div class="card-title">Churn por ciudad</div><div class="chart-wrap"><canvas id="geoChurnC" role="img" aria-label="Churn por ciudad">Churn geo.</canvas></div></div>
+      </div>
+    </div>
+
+    <!-- RIESGOS -->
+    <div class="page" id="page-riesgos">
+      <div class="page-header"><div class="page-title"><h1>Alertas y riesgos</h1><p>Detractores, churn y llamadas críticas</p></div></div>
+      <div class="kpi-row" id="risk-kpis"></div>
+      <div class="grid-2">
+        <div class="card"><div class="card-title">Llamadas con riesgo de churn identificado</div>
+          <div class="table-wrap" style="max-height:280px"><table><thead><tr><th>#</th><th>Fecha</th><th>Motivo</th><th>Geo</th><th>Antiguedad</th><th>NPS</th></tr></thead><tbody id="churn-tbody"></tbody></table></div>
+        </div>
+        <div class="card"><div class="card-title">Evolución de detractores vs promotores</div><div class="chart-wrap"><canvas id="riskC" role="img" aria-label="Detractores vs promotores">Riesgo.</canvas></div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card"><div class="card-title">Incidencias por tipo</div><div class="chart-wrap"><canvas id="incC" role="img" aria-label="Incidencias por tipo">Incidencias.</canvas></div></div>
+        <div class="card"><div class="card-title">Transferencias sin resolución — Alertas activas</div>
+          <div id="transfer-alerts" style="padding-top:4px;max-height:200px;overflow-y:auto"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalEv(event)">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+<script>
+document.getElementById('ts').textContent=new Date().toLocaleString('es-ES',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'});
+
+const RAW=[{id:1,fecha:"2026-06-04",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Bilbao",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.92,vc_gen:0.31,dur:204,silencios:12.3,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:5,m_s5:4,vc_s1:1,vc_s2:1,vc_s3:3,vc_s4:3,vc_s5:3},
+{id:2,fecha:"2026-06-05",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Sevilla",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.84,vc_gen:0.46,dur:138,silencios:6.5,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:2,vc_s2:1,vc_s3:1,vc_s4:3,vc_s5:2},
+{id:3,fecha:"2026-06-17",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.8,vc_gen:0.56,dur:163,silencios:7.5,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:2,vc_s4:2,vc_s5:1},
+{id:4,fecha:"2026-06-09",motivo:"Seguimiento",submotivo:"CICOS Seguimiento",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Detractor",churn:"SI",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:1.7,maslow_gen:0.44,vc_gen:0.44,dur:229,silencios:11.7,musica:0,antiguedad:"Cliente Reciente",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:2,m_s2:2,m_s3:2,m_s4:3,m_s5:2,vc_s1:3,vc_s2:3,vc_s3:1,vc_s4:1,vc_s5:2},
+{id:5,fecha:"2026-06-08",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Zaragoza",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.76,vc_gen:0.43,dur:128,silencios:2.5,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:3,vc_s4:2,vc_s5:1},
+{id:6,fecha:"2026-06-20",motivo:"Seguimiento",submotivo:"Pre-apertura CICOS",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:4,maslow_gen:0.8,vc_gen:0.44,dur:166,silencios:11.1,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:3,vc_s4:2,vc_s5:2},
+{id:7,fecha:"2026-06-02",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Madrid",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:2,maslow_gen:0.84,vc_gen:0.38,dur:152,silencios:9.1,musica:0,antiguedad:"Cliente Nuevo",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:2,vc_s2:1,vc_s3:3,vc_s4:3,vc_s5:1},
+{id:8,fecha:"2026-06-03",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Valencia",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:2,maslow_gen:0.76,vc_gen:0.34,dur:162,silencios:11.3,musica:0,antiguedad:"Cliente Fiel",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:1,vc_s3:2,vc_s4:1,vc_s5:3},
+{id:9,fecha:"2026-06-22",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.31,dur:161,silencios:8.2,musica:8.6,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:3,vc_s4:3,vc_s5:1},
+{id:10,fecha:"2026-06-13",motivo:"Incidencia",submotivo:"Incidencia Declaración",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:5,maslow_gen:0.64,vc_gen:0.45,dur:155,silencios:7.2,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:3,m_s4:3,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:1,vc_s4:1,vc_s5:2},
+{id:11,fecha:"2026-06-11",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.84,vc_gen:0.4,dur:139,silencios:9.9,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:3,vc_s4:1,vc_s5:1},
+{id:12,fecha:"2026-06-04",motivo:"Incidencia",submotivo:"Incidencia Declaración",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:4,maslow_gen:0.8,vc_gen:0.48,dur:164,silencios:2.3,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:2,vc_s2:2,vc_s3:2,vc_s4:1,vc_s5:1},
+{id:13,fecha:"2026-06-15",motivo:"Seguimiento",submotivo:"CICOS Insatisfecho",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:4,maslow_gen:0.76,vc_gen:0.41,dur:172,silencios:3.5,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:3,vc_s3:1,vc_s4:3,vc_s5:3},
+{id:14,fecha:"2026-06-09",motivo:"Asistencia",submotivo:"Asistencia En Carretera",producto:"Auto",geo:"Bilbao",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Asistencia en carretera. Grúa activada.",eval_score:5,maslow_gen:0.88,vc_gen:0.3,dur:188,silencios:10.5,musica:14.2,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:5,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:1,vc_s4:2,vc_s5:3},
+{id:15,fecha:"2026-06-02",motivo:"Incidencia",submotivo:"Facturación Prima",producto:"Auto",geo:"Bilbao",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:5,maslow_gen:0.92,vc_gen:0.33,dur:171,silencios:12.6,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:5,m_s5:4,vc_s1:2,vc_s2:1,vc_s3:3,vc_s4:3,vc_s5:3},
+{id:16,fecha:"2026-06-21",motivo:"Seguimiento",submotivo:"CICOS Insatisfecho",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:4,maslow_gen:0.8,vc_gen:0.46,dur:151,silencios:4.7,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:2,vc_s3:2,vc_s4:1,vc_s5:2},
+{id:17,fecha:"2026-06-15",motivo:"Incidencia",submotivo:"Facturación Prima",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:5,maslow_gen:0.68,vc_gen:0.3,dur:170,silencios:5.9,musica:14.7,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:3,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:3,vc_s4:3,vc_s5:2},
+{id:18,fecha:"2026-06-03",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Zaragoza",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.49,dur:115,silencios:8.0,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:1,vc_s3:2,vc_s4:2,vc_s5:2},
+{id:19,fecha:"2026-06-01",motivo:"Seguimiento",submotivo:"Pre-apertura CICOS",producto:"Auto",geo:"Zaragoza",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.76,vc_gen:0.33,dur:151,silencios:8.8,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:1,vc_s3:1,vc_s4:1,vc_s5:3},
+{id:20,fecha:"2026-06-02",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Detractor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Muy Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:1.7,maslow_gen:0.56,vc_gen:0.47,dur:127,silencios:10.7,musica:0,antiguedad:"Cliente Fiel",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:3,m_s3:3,m_s4:3,m_s5:2,vc_s1:1,vc_s2:3,vc_s3:2,vc_s4:1,vc_s5:2},
+{id:21,fecha:"2026-06-15",motivo:"Consulta",submotivo:"Consulta Póliza",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Consulta póliza resuelta satisfactoriamente.",eval_score:5,maslow_gen:0.76,vc_gen:0.47,dur:124,silencios:9.0,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:3,vc_s4:1,vc_s5:1},
+{id:22,fecha:"2026-06-03",motivo:"Seguimiento",submotivo:"CICOS Insatisfecho",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Detractor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Muy Bajo",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:1.7,maslow_gen:0.44,vc_gen:0.45,dur:109,silencios:4.8,musica:9.5,antiguedad:"Cliente Nuevo",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:2,m_s3:2,m_s4:2,m_s5:2,vc_s1:2,vc_s2:1,vc_s3:3,vc_s4:1,vc_s5:1},
+{id:23,fecha:"2026-06-04",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.68,vc_gen:0.43,dur:148,silencios:8.8,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:3,m_s5:3,vc_s1:1,vc_s2:3,vc_s3:2,vc_s4:3,vc_s5:1},
+{id:24,fecha:"2026-06-05",motivo:"Seguimiento",submotivo:"CICOS Seguimiento",producto:"Auto",geo:"Madrid",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Cliente insatisfecho por demoras.",eval_score:2,maslow_gen:0.84,vc_gen:0.46,dur:186,silencios:6.4,musica:0,antiguedad:"Cliente Fiel",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:5,m_s4:4,m_s5:4,vc_s1:1,vc_s2:3,vc_s3:3,vc_s4:2,vc_s5:3},
+{id:25,fecha:"2026-06-22",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.28,dur:198,silencios:12.2,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:2,vc_s3:2,vc_s4:2,vc_s5:2},
+{id:26,fecha:"2026-06-06",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Málaga",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:2,maslow_gen:0.64,vc_gen:0.49,dur:176,silencios:7.9,musica:0,antiguedad:"Cliente Premium",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:3,m_s5:2,vc_s1:2,vc_s2:1,vc_s3:2,vc_s4:1,vc_s5:3},
+{id:27,fecha:"2026-06-20",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Bilbao",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.84,vc_gen:0.39,dur:157,silencios:12.1,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:3,vc_s4:1,vc_s5:2},
+{id:28,fecha:"2026-06-18",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.8,vc_gen:0.3,dur:155,silencios:9.2,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:4,vc_s1:3,vc_s2:1,vc_s3:1,vc_s4:3,vc_s5:2},
+{id:29,fecha:"2026-06-11",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Sevilla",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.8,vc_gen:0.34,dur:150,silencios:2.4,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:1,vc_s3:3,vc_s4:2,vc_s5:1},
+{id:30,fecha:"2026-06-05",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.8,vc_gen:0.56,dur:136,silencios:6.7,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:1,vc_s2:1,vc_s3:3,vc_s4:1,vc_s5:3},
+{id:31,fecha:"2026-06-16",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.64,vc_gen:0.38,dur:157,silencios:8.0,musica:8.2,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:3,m_s2:3,m_s3:4,m_s4:3,m_s5:3,vc_s1:2,vc_s2:2,vc_s3:1,vc_s4:3,vc_s5:2},
+{id:32,fecha:"2026-06-19",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Detractor",churn:"SI",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:1.7,maslow_gen:0.48,vc_gen:0.29,dur:140,silencios:11.1,musica:0,antiguedad:"Cliente Fiel",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:2,m_s3:2,m_s4:3,m_s5:2,vc_s1:2,vc_s2:3,vc_s3:2,vc_s4:1,vc_s5:1},
+{id:33,fecha:"2026-06-15",motivo:"Diversos",submotivo:"Cambio Datos",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Gestión administrativa completada.",eval_score:4,maslow_gen:0.8,vc_gen:0.41,dur:146,silencios:2.9,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:2,vc_s4:2,vc_s5:3},
+{id:34,fecha:"2026-06-16",motivo:"Seguimiento",submotivo:"CICOS Insatisfecho",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.8,vc_gen:0.34,dur:152,silencios:11.1,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:2,vc_s4:3,vc_s5:3},
+{id:35,fecha:"2026-06-10",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.68,vc_gen:0.44,dur:136,silencios:12.4,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:3,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:3,vc_s3:2,vc_s4:1,vc_s5:1},
+{id:36,fecha:"2026-06-04",motivo:"Diversos",submotivo:"Modificación Póliza",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Gestión administrativa completada.",eval_score:4,maslow_gen:0.84,vc_gen:0.53,dur:153,silencios:12.4,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:2,vc_s2:2,vc_s3:3,vc_s4:3,vc_s5:1},
+{id:37,fecha:"2026-06-03",motivo:"Seguimiento",submotivo:"CICOS Insatisfecho",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.76,vc_gen:0.29,dur:171,silencios:2.8,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:2,vc_s3:2,vc_s4:3,vc_s5:1},
+{id:38,fecha:"2026-06-20",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Málaga",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:2,maslow_gen:0.68,vc_gen:0.39,dur:135,silencios:8.4,musica:9.6,antiguedad:"Cliente Reciente",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:1,vc_s4:2,vc_s5:2},
+{id:39,fecha:"2026-06-06",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Bilbao",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.92,vc_gen:0.31,dur:165,silencios:13.7,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:5,m_s5:4,vc_s1:3,vc_s2:2,vc_s3:1,vc_s4:2,vc_s5:2},
+{id:40,fecha:"2026-06-16",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.55,dur:158,silencios:14.0,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:3,vc_s3:2,vc_s4:1,vc_s5:1},
+{id:41,fecha:"2026-06-21",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Madrid",fcr:"NO",nps:"Detractor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Muy Bajo",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:1.7,maslow_gen:0.56,vc_gen:0.53,dur:168,silencios:9.9,musica:13.2,antiguedad:"Cliente Fiel",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:3,m_s3:3,m_s4:3,m_s5:2,vc_s1:2,vc_s2:3,vc_s3:1,vc_s4:2,vc_s5:1},
+{id:42,fecha:"2026-06-15",motivo:"Incidencia",submotivo:"Facturación Prima",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Detractor",churn:"SI",frustracion:"SI",transferencia:"NO",engagement:"Muy Bajo",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:1.7,maslow_gen:0.56,vc_gen:0.28,dur:148,silencios:3.5,musica:15.5,antiguedad:"Cliente Premium",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:3,m_s3:3,m_s4:3,m_s5:2,vc_s1:2,vc_s2:1,vc_s3:2,vc_s4:3,vc_s5:3},
+{id:43,fecha:"2026-06-19",motivo:"Consulta",submotivo:"Consulta Póliza",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Consulta póliza resuelta satisfactoriamente.",eval_score:4,maslow_gen:0.64,vc_gen:0.38,dur:141,silencios:5.6,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:3,m_s4:3,m_s5:3,vc_s1:1,vc_s2:3,vc_s3:2,vc_s4:2,vc_s5:3},
+{id:44,fecha:"2026-06-07",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Detractor",churn:"SI",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:1.7,maslow_gen:0.56,vc_gen:0.49,dur:175,silencios:10.6,musica:11.0,antiguedad:"Cliente Nuevo",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:3,m_s3:3,m_s4:3,m_s5:2,vc_s1:1,vc_s2:3,vc_s3:2,vc_s4:3,vc_s5:1},
+{id:45,fecha:"2026-06-19",motivo:"Incidencia",submotivo:"Facturación Prima",producto:"Auto",geo:"Barcelona",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:2,maslow_gen:0.84,vc_gen:0.52,dur:138,silencios:6.6,musica:0,antiguedad:"Cliente Premium",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:1,vc_s4:2,vc_s5:1},
+{id:46,fecha:"2026-06-10",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Bilbao",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.88,vc_gen:0.39,dur:160,silencios:7.2,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:4,vc_s1:3,vc_s2:3,vc_s3:3,vc_s4:3,vc_s5:2},
+{id:47,fecha:"2026-06-21",motivo:"Asistencia",submotivo:"Asistencia En Carretera",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Asistencia en carretera. Grúa activada.",eval_score:4,maslow_gen:0.84,vc_gen:0.41,dur:146,silencios:5.9,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:1,vc_s4:2,vc_s5:1},
+{id:48,fecha:"2026-06-17",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Valencia",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.33,dur:164,silencios:3.6,musica:11.8,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:2,vc_s4:3,vc_s5:2},
+{id:49,fecha:"2026-06-08",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.84,vc_gen:0.38,dur:143,silencios:12.5,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:1,vc_s4:1,vc_s5:3},
+{id:50,fecha:"2026-06-13",motivo:"Asistencia",submotivo:"Coche Sustitución",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Detractor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Muy Bajo",resumen:"Asistencia en carretera. Grúa activada.",eval_score:1.7,maslow_gen:0.56,vc_gen:0.32,dur:158,silencios:12.2,musica:8.9,antiguedad:"Cliente Fiel",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:3,m_s3:3,m_s4:3,m_s5:2,vc_s1:3,vc_s2:3,vc_s3:3,vc_s4:3,vc_s5:3},
+{id:51,fecha:"2026-06-09",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.8,vc_gen:0.46,dur:165,silencios:12.8,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:2,vc_s3:1,vc_s4:3,vc_s5:2},
+{id:52,fecha:"2026-06-02",motivo:"Asistencia",submotivo:"Coche Sustitución",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Asistencia en carretera. Grúa activada.",eval_score:5,maslow_gen:0.8,vc_gen:0.52,dur:192,silencios:12.6,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:4,vc_s1:1,vc_s2:2,vc_s3:1,vc_s4:3,vc_s5:1},
+{id:53,fecha:"2026-06-18",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Zaragoza",fcr:"NO",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:2,maslow_gen:0.76,vc_gen:0.38,dur:180,silencios:6.6,musica:0,antiguedad:"Cliente Reciente",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:1,vc_s3:2,vc_s4:3,vc_s5:2},
+{id:54,fecha:"2026-06-05",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.47,dur:132,silencios:5.1,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:2,vc_s4:3,vc_s5:1},
+{id:55,fecha:"2026-06-08",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.84,vc_gen:0.41,dur:163,silencios:12.4,musica:15.7,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:5,m_s4:4,m_s5:4,vc_s1:1,vc_s2:3,vc_s3:3,vc_s4:3,vc_s5:1},
+{id:56,fecha:"2026-06-08",motivo:"Asistencia",submotivo:"Asistencia En Carretera",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Detractor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Asistencia en carretera. Grúa activada.",eval_score:1.7,maslow_gen:0.52,vc_gen:0.49,dur:142,silencios:9.7,musica:0,antiguedad:"Cliente Premium",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:2,m_s3:3,m_s4:3,m_s5:2,vc_s1:2,vc_s2:2,vc_s3:3,vc_s4:1,vc_s5:2},
+{id:57,fecha:"2026-06-09",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.8,vc_gen:0.35,dur:125,silencios:3.3,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:2,vc_s2:2,vc_s3:1,vc_s4:1,vc_s5:3},
+{id:58,fecha:"2026-06-01",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.84,vc_gen:0.31,dur:209,silencios:5.6,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:4,vc_s1:2,vc_s2:3,vc_s3:2,vc_s4:3,vc_s5:2},
+{id:59,fecha:"2026-06-10",motivo:"Incidencia",submotivo:"Incidencia Declaración",producto:"Auto",geo:"Zaragoza",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:4,maslow_gen:0.76,vc_gen:0.55,dur:113,silencios:3.0,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:3,vc_s3:2,vc_s4:2,vc_s5:3},
+{id:60,fecha:"2026-06-02",motivo:"Diversos",submotivo:"Modificación Póliza",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Detractor",churn:"SI",frustracion:"SI",transferencia:"SI",engagement:"Muy Bajo",resumen:"Gestión administrativa completada.",eval_score:1.7,maslow_gen:0.52,vc_gen:0.3,dur:145,silencios:7.6,musica:0,antiguedad:"Cliente Reciente",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:2,m_s3:3,m_s4:3,m_s5:2,vc_s1:2,vc_s2:3,vc_s3:3,vc_s4:2,vc_s5:1},
+{id:61,fecha:"2026-06-13",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Madrid",fcr:"NO",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:2,maslow_gen:0.8,vc_gen:0.39,dur:131,silencios:6.0,musica:0,antiguedad:"Cliente Reciente",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:2,vc_s2:1,vc_s3:2,vc_s4:3,vc_s5:2},
+{id:62,fecha:"2026-06-16",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Valencia",fcr:"NO",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:2,maslow_gen:0.76,vc_gen:0.39,dur:180,silencios:10.1,musica:0,antiguedad:"Cliente Premium",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:1,vc_s4:1,vc_s5:1},
+{id:63,fecha:"2026-06-17",motivo:"Seguimiento",submotivo:"CICOS Seguimiento",producto:"Auto",geo:"Bilbao",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.92,vc_gen:0.54,dur:146,silencios:11.3,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:5,m_s3:5,m_s4:4,m_s5:4,vc_s1:2,vc_s2:3,vc_s3:2,vc_s4:3,vc_s5:2},
+{id:64,fecha:"2026-06-20",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Madrid",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:2,maslow_gen:0.8,vc_gen:0.29,dur:137,silencios:6.0,musica:0,antiguedad:"Cliente Nuevo",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:4,vc_s1:3,vc_s2:2,vc_s3:2,vc_s4:3,vc_s5:2},
+{id:65,fecha:"2026-06-19",motivo:"Asistencia",submotivo:"Asistencia En Carretera",producto:"Auto",geo:"Zaragoza",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Asistencia en carretera. Grúa activada.",eval_score:5,maslow_gen:0.76,vc_gen:0.28,dur:152,silencios:2.4,musica:11.6,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:1,vc_s3:1,vc_s4:2,vc_s5:2},
+{id:66,fecha:"2026-06-10",motivo:"Seguimiento",submotivo:"Pre-apertura CICOS",producto:"Auto",geo:"Zaragoza",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.76,vc_gen:0.3,dur:156,silencios:10.4,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:2,vc_s4:3,vc_s5:1},
+{id:67,fecha:"2026-06-14",motivo:"Asistencia",submotivo:"Asistencia En Carretera",producto:"Auto",geo:"Málaga",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Asistencia bloqueada por expediente sin perito.",eval_score:2,maslow_gen:0.72,vc_gen:0.42,dur:186,silencios:7.3,musica:0,antiguedad:"Cliente Premium",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:1,vc_s4:2,vc_s5:3},
+{id:68,fecha:"2026-06-19",motivo:"Diversos",submotivo:"Modificación Póliza",producto:"Auto",geo:"Zaragoza",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Gestión administrativa completada.",eval_score:4,maslow_gen:0.76,vc_gen:0.53,dur:228,silencios:13.0,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:1,vc_s3:1,vc_s4:2,vc_s5:1},
+{id:69,fecha:"2026-06-15",motivo:"Seguimiento",submotivo:"CICOS Insatisfecho",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:4,maslow_gen:0.84,vc_gen:0.41,dur:169,silencios:4.6,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:4,vc_s1:2,vc_s2:3,vc_s3:3,vc_s4:3,vc_s5:3},
+{id:70,fecha:"2026-06-18",motivo:"Incidencia",submotivo:"Incidencia Declaración",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:5,maslow_gen:0.8,vc_gen:0.54,dur:176,silencios:11.8,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:3,vc_s4:2,vc_s5:1},
+{id:71,fecha:"2026-06-01",motivo:"Consulta",submotivo:"Consulta Cobertura",producto:"Auto",geo:"Zaragoza",fcr:"SI",nps:"Detractor",churn:"SI",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Consulta póliza resuelta satisfactoriamente.",eval_score:1.7,maslow_gen:0.52,vc_gen:0.5,dur:120,silencios:5.5,musica:0,antiguedad:"Cliente Reciente",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:2,m_s3:3,m_s4:3,m_s5:2,vc_s1:3,vc_s2:3,vc_s3:1,vc_s4:1,vc_s5:1},
+{id:72,fecha:"2026-06-21",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Bilbao",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.88,vc_gen:0.53,dur:160,silencios:10.6,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:4,vc_s1:2,vc_s2:3,vc_s3:2,vc_s4:1,vc_s5:2},
+{id:73,fecha:"2026-06-04",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.8,vc_gen:0.4,dur:127,silencios:3.2,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:2,vc_s4:2,vc_s5:2},
+{id:74,fecha:"2026-06-01",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Zaragoza",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:2,maslow_gen:0.76,vc_gen:0.49,dur:148,silencios:2.7,musica:0,antiguedad:"Cliente Reciente",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:1,vc_s4:1,vc_s5:3},
+{id:75,fecha:"2026-06-19",motivo:"Consulta",submotivo:"Consulta Póliza",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Consulta póliza resuelta satisfactoriamente.",eval_score:5,maslow_gen:0.8,vc_gen:0.45,dur:138,silencios:8.9,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:1,vc_s4:3,vc_s5:2},
+{id:76,fecha:"2026-06-05",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.68,vc_gen:0.33,dur:124,silencios:7.8,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:3,m_s4:3,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:1,vc_s4:2,vc_s5:1},
+{id:77,fecha:"2026-06-10",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Zaragoza",fcr:"SI",nps:"Detractor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Muy Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:1.7,maslow_gen:0.52,vc_gen:0.41,dur:143,silencios:5.8,musica:8.6,antiguedad:"Cliente Premium",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:3,m_s3:3,m_s4:2,m_s5:2,vc_s1:2,vc_s2:1,vc_s3:3,vc_s4:2,vc_s5:1},
+{id:78,fecha:"2026-06-15",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.76,vc_gen:0.48,dur:155,silencios:12.5,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:2,vc_s4:3,vc_s5:3},
+{id:79,fecha:"2026-06-15",motivo:"Asistencia",submotivo:"Asistencia En Carretera",producto:"Auto",geo:"Málaga",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Asistencia bloqueada por expediente sin perito.",eval_score:2,maslow_gen:0.72,vc_gen:0.31,dur:148,silencios:7.9,musica:0,antiguedad:"Cliente Reciente",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:3,vc_s4:3,vc_s5:1},
+{id:80,fecha:"2026-06-02",motivo:"Diversos",submotivo:"Modificación Póliza",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Detractor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Muy Bajo",resumen:"Gestión administrativa completada.",eval_score:1.7,maslow_gen:0.56,vc_gen:0.4,dur:169,silencios:13.2,musica:0,antiguedad:"Cliente Premium",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:3,m_s3:3,m_s4:3,m_s5:2,vc_s1:2,vc_s2:2,vc_s3:2,vc_s4:3,vc_s5:1},
+{id:81,fecha:"2026-06-20",motivo:"Seguimiento",submotivo:"Pre-apertura CICOS",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.84,vc_gen:0.51,dur:136,silencios:5.3,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:2,vc_s2:1,vc_s3:3,vc_s4:2,vc_s5:1},
+{id:82,fecha:"2026-06-11",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.4,dur:143,silencios:4.9,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:1,vc_s3:2,vc_s4:3,vc_s5:1},
+{id:83,fecha:"2026-06-02",motivo:"Diversos",submotivo:"Modificación Póliza",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Detractor",churn:"SI",frustracion:"SI",transferencia:"NO",engagement:"Muy Bajo",resumen:"Gestión administrativa completada.",eval_score:1.7,maslow_gen:0.56,vc_gen:0.51,dur:153,silencios:3.3,musica:8.2,antiguedad:"Cliente Nuevo",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:3,m_s3:3,m_s4:3,m_s5:2,vc_s1:3,vc_s2:2,vc_s3:3,vc_s4:2,vc_s5:1},
+{id:84,fecha:"2026-06-06",motivo:"Consulta",submotivo:"Consulta Póliza",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Detractor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Muy Bajo",resumen:"Consulta póliza resuelta satisfactoriamente.",eval_score:1.7,maslow_gen:0.56,vc_gen:0.48,dur:121,silencios:12.7,musica:12.0,antiguedad:"Cliente Premium",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:3,m_s3:3,m_s4:3,m_s5:2,vc_s1:1,vc_s2:3,vc_s3:2,vc_s4:2,vc_s5:3},
+{id:85,fecha:"2026-06-06",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.84,vc_gen:0.35,dur:139,silencios:5.7,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:1,vc_s2:1,vc_s3:1,vc_s4:1,vc_s5:3},
+{id:86,fecha:"2026-06-10",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.8,vc_gen:0.45,dur:135,silencios:6.2,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:2,vc_s4:1,vc_s5:1},
+{id:87,fecha:"2026-06-18",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Sevilla",fcr:"NO",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:2,maslow_gen:0.76,vc_gen:0.4,dur:150,silencios:9.4,musica:0,antiguedad:"Cliente Reciente",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:1,vc_s4:3,vc_s5:1},
+{id:88,fecha:"2026-06-17",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.48,dur:170,silencios:5.0,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:1,vc_s3:1,vc_s4:1,vc_s5:2},
+{id:89,fecha:"2026-06-10",motivo:"Incidencia",submotivo:"Incidencia Declaración",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:4,maslow_gen:0.88,vc_gen:0.38,dur:127,silencios:6.6,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:4,vc_s1:1,vc_s2:3,vc_s3:2,vc_s4:3,vc_s5:2},
+{id:90,fecha:"2026-06-17",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.76,vc_gen:0.46,dur:157,silencios:13.8,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:2,vc_s4:1,vc_s5:2},
+{id:91,fecha:"2026-06-09",motivo:"Seguimiento",submotivo:"CICOS Pre-apertura Frustración",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.84,vc_gen:0.51,dur:181,silencios:9.2,musica:9.8,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:4,vc_s1:3,vc_s2:1,vc_s3:1,vc_s4:2,vc_s5:3},
+{id:92,fecha:"2026-06-03",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Málaga",fcr:"SI",nps:"Detractor",churn:"SI",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:1.7,maslow_gen:0.4,vc_gen:0.44,dur:152,silencios:3.3,musica:10.5,antiguedad:"Cliente Fiel",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:2,m_s2:2,m_s3:2,m_s4:2,m_s5:2,vc_s1:2,vc_s2:1,vc_s3:1,vc_s4:1,vc_s5:2},
+{id:93,fecha:"2026-06-03",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.84,vc_gen:0.35,dur:124,silencios:4.1,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:5,m_s4:4,m_s5:4,vc_s1:2,vc_s2:2,vc_s3:3,vc_s4:2,vc_s5:1},
+{id:94,fecha:"2026-06-19",motivo:"Asistencia",submotivo:"Asistencia En Carretera",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Asistencia en carretera. Grúa activada.",eval_score:5,maslow_gen:0.76,vc_gen:0.49,dur:159,silencios:8.4,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:1,vc_s3:2,vc_s4:2,vc_s5:2},
+{id:95,fecha:"2026-06-13",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Zaragoza",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.72,vc_gen:0.34,dur:122,silencios:5.2,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:1,vc_s3:1,vc_s4:3,vc_s5:1},
+{id:96,fecha:"2026-06-22",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.54,dur:120,silencios:11.3,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:2,vc_s3:1,vc_s4:2,vc_s5:3},
+{id:97,fecha:"2026-06-16",motivo:"Seguimiento",submotivo:"CICOS Insatisfecho",producto:"Auto",geo:"Zaragoza",fcr:"NO",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Seguimiento CICOS. Cliente insatisfecho por demoras.",eval_score:2,maslow_gen:0.72,vc_gen:0.53,dur:165,silencios:2.4,musica:0,antiguedad:"Cliente Premium",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:3,vc_s3:3,vc_s4:3,vc_s5:1},
+{id:98,fecha:"2026-06-22",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.8,vc_gen:0.36,dur:163,silencios:7.3,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:3,vc_s4:2,vc_s5:1},
+{id:99,fecha:"2026-06-16",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Detractor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:1.7,maslow_gen:0.56,vc_gen:0.43,dur:174,silencios:6.6,musica:10.8,antiguedad:"Cliente Nuevo",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:3,m_s3:3,m_s4:3,m_s5:2,vc_s1:3,vc_s2:1,vc_s3:2,vc_s4:1,vc_s5:2},
+{id:100,fecha:"2026-06-14",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.76,vc_gen:0.36,dur:194,silencios:10.4,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:2,vc_s4:1,vc_s5:3},
+{id:101,fecha:"2026-06-10",motivo:"Seguimiento",submotivo:"CICOS Insatisfecho",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.84,vc_gen:0.53,dur:165,silencios:13.0,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:4,vc_s1:1,vc_s2:2,vc_s3:3,vc_s4:3,vc_s5:1},
+{id:102,fecha:"2026-06-21",motivo:"Asistencia",submotivo:"Coche Sustitución",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Asistencia en carretera. Grúa activada.",eval_score:5,maslow_gen:0.76,vc_gen:0.46,dur:204,silencios:12.1,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:3,vc_s4:3,vc_s5:1},
+{id:103,fecha:"2026-06-03",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.29,dur:133,silencios:5.9,musica:13.3,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:2,vc_s4:2,vc_s5:3},
+{id:104,fecha:"2026-06-01",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.68,vc_gen:0.46,dur:162,silencios:8.9,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:4,m_s5:2,vc_s1:2,vc_s2:1,vc_s3:1,vc_s4:1,vc_s5:2},
+{id:105,fecha:"2026-06-11",motivo:"Seguimiento",submotivo:"CICOS Pre-apertura Frustración",producto:"Auto",geo:"Málaga",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Cliente insatisfecho por demoras.",eval_score:2,maslow_gen:0.68,vc_gen:0.38,dur:145,silencios:6.6,musica:0,antiguedad:"Cliente Nuevo",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:3,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:1,vc_s4:1,vc_s5:2},
+{id:106,fecha:"2026-06-17",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Zaragoza",fcr:"NO",nps:"Detractor",churn:"SI",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:1.7,maslow_gen:0.48,vc_gen:0.3,dur:154,silencios:9.9,musica:0,antiguedad:"Cliente Premium",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:2,m_s3:3,m_s4:2,m_s5:2,vc_s1:1,vc_s2:3,vc_s3:2,vc_s4:1,vc_s5:1},
+{id:107,fecha:"2026-06-09",motivo:"Consulta",submotivo:"Consulta Cobertura",producto:"Auto",geo:"Valencia",fcr:"NO",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Consulta póliza resuelta satisfactoriamente.",eval_score:2,maslow_gen:0.76,vc_gen:0.49,dur:121,silencios:2.5,musica:8.3,antiguedad:"Cliente Nuevo",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:2,vc_s4:1,vc_s5:3},
+{id:108,fecha:"2026-06-16",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.33,dur:137,silencios:10.4,musica:14.9,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:2,vc_s4:1,vc_s5:1},
+{id:109,fecha:"2026-06-06",motivo:"Asistencia",submotivo:"Asistencia En Carretera",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Asistencia en carretera. Grúa activada.",eval_score:5,maslow_gen:0.76,vc_gen:0.36,dur:133,silencios:9.5,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:1,vc_s4:1,vc_s5:3},
+{id:110,fecha:"2026-06-22",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.4,dur:128,silencios:4.8,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:3,vc_s4:2,vc_s5:2},
+{id:111,fecha:"2026-06-17",motivo:"Asistencia",submotivo:"Coche Sustitución",producto:"Auto",geo:"Bilbao",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Asistencia en carretera. Grúa activada.",eval_score:5,maslow_gen:0.88,vc_gen:0.51,dur:177,silencios:5.2,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:5,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:1,vc_s4:3,vc_s5:1},
+{id:112,fecha:"2026-06-21",motivo:"Consulta",submotivo:"Consulta Póliza",producto:"Auto",geo:"Bilbao",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Consulta póliza resuelta satisfactoriamente.",eval_score:5,maslow_gen:0.84,vc_gen:0.46,dur:145,silencios:8.6,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:4,vc_s1:2,vc_s2:1,vc_s3:1,vc_s4:1,vc_s5:1},
+{id:113,fecha:"2026-06-16",motivo:"Seguimiento",submotivo:"Pre-apertura CICOS",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:4,maslow_gen:0.76,vc_gen:0.5,dur:151,silencios:10.0,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:1,vc_s4:1,vc_s5:1},
+{id:114,fecha:"2026-06-09",motivo:"Seguimiento",submotivo:"Pre-apertura CICOS",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.84,vc_gen:0.45,dur:148,silencios:2.4,musica:10.3,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:4,vc_s1:1,vc_s2:2,vc_s3:1,vc_s4:3,vc_s5:1},
+{id:115,fecha:"2026-06-10",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.8,vc_gen:0.45,dur:126,silencios:3.8,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:3,vc_s4:2,vc_s5:2},
+{id:116,fecha:"2026-06-22",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.72,vc_gen:0.48,dur:208,silencios:7.8,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:3,vc_s4:1,vc_s5:1},
+{id:117,fecha:"2026-06-16",motivo:"Incidencia",submotivo:"Incidencia Declaración",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:5,maslow_gen:0.76,vc_gen:0.37,dur:181,silencios:6.8,musica:11.1,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:1,vc_s3:1,vc_s4:2,vc_s5:2},
+{id:118,fecha:"2026-06-14",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.54,dur:160,silencios:6.8,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:1,vc_s4:3,vc_s5:2},
+{id:119,fecha:"2026-06-17",motivo:"Incidencia",submotivo:"Facturación Prima",producto:"Auto",geo:"Valencia",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:2,maslow_gen:0.72,vc_gen:0.32,dur:174,silencios:3.5,musica:0,antiguedad:"Cliente Fiel",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:3,vc_s4:3,vc_s5:1},
+{id:120,fecha:"2026-06-03",motivo:"Seguimiento",submotivo:"Pre-apertura CICOS",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.8,vc_gen:0.31,dur:164,silencios:7.9,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:4,vc_s1:2,vc_s2:1,vc_s3:3,vc_s4:1,vc_s5:2},
+{id:121,fecha:"2026-06-08",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.68,vc_gen:0.38,dur:137,silencios:10.3,musica:13.2,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:3,m_s2:4,m_s3:3,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:1,vc_s4:2,vc_s5:3},
+{id:122,fecha:"2026-06-15",motivo:"Incidencia",submotivo:"Facturación Prima",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:5,maslow_gen:0.76,vc_gen:0.31,dur:175,silencios:8.9,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:1,vc_s4:2,vc_s5:1},
+{id:123,fecha:"2026-06-20",motivo:"Seguimiento",submotivo:"CICOS Seguimiento",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:4,maslow_gen:0.76,vc_gen:0.35,dur:133,silencios:10.2,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:2,vc_s4:2,vc_s5:3},
+{id:124,fecha:"2026-06-12",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.42,dur:163,silencios:12.6,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:2,vc_s3:2,vc_s4:1,vc_s5:3},
+{id:125,fecha:"2026-06-18",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.84,vc_gen:0.52,dur:154,silencios:10.7,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:1,vc_s4:1,vc_s5:2},
+{id:126,fecha:"2026-06-08",motivo:"Asistencia",submotivo:"Asistencia En Carretera",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Asistencia en carretera. Grúa activada.",eval_score:4,maslow_gen:0.8,vc_gen:0.47,dur:157,silencios:2.5,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:2,vc_s4:3,vc_s5:3},
+{id:127,fecha:"2026-06-07",motivo:"Seguimiento",submotivo:"Pre-apertura CICOS",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.76,vc_gen:0.4,dur:159,silencios:4.9,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:2,vc_s3:3,vc_s4:3,vc_s5:2},
+{id:128,fecha:"2026-06-08",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Bilbao",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.92,vc_gen:0.37,dur:114,silencios:12.7,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:5,m_s5:4,vc_s1:2,vc_s2:2,vc_s3:2,vc_s4:2,vc_s5:3},
+{id:129,fecha:"2026-06-14",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.72,vc_gen:0.31,dur:144,silencios:9.4,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:1,vc_s3:2,vc_s4:1,vc_s5:1},
+{id:130,fecha:"2026-06-19",motivo:"Asistencia",submotivo:"Asistencia En Carretera",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Asistencia en carretera. Grúa activada.",eval_score:5,maslow_gen:0.68,vc_gen:0.32,dur:150,silencios:10.2,musica:12.3,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:3,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:1,vc_s4:2,vc_s5:1},
+{id:131,fecha:"2026-06-13",motivo:"Incidencia",submotivo:"Incidencia Declaración",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:5,maslow_gen:0.76,vc_gen:0.38,dur:184,silencios:9.4,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:3,vc_s4:3,vc_s5:2},
+{id:132,fecha:"2026-06-06",motivo:"Seguimiento",submotivo:"CICOS Pre-apertura Frustración",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:4,maslow_gen:0.72,vc_gen:0.34,dur:134,silencios:7.4,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:3,vc_s4:2,vc_s5:3},
+{id:133,fecha:"2026-06-09",motivo:"Asistencia",submotivo:"Coche Sustitución",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Asistencia en carretera. Grúa activada.",eval_score:4,maslow_gen:0.76,vc_gen:0.37,dur:137,silencios:10.9,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:1,vc_s4:2,vc_s5:3},
+{id:134,fecha:"2026-06-12",motivo:"Seguimiento",submotivo:"CICOS Insatisfecho",producto:"Auto",geo:"Zaragoza",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.72,vc_gen:0.5,dur:144,silencios:5.2,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:1,vc_s3:1,vc_s4:1,vc_s5:3},
+{id:135,fecha:"2026-06-17",motivo:"Diversos",submotivo:"Cambio Datos",producto:"Auto",geo:"Valencia",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Gestión diversa no completada.",eval_score:2,maslow_gen:0.76,vc_gen:0.39,dur:188,silencios:11.2,musica:0,antiguedad:"Cliente Nuevo",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:2,vc_s4:1,vc_s5:1},
+{id:136,fecha:"2026-06-05",motivo:"Seguimiento",submotivo:"Pre-apertura CICOS",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.76,vc_gen:0.3,dur:148,silencios:2.3,musica:8.0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:1,vc_s4:2,vc_s5:2},
+{id:137,fecha:"2026-06-05",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.84,vc_gen:0.47,dur:153,silencios:3.8,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:3,vc_s4:3,vc_s5:2},
+{id:138,fecha:"2026-06-17",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.76,vc_gen:0.45,dur:188,silencios:8.0,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:3,vc_s3:2,vc_s4:1,vc_s5:3},
+{id:139,fecha:"2026-06-19",motivo:"Seguimiento",submotivo:"CICOS Insatisfecho",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:4,maslow_gen:0.84,vc_gen:0.39,dur:149,silencios:3.7,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:2,vc_s2:2,vc_s3:1,vc_s4:2,vc_s5:2},
+{id:140,fecha:"2026-06-16",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Bilbao",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.88,vc_gen:0.33,dur:135,silencios:10.8,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:5,m_s5:4,vc_s1:2,vc_s2:3,vc_s3:1,vc_s4:3,vc_s5:3},
+{id:141,fecha:"2026-06-08",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Zaragoza",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.76,vc_gen:0.42,dur:154,silencios:10.7,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:3,vc_s4:2,vc_s5:2},
+{id:142,fecha:"2026-06-13",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Detractor",churn:"SI",frustracion:"SI",transferencia:"NO",engagement:"Muy Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:1.7,maslow_gen:0.56,vc_gen:0.36,dur:205,silencios:13.0,musica:0,antiguedad:"Cliente Reciente",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:3,m_s2:3,m_s3:3,m_s4:3,m_s5:2,vc_s1:2,vc_s2:2,vc_s3:1,vc_s4:2,vc_s5:3},
+{id:143,fecha:"2026-06-07",motivo:"Consulta",submotivo:"Consulta Póliza",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Consulta póliza resuelta satisfactoriamente.",eval_score:4,maslow_gen:0.84,vc_gen:0.48,dur:106,silencios:7.1,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:2,vc_s2:1,vc_s3:3,vc_s4:3,vc_s5:3},
+{id:144,fecha:"2026-06-09",motivo:"Seguimiento",submotivo:"CICOS Insatisfecho",producto:"Auto",geo:"Bilbao",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.92,vc_gen:0.41,dur:152,silencios:6.2,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:5,m_s5:4,vc_s1:2,vc_s2:1,vc_s3:1,vc_s4:3,vc_s5:1},
+{id:145,fecha:"2026-06-15",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.76,vc_gen:0.48,dur:169,silencios:8.6,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:3,vc_s4:2,vc_s5:2},
+{id:146,fecha:"2026-06-02",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.8,vc_gen:0.33,dur:164,silencios:10.7,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:1,vc_s3:1,vc_s4:2,vc_s5:3},
+{id:147,fecha:"2026-06-17",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Málaga",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:2,maslow_gen:0.68,vc_gen:0.52,dur:127,silencios:7.3,musica:0,antiguedad:"Cliente Reciente",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:3,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:3,vc_s4:1,vc_s5:3},
+{id:148,fecha:"2026-06-19",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Sevilla",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.8,vc_gen:0.35,dur:164,silencios:3.0,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:2,vc_s4:2,vc_s5:2},
+{id:149,fecha:"2026-06-03",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Barcelona",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.3,dur:125,silencios:7.0,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:1,vc_s3:2,vc_s4:3,vc_s5:2},
+{id:150,fecha:"2026-06-19",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.84,vc_gen:0.28,dur:154,silencios:10.1,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:2,vc_s4:2,vc_s5:3},
+{id:151,fecha:"2026-06-19",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Barcelona",fcr:"NO",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:2,maslow_gen:0.76,vc_gen:0.33,dur:180,silencios:3.8,musica:0,antiguedad:"Cliente Fiel",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:1,vc_s4:1,vc_s5:2},
+{id:152,fecha:"2026-06-07",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Barcelona",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.8,vc_gen:0.32,dur:181,silencios:7.5,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:1,vc_s4:3,vc_s5:1},
+{id:153,fecha:"2026-06-21",motivo:"Consulta",submotivo:"Consulta Cobertura",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Consulta póliza resuelta satisfactoriamente.",eval_score:5,maslow_gen:0.8,vc_gen:0.54,dur:121,silencios:3.2,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:3,vc_s4:3,vc_s5:1},
+{id:154,fecha:"2026-06-14",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Zaragoza",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:2,maslow_gen:0.72,vc_gen:0.5,dur:157,silencios:11.2,musica:0,antiguedad:"Cliente Premium",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:3,vc_s4:3,vc_s5:3},
+{id:155,fecha:"2026-06-16",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Zaragoza",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.43,dur:135,silencios:7.7,musica:11.1,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:3,vc_s4:2,vc_s5:2},
+{id:156,fecha:"2026-06-14",motivo:"Asistencia",submotivo:"Asistencia En Carretera",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Asistencia en carretera. Grúa activada.",eval_score:4,maslow_gen:0.76,vc_gen:0.54,dur:191,silencios:9.6,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:1,vc_s3:3,vc_s4:1,vc_s5:2},
+{id:157,fecha:"2026-06-13",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Sevilla",fcr:"NO",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Siniestro auto. Expediente pendiente de perito.",eval_score:2,maslow_gen:0.76,vc_gen:0.38,dur:159,silencios:8.7,musica:15.8,antiguedad:"Cliente Premium",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:2,vc_s4:1,vc_s5:3},
+{id:158,fecha:"2026-06-04",motivo:"Seguimiento",submotivo:"Pre-apertura CICOS",producto:"Auto",geo:"Bilbao",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.92,vc_gen:0.53,dur:162,silencios:13.6,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:5,m_s3:5,m_s4:4,m_s5:4,vc_s1:3,vc_s2:1,vc_s3:3,vc_s4:3,vc_s5:3},
+{id:159,fecha:"2026-06-22",motivo:"Seguimiento",submotivo:"CICOS Seguimiento",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.76,vc_gen:0.52,dur:173,silencios:13.4,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:3,vc_s3:3,vc_s4:3,vc_s5:3},
+{id:160,fecha:"2026-06-14",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.8,vc_gen:0.4,dur:131,silencios:5.8,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:2,vc_s4:2,vc_s5:1},
+{id:161,fecha:"2026-06-06",motivo:"Seguimiento",submotivo:"CICOS Pre-apertura Frustración",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.8,vc_gen:0.49,dur:144,silencios:8.3,musica:9.8,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:2,vc_s3:1,vc_s4:1,vc_s5:2},
+{id:162,fecha:"2026-06-10",motivo:"Consulta",submotivo:"Consulta Cobertura",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Consulta póliza resuelta satisfactoriamente.",eval_score:5,maslow_gen:0.8,vc_gen:0.37,dur:108,silencios:14.0,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:5,m_s4:4,m_s5:3,vc_s1:1,vc_s2:1,vc_s3:2,vc_s4:2,vc_s5:3},
+{id:163,fecha:"2026-06-15",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.43,dur:136,silencios:7.6,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:1,vc_s4:1,vc_s5:2},
+{id:164,fecha:"2026-06-06",motivo:"Asistencia",submotivo:"Asistencia En Carretera",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Asistencia en carretera. Grúa activada.",eval_score:4,maslow_gen:0.76,vc_gen:0.4,dur:176,silencios:10.2,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:1,vc_s3:3,vc_s4:1,vc_s5:2},
+{id:165,fecha:"2026-06-09",motivo:"Consulta",submotivo:"Consulta Cobertura",producto:"Auto",geo:"Málaga",fcr:"NO",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Consulta póliza resuelta satisfactoriamente.",eval_score:2,maslow_gen:0.72,vc_gen:0.3,dur:137,silencios:2.0,musica:0,antiguedad:"Cliente Fiel",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:1,vc_s4:2,vc_s5:1},
+{id:166,fecha:"2026-06-17",motivo:"Asistencia",submotivo:"Asistencia En Carretera",producto:"Auto",geo:"Zaragoza",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Asistencia en carretera. Grúa activada.",eval_score:5,maslow_gen:0.76,vc_gen:0.35,dur:150,silencios:2.9,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:3,vc_s3:3,vc_s4:3,vc_s5:1},
+{id:167,fecha:"2026-06-09",motivo:"Siniestro",submotivo:"Apertura Sin Encargo Pericial",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.68,vc_gen:0.3,dur:131,silencios:11.4,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:3,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:1,vc_s4:3,vc_s5:1},
+{id:168,fecha:"2026-06-22",motivo:"Siniestro",submotivo:"Hogar Agua",producto:"Hogar",geo:"Madrid",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"SI",transferencia:"NO",engagement:"Bajo",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.88,vc_gen:0.42,dur:188,silencios:8.1,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:4,m_s5:4,vc_s1:1,vc_s2:2,vc_s3:3,vc_s4:2,vc_s5:3},
+{id:169,fecha:"2026-06-19",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.76,vc_gen:0.36,dur:141,silencios:6.0,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:3,vc_s4:1,vc_s5:1},
+{id:170,fecha:"2026-06-18",motivo:"Incidencia",submotivo:"Incidencia Declaración",producto:"Auto",geo:"Zaragoza",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:4,maslow_gen:0.72,vc_gen:0.55,dur:177,silencios:11.9,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:2,vc_s4:2,vc_s5:2},
+{id:171,fecha:"2026-06-13",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Málaga",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.72,vc_gen:0.36,dur:154,silencios:12.1,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:3,m_s5:3,vc_s1:3,vc_s2:3,vc_s3:1,vc_s4:2,vc_s5:2},
+{id:172,fecha:"2026-06-18",motivo:"Siniestro",submotivo:"Con Lesionados",producto:"Auto",geo:"Valencia",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.72,vc_gen:0.38,dur:164,silencios:5.4,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:1,vc_s3:3,vc_s4:3,vc_s5:1},
+{id:173,fecha:"2026-06-19",motivo:"Asistencia",submotivo:"Asistencia En Carretera",producto:"Auto",geo:"Barcelona",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Asistencia en carretera. Grúa activada.",eval_score:4,maslow_gen:0.8,vc_gen:0.31,dur:164,silencios:7.1,musica:0,antiguedad:"Cliente Fiel",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:3,vc_s3:3,vc_s4:2,vc_s5:1},
+{id:174,fecha:"2026-06-06",motivo:"Seguimiento",submotivo:"CICOS Seguimiento",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:4,maslow_gen:0.76,vc_gen:0.29,dur:147,silencios:3.9,musica:0,antiguedad:"Cliente Nuevo",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:3,vc_s4:1,vc_s5:1},
+{id:175,fecha:"2026-06-18",motivo:"Siniestro",submotivo:"Por Robo Vehículo",producto:"Auto",geo:"Bilbao",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Apertura siniestro auto resuelta.",eval_score:4,maslow_gen:0.92,vc_gen:0.51,dur:180,silencios:13.7,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:5,m_s4:5,m_s5:4,vc_s1:2,vc_s2:2,vc_s3:3,vc_s4:1,vc_s5:1},
+{id:176,fecha:"2026-06-03",motivo:"Incidencia",submotivo:"Incidencia Declaración",producto:"Auto",geo:"Madrid",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Incidencia facturación. Sin resolución en primera llamada.",eval_score:5,maslow_gen:0.76,vc_gen:0.53,dur:132,silencios:6.0,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:3,vc_s2:2,vc_s3:3,vc_s4:1,vc_s5:3},
+{id:177,fecha:"2026-06-04",motivo:"Siniestro",submotivo:"Apertura Con Encargo Pericial",producto:"Auto",geo:"Zaragoza",fcr:"SI",nps:"Promotor",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Alto",resumen:"Apertura siniestro auto resuelta.",eval_score:5,maslow_gen:0.76,vc_gen:0.3,dur:173,silencios:6.7,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:2,vc_s2:3,vc_s3:2,vc_s4:3,vc_s5:1},
+{id:178,fecha:"2026-06-06",motivo:"Seguimiento",submotivo:"CICOS Seguimiento",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:5,maslow_gen:0.84,vc_gen:0.36,dur:146,silencios:6.9,musica:0,antiguedad:"Cliente Premium",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:5,m_s2:4,m_s3:4,m_s4:4,m_s5:4,vc_s1:1,vc_s2:1,vc_s3:3,vc_s4:3,vc_s5:1},
+{id:179,fecha:"2026-06-15",motivo:"Seguimiento",submotivo:"Pre-apertura CICOS",producto:"Auto",geo:"Málaga",fcr:"NO",nps:"Pasivo",churn:"NO",frustracion:"SI",transferencia:"SI",engagement:"Bajo",resumen:"Seguimiento CICOS. Cliente insatisfecho por demoras.",eval_score:2,maslow_gen:0.68,vc_gen:0.31,dur:184,silencios:9.4,musica:0,antiguedad:"Cliente Fiel",e_saludo:2,e_idcli:0,e_motivo:5,e_proc:0,e_esperas:0,e_gestion:0,e_cierre:0,e_empatia:0,e_tono:5,e_escucha:5,m_s1:4,m_s2:3,m_s3:4,m_s4:3,m_s5:3,vc_s1:1,vc_s2:2,vc_s3:1,vc_s4:3,vc_s5:3},
+{id:180,fecha:"2026-06-21",motivo:"Seguimiento",submotivo:"Pre-apertura CICOS",producto:"Auto",geo:"Sevilla",fcr:"SI",nps:"Pasivo",churn:"NO",frustracion:"NO",transferencia:"NO",engagement:"Medio",resumen:"Seguimiento CICOS. Datos confirmados.",eval_score:4,maslow_gen:0.76,vc_gen:0.43,dur:184,silencios:7.9,musica:0,antiguedad:"Cliente Reciente",e_saludo:5,e_idcli:5,e_motivo:5,e_proc:5,e_esperas:0,e_gestion:5,e_cierre:5,e_empatia:5,e_tono:5,e_escucha:5,m_s1:4,m_s2:4,m_s3:4,m_s4:4,m_s5:3,vc_s1:1,vc_s2:3,vc_s3:1,vc_s4:1,vc_s5:2}];
+
+let FC=[...RAW],tPage=1,PS=15,activeAg=null;
+const GEOS=['Madrid','Barcelona','Valencia','Sevilla','Málaga','Zaragoza','Bilbao'];
+const MOTIVOS=['Siniestro','Seguimiento','Asistencia','Incidencia','Consulta','Diversos'];
+const CHARTS={};
+
+const AGENTS=[
+  {id:'A1',initials:'A1',name:'Agente Resumen',desc:'Resumen ejecutivo y motivo',tags:['Transcripción','NLP'],detail:'Genera automáticamente resumen ejecutivo de cada llamada incluyendo motivo y resultado.',radarLabels:['Precisión','Cobertura','Concisión','Contexto','Velocidad'],scoreKey:c=>c.eval_score>0?85:20,radarFn:c=>[c.eval_score/5,c.maslow_gen,c.vc_gen,c.fcr==='SI'?1:0.3,0.9]},
+  {id:'A2',initials:'A2',name:'Agente Experiencia',desc:'CX pirámide de Maslow',tags:['Maslow','NPS','CSAT'],detail:'Evalúa experiencia cliente según pirámide de Maslow S1-S5.',radarLabels:['S1 Funcional','S2 Seguridad','S3 Social','S4 Estima','S5 Autorrealiz.'],scoreKey:c=>c.maslow_gen*100,radarFn:c=>[c.m_s1/5,c.m_s2/5,c.m_s3/5,c.m_s4/5,c.m_s5/5]},
+  {id:'A3',initials:'A3',name:'Agente Calidad',desc:'Auditoría 100% llamadas',tags:['QA','Score'],detail:'Audita 100% de llamadas evaluando 10 dimensiones de calidad.',radarLabels:['Saludo','Identific.','Procedim.','Empatía','Cierre'],scoreKey:c=>c.eval_score/5*100,radarFn:c=>[c.e_saludo/5,c.e_idcli/5,c.e_proc/5,c.e_empatia/5,c.e_cierre/5]},
+  {id:'A4',initials:'A4',name:'Agente Venta',desc:'Oportunidades venta cruzada',tags:['Cross-sell','Revenue'],detail:'Detecta oportunidades de venta cruzada evaluando propensión al upsell.',radarLabels:['Propensión','Apertura','Timing','Relevancia','Seguimiento'],scoreKey:c=>c.vc_gen*100,radarFn:c=>[c.vc_s1/3,c.vc_s2/3,c.vc_s3/3,c.vc_s4/3,c.vc_s5/3]},
+  {id:'A5',initials:'A5',name:'Agente Audio',desc:'Speech analytics y silencios',tags:['Audio','AHT'],detail:'Analiza silencios, música en espera y duración de llamadas.',radarLabels:['Silencios','Música','Duración','Claridad','AHT'],scoreKey:c=>c.musica>0?35:80,radarFn:c=>[1-Math.min(c.silencios/15,1),c.musica===0?1:0.3,1-Math.min(c.dur/250,1),0.8,0.75]}
+];
+
+function nav(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
+  if(page==='resumen'){renderHero();renderResumenCharts();}
+  else if(page==='agentes'){renderAgents();renderAgentCharts();}
+  else if(page==='llamadas'){renderTable();}
+  else if(page==='calidad'){renderCalidad();}
+  else if(page==='experiencia'){renderExperiencia();}
+  else if(page==='ventas'){renderVentas();}
+  else if(page==='audio'){renderAudio();}
+  else if(page==='geo'){renderGeo();}
+  else if(page==='riesgos'){renderRiesgos();}
+}
+document.querySelectorAll('.nav-item').forEach(el=>{
+  el.addEventListener('click',()=>nav(el.dataset.page));
+});
+
+function globalFilter(){
+  const g=document.getElementById('geo-f').value;
+  const m=document.getElementById('mot-f').value;
+  document.getElementById('chart-fl').textContent=[g,m].filter(Boolean).join(' · ')||'Todas las llamadas';
+  FC=RAW.filter(c=>(!g||c.geo===g)&&(!m||c.motivo===m));
+  renderHero();renderResumenCharts();
+}
+
+function avg(arr,fn){return arr.length?arr.reduce((s,c)=>s+fn(c),0)/arr.length:0;}
+function pct(arr,fn){return arr.length?Math.round(arr.filter(fn).length/arr.length*100):0;}
+
+function renderHero(){
+  const fcrP=pct(FC,c=>c.fcr==='SI');
+  const pro=FC.filter(c=>c.nps==='Promotor').length;
+  const det=FC.filter(c=>c.nps==='Detractor').length;
+  const nps=FC.length?Math.round((pro-det)/FC.length*100):0;
+  const scQ=Math.round(avg(FC,c=>c.eval_score/5)*100);
+  const chP=pct(FC,c=>c.churn==='SI');
+  const aht=Math.round(avg(FC,c=>c.dur));
+  document.getElementById('hero-block').innerHTML=`
+  <div class="hero-label">Resumen del periodo · Junio 2026</div>
+  <div class="hero-sub">${FC.length} llamadas analizadas · 5 Agentes IA activos · BigQuery ccaiglobalv01</div>
+  <div class="hero-kpis">
+    <div class="hk"><div class="hk-label">FCR</div><div class="hk-val ${fcrP>=75?'g':fcrP>=60?'a':'r'}">${fcrP}%</div><div class="hk-sub">Resolución en 1ª llamada</div></div>
+    <div class="hk"><div class="hk-label">NPS score</div><div class="hk-val ${nps>=20?'g':nps>=0?'a':'r'}">${nps>0?'+':''}${nps}</div><div class="hk-sub">${pro} promotores · ${det} detractores</div></div>
+    <div class="hk"><div class="hk-label">Score calidad</div><div class="hk-val a">${scQ}%</div><div class="hk-sub">Promedio Agente A3</div></div>
+    <div class="hk"><div class="hk-label">Riesgo churn</div><div class="hk-val ${chP<=8?'g':chP<=15?'a':'r'}">${chP}%</div><div class="hk-sub">${FC.filter(c=>c.churn==='SI').length} expedientes en riesgo</div></div>
+    <div class="hk"><div class="hk-label">AHT promedio</div><div class="hk-val">${aht}s</div><div class="hk-sub">${Math.floor(aht/60)}m ${aht%60}s por llamada</div></div>
+  </div>`;
+}
+
+function mkChart(id,cfg){if(CHARTS[id]){CHARTS[id].destroy()}const c=document.getElementById(id);if(!c)return;CHARTS[id]=new Chart(c,cfg);}
+
+function renderResumenCharts(){
+  const byD={};FC.forEach(c=>{const d=c.fecha.slice(5);if(!byD[d]){byD[d]={calls:0,fcr:0}}byD[d].calls++;if(c.fcr==='SI')byD[d].fcr++;});
+  const dates=Object.keys(byD).sort();
+  mkChart('lineC',{data:{labels:dates,datasets:[{type:'bar',data:dates.map(d=>byD[d].calls),backgroundColor:'rgba(0,59,115,.15)',borderColor:'rgba(0,59,115,.4)',borderWidth:1,yAxisID:'y'},{type:'line',data:dates.map(d=>Math.round(byD[d].fcr/byD[d].calls*100)),borderColor:'#DCA11D',backgroundColor:'transparent',pointBackgroundColor:'#DCA11D',pointRadius:2,tension:.35,borderWidth:1.8,yAxisID:'y1'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:9},maxTicksLimit:10},grid:{display:false}},y:{ticks:{font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}},y1:{position:'right',ticks:{font:{size:9},callback:v=>v+'%'},grid:{display:false},min:0,max:100}}}});
+  const mot={};FC.forEach(c=>{mot[c.motivo]=(mot[c.motivo]||0)+1;});
+  mkChart('donutC',{type:'doughnut',data:{labels:Object.keys(mot),datasets:[{data:Object.values(mot),backgroundColor:['#003B73','#DCA11D','#1a5fa8','#F0B500','#5a8ec7','#8cb4d8'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'62%',plugins:{legend:{position:'right',labels:{font:{size:9},padding:8,boxWidth:10}}}}});
+  const gNPS={};GEOS.forEach(g=>{gNPS[g]={p:0,pa:0,d:0};});FC.forEach(c=>{if(gNPS[c.geo]){if(c.nps==='Promotor')gNPS[c.geo].p++;else if(c.nps==='Pasivo')gNPS[c.geo].pa++;else gNPS[c.geo].d++;}});
+  mkChart('geoC',{type:'bar',data:{labels:GEOS.map(g=>g.slice(0,3)),datasets:[{label:'Promotor',data:GEOS.map(g=>gNPS[g].p),backgroundColor:'#1A8A5A',stack:'s'},{label:'Pasivo',data:GEOS.map(g=>gNPS[g].pa),backgroundColor:'#9CA3AF',stack:'s'},{label:'Detractor',data:GEOS.map(g=>gNPS[g].d),backgroundColor:'#C0392B',stack:'s'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:9},boxWidth:10}}},scales:{x:{ticks:{font:{size:9}},grid:{display:false}},y:{ticks:{font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}}}}});
+  const agAvg=AGENTS.map(a=>Math.min(avg(FC,c=>a.scoreKey(c)),100));
+  mkChart('agentC',{type:'bar',data:{labels:AGENTS.map(a=>a.id),datasets:[{label:'Score',data:agAvg.map(v=>Math.round(v)),backgroundColor:agAvg.map(v=>v>=70?'#1A8A5A':v>=50?'#DCA11D':'#C0392B')}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{min:0,max:100,ticks:{font:{size:9},callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.05)'}},y:{ticks:{font:{size:9}},grid:{display:false}}}}});
+  const bk={'<90s':[],'90-150s':[],'150-210s':[],'>210s':[]};
+  FC.forEach(c=>{if(c.dur<90)bk['<90s'].push(c);else if(c.dur<150)bk['90-150s'].push(c);else if(c.dur<210)bk['150-210s'].push(c);else bk['>210s'].push(c);});
+  const bl=Object.keys(bk);
+  mkChart('durC',{data:{labels:bl,datasets:[{type:'bar',data:bl.map(b=>bk[b].length),backgroundColor:'rgba(0,59,115,.15)',borderColor:'rgba(0,59,115,.4)',borderWidth:1,yAxisID:'y'},{type:'line',data:bl.map(b=>bk[b].length?+(bk[b].reduce((a,c)=>a+c.silencios,0)/bk[b].length).toFixed(1):0),borderColor:'#DCA11D',backgroundColor:'transparent',pointBackgroundColor:'#DCA11D',pointRadius:3,tension:.3,borderWidth:1.8,yAxisID:'y1'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:9},boxWidth:10}}},scales:{x:{ticks:{font:{size:9}},grid:{display:false}},y:{ticks:{font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}},y1:{position:'right',ticks:{font:{size:9}},grid:{display:false}}}}});
+}
+
+function renderAgents(){
+  const grid=document.getElementById('agents-grid');
+  grid.innerHTML=AGENTS.map(a=>{
+    const sc=Math.min(Math.round(avg(RAW,c=>a.scoreKey(c))),100);
+    const isA=activeAg===a.id;
+    return`<div class="agent-card${isA?' active':''}" onclick="toggleAgent('${a.id}')">
+      <div class="agent-head${isA?' lite':''}"><div class="agent-initials">${a.initials}</div>
+      <div><div class="agent-name">${a.name}</div><div class="agent-desc">${a.desc}</div></div></div>
+      <div class="agent-body"><div class="agent-score">${sc}%</div>
+      <div class="agent-bar"><div class="agent-bar-fill" style="width:${sc}%"></div></div>
+      <div class="agent-tags">${a.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div></div>
+    </div>`;
+  }).join('');
+}
+
+function toggleAgent(id){
+  const det=document.getElementById('agent-detail');
+  if(activeAg===id){activeAg=null;det.classList.remove('visible');renderAgents();return;}
+  activeAg=id;renderAgents();
+  const a=AGENTS.find(x=>x.id===id);
+  const sc=Math.min(avg(RAW,c=>a.scoreKey(c)),100).toFixed(1);
+  const rad=a.radarLabels.map((_,i)=>(avg(RAW,c=>a.radarFn(c)[i])*100).toFixed(0));
+  det.classList.add('visible');
+  det.innerHTML=`<div class="detail-header">
+    <div class="detail-badge">${a.initials}</div>
+    <div><div style="font-size:16px;font-weight:700;color:var(--navy)">${a.name}</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:2px;max-width:400px">${a.detail}</div></div>
+    <button onclick="document.getElementById('agent-detail').classList.remove('visible');activeAg=null;renderAgents();" style="margin-left:auto;background:none;border:none;cursor:pointer;font-size:16px;color:var(--muted)">✕</button>
+  </div>
+  ${a.id==='A2'?`
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+    <div style="background:var(--sf2);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Score promedio</div><div style="font-size:24px;font-weight:700;color:var(--navy)">${sc}%</div></div>
+    <div style="background:var(--sf2);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Llamadas analizadas</div><div style="font-size:24px;font-weight:700;color:var(--navy)">${RAW.length}</div></div>
+  </div>
+  <div id="maslow-agent-pyramid"></div>
+  `:`<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div><div style="background:var(--sf2);border-radius:8px;padding:12px;margin-bottom:10px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Score promedio</div><div style="font-size:24px;font-weight:700;color:var(--navy)">${sc}%</div></div>
+    <div style="background:var(--sf2);border-radius:8px;padding:12px"><div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.7px;margin-bottom:4px">Llamadas analizadas</div><div style="font-size:24px;font-weight:700;color:var(--navy)">${RAW.length}</div></div></div>
+    <div style="position:relative;height:200px"><canvas id="radarDet" role="img" aria-label="Radar agente ${a.name}">Radar.</canvas></div>
+  </div>`}`;
+  setTimeout(()=>{
+    if(a.id==='A2'){
+      renderMaslowPyramid('maslow-agent-pyramid',RAW);
+    } else {
+      mkChart('radarDet',{type:'radar',data:{labels:a.radarLabels,datasets:[{label:a.name,data:rad,backgroundColor:'rgba(0,59,115,.1)',borderColor:'#003B73',pointBackgroundColor:'#DCA11D',pointRadius:3,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:100,ticks:{font:{size:9},stepSize:25},pointLabels:{font:{size:9}},grid:{color:'rgba(0,0,0,.07)'},angleLines:{color:'rgba(0,0,0,.07)'}}},plugins:{legend:{display:false}}}});
+    }
+  },50);
+}
+
+function renderAgentCharts(){
+  const agAvg=AGENTS.map(a=>Math.min(Math.round(avg(RAW,c=>a.scoreKey(c))),100));
+  mkChart('agentBarC',{type:'bar',data:{labels:AGENTS.map(a=>a.name.replace('Agente ','')),datasets:[{label:'Score',data:agAvg,backgroundColor:agAvg.map(v=>v>=70?'rgba(26,138,90,.7)':v>=50?'rgba(220,161,29,.7)':'rgba(192,57,43,.7)'),borderColor:agAvg.map(v=>v>=70?'#1A8A5A':v>=50?'#DCA11D':'#C0392B'),borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:100,ticks:{callback:v=>v+'%',font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9}},grid:{display:false}}}}});
+  const scores={5:0,4:0,2:0,1.7:0};RAW.forEach(c=>{if(scores[c.eval_score]!==undefined)scores[c.eval_score]++;else scores[Math.round(c.eval_score)]=( scores[Math.round(c.eval_score)]||0)+1;});
+  mkChart('evalDistC',{type:'bar',data:{labels:['Excelente (5)','Buena (4)','Mejorable (2)','Crítica (1.7)'],datasets:[{data:[RAW.filter(c=>c.eval_score===5).length,RAW.filter(c=>c.eval_score===4).length,RAW.filter(c=>c.eval_score===2).length,RAW.filter(c=>c.eval_score===1.7).length],backgroundColor:['#1A8A5A','#4ade80','#DCA11D','#C0392B']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9}},grid:{display:false}}}}});
+}
+
+function renderTable(){
+  const geo=document.getElementById('llam-geo').value;
+  const mot=document.getElementById('llam-mot').value;
+  const fcr=document.getElementById('llam-fcr').value;
+  const nps=document.getElementById('llam-nps').value;
+  const ch=document.getElementById('llam-churn').value;
+  const q=(document.getElementById('srch').value||'').toLowerCase();
+  const filt=RAW.filter(c=>(!geo||c.geo===geo)&&(!mot||c.motivo===mot)&&(!fcr||c.fcr===fcr)&&(!nps||c.nps===nps)&&(!ch||c.churn===ch)&&(!q||c.resumen.toLowerCase().includes(q)));
+  document.getElementById('llam-count').textContent=filt.length+' registros';
+  const fcrP=pct(filt,c=>c.fcr==='SI');
+  const chP=pct(filt,c=>c.churn==='SI');
+  const scQ=Math.round(avg(filt,c=>c.eval_score/5)*100);
+  const avgDur=Math.round(avg(filt,c=>c.dur));
+  document.getElementById('llam-kpis').innerHTML=[
+    {l:'FCR',v:fcrP+'%',cl:fcrP>=75?'g':fcrP>=60?'a':'r'},
+    {l:'Score calidad',v:scQ+'%',cl:'a'},
+    {l:'Riesgo churn',v:chP+'%',cl:chP<=8?'g':chP<=15?'a':'r'},
+    {l:'AHT promedio',v:avgDur+'s',cl:''}
+  ].map(k=>`<div class="kpi-card ${k.cl}"><div class="kpi-label">${k.l}</div><div class="kpi-value ${k.cl}">${k.v}</div></div>`).join('');
+  const pg=filt.slice((tPage-1)*PS,tPage*PS);
+  document.getElementById('llam-tbody').innerHTML=pg.map(c=>{
+    const nc=c.nps==='Promotor'?'badge-pro':c.nps==='Detractor'?'badge-det':'badge-pas';
+    return`<tr onclick="openModal(${c.id})" style="cursor:pointer">
+      <td>${c.id}</td><td>${c.fecha.slice(5)}</td><td>${c.motivo}</td><td style="font-size:10px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.submotivo}</td><td>${c.geo}</td><td>${c.producto}</td>
+      <td><span class="badge ${c.fcr==='SI'?'badge-y':'badge-n'}">${c.fcr}</span></td>
+      <td><span class="badge ${nc}">${c.nps}</span></td>
+      <td><span class="badge ${c.churn==='SI'?'badge-n':'badge-y'}">${c.churn}</span></td>
+      <td><span class="badge ${c.frustracion==='SI'?'badge-det':'badge-pas'}">${c.frustracion}</span></td>
+      <td>${(c.eval_score/5*100).toFixed(0)}%</td>
+      <td>${(c.maslow_gen*100).toFixed(0)}%</td>
+      <td>${(c.vc_gen*100).toFixed(0)}%</td>
+      <td>${c.dur}s</td></tr>`;
+  }).join('');
+  const tot=Math.ceil(filt.length/PS);
+  document.getElementById('llam-info').textContent=`Pág. ${tPage} de ${tot}`;
+  const pb=document.getElementById('llam-btns');pb.innerHTML='';
+  for(let i=1;i<=Math.min(tot,6);i++){const b=document.createElement('button');b.className='page-btn'+(i===tPage?' active':'');b.textContent=i;b.onclick=(()=>{const pg=i;return()=>{tPage=pg;renderTable();};})();pb.appendChild(b);}
+}
+
+function renderCalidad(){
+  const scQ=Math.round(avg(RAW,c=>c.eval_score/5)*100);
+  const excelente=RAW.filter(c=>c.eval_score===5).length;
+  const criticas=RAW.filter(c=>c.eval_score<=2).length;
+  const dim=[['Saludo','e_saludo',5],['Identificación','e_idcli',5],['Motivo','e_motivo',5],['Procedimiento','e_proc',5],['Gestión','e_gestion',5],['Cierre','e_cierre',5],['Empatía','e_empatia',5],['Tono','e_tono',5],['Escucha','e_escucha',5]];
+  document.getElementById('cal-kpis').innerHTML=[
+    {l:'Score global',v:scQ+'%',cl:'a'},{l:'Llamadas excelentes',v:excelente,cl:'g'},{l:'Llamadas críticas',v:criticas,cl:'r'},{l:'Tasa auditoría',v:'100%',cl:'g'}
+  ].map(k=>`<div class="kpi-card ${k.cl}"><div class="kpi-label">${k.l}</div><div class="kpi-value ${k.cl}">${k.v}</div></div>`).join('');
+  document.getElementById('cal-dims').innerHTML=dim.map(([lbl,key,max])=>{
+    const sc=avg(RAW,c=>c[key]/max)*100;const w=sc.toFixed(0);
+    const col=sc>=80?'#1A8A5A':sc>=60?'#DCA11D':'#C0392B';
+    return`<div class="maslow-row"><div class="maslow-label">${lbl}</div><div class="maslow-bar"><div class="maslow-fill" style="width:${w}%;background:${col}">${w}%</div></div><div class="maslow-pct">${w}%</div></div>`;
+  }).join('');
+  mkChart('calDistC',{type:'bar',data:{labels:['Excelente','Buena','Mejorable','Crítica'],datasets:[{data:[RAW.filter(c=>c.eval_score===5).length,RAW.filter(c=>c.eval_score===4).length,RAW.filter(c=>c.eval_score===2).length,RAW.filter(c=>c.eval_score<=1.8).length],backgroundColor:['#1A8A5A','#4ade80','#DCA11D','#C0392B']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9}},grid:{display:false}}}}});
+  const wk=[{w:'Jun 1-7',calls:RAW.filter(c=>c.fecha<='2026-06-07')},{w:'Jun 8-14',calls:RAW.filter(c=>c.fecha>='2026-06-08'&&c.fecha<='2026-06-14')},{w:'Jun 15-21',calls:RAW.filter(c=>c.fecha>='2026-06-15'&&c.fecha<='2026-06-21')},{w:'Jun 22-28',calls:RAW.filter(c=>c.fecha>='2026-06-22')}];
+  mkChart('calEvolC',{type:'line',data:{labels:wk.map(w=>w.w),datasets:[{label:'Score QA %',data:wk.map(w=>w.calls.length?Math.round(avg(w.calls,c=>c.eval_score/5)*100):0),borderColor:'#003B73',backgroundColor:'rgba(0,59,115,.08)',fill:true,tension:.35,pointBackgroundColor:'#DCA11D',pointRadius:4,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:50,max:100,ticks:{font:{size:9},callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9}},grid:{display:false}}}}});
+  const crit=RAW.filter(c=>c.eval_score<=2).slice(0,8);
+  document.getElementById('cal-crit-tbody').innerHTML=crit.map(c=>{
+    const reason=c.e_idcli==0?'Sin identificación':c.e_proc==0?'Sin procedimiento':c.e_gestion==0?'Sin resolución':'Score bajo';
+    return`<tr><td>${c.id}</td><td>${c.fecha.slice(5)}</td><td>${c.motivo}</td><td>${c.geo}</td><td style="color:var(--red);font-weight:700">${c.eval_score}</td><td style="font-size:10px">${reason}</td></tr>`;
+  }).join('');
+}
+
+function renderMaslowPyramid(containerId, data){
+  const dims=[
+    {sid:'S5',lbl:'Autorrealización',key:'m_s5',desc:'Proactividad, soluciones alternativas y prevención anticipada.',col:'#6B7A8E'},
+    {sid:'S4',lbl:'Estima',key:'m_s4',desc:'Satisfacción, reconocimiento del cliente y señales de fidelidad.',col:'#DCA11D'},
+    {sid:'S3',lbl:'Social',key:'m_s3',desc:'Empatía, tono cercano, personalización y escucha activa.',col:'#F0B500'},
+    {sid:'S2',lbl:'Seguridad',key:'m_s2',desc:'Resolución en 1ª llamada, información clara y confianza percibida.',col:'#1a5fa8'},
+    {sid:'S1',lbl:'Funcional',key:'m_s1',desc:'Accesibilidad, tiempos de espera, fluidez técnica sin fallos.',col:'#003B73'}
+  ];
+  const scores=dims.map(d=>({...d,sc:avg(data,c=>c[d.key]/5)*100}));
+  // SVG pyramid
+  const W=260,rowH=40,base=240,top=28;
+  const totalH=rowH*5;
+  let svgRows='';
+  scores.forEach((d,i)=>{
+    const ratio=(i+1)/5;
+    const w=top+(base-top)*ratio;
+    const x=(W-w)/2;
+    const y=i*rowH;
+    const wNext=i<4?top+(base-top)*(i+2)/5:base;
+    const xNext=(W-wNext)/2;
+    const pts=`${x},${y} ${x+w},${y} ${xNext+wNext},${y+rowH-1} ${xNext},${y+rowH-1}`;
+    svgRows+=`<polygon points="${pts}" fill="${d.col}" stroke="#fff" stroke-width="1.5"/>`;
+    const fs=i===0?9:10;
+    svgRows+=`<text x="${W/2}" y="${y+rowH/2+fs/3}" text-anchor="middle" font-size="${fs}" font-weight="700" fill="#fff" font-family="Segoe UI,sans-serif">${d.sid} · ${d.lbl}</text>`;
+  });
+  const svgPyramid=`<svg viewBox="0 0 ${W} ${totalH}" style="width:100%;max-width:260px;height:${totalH}px;display:block;margin:0 auto 4px">
+    ${svgRows}
+  </svg>`;
+  // Score bars (S1 top → S5 bottom for reading order)
+  const barsHtml=scores.slice().reverse().map(d=>{
+    const w=d.sc.toFixed(0);
+    const status=d.sc>=80?{t:'Óptimo',c:'#1A8A5A'}:d.sc>=60?{t:'Mejorable',c:'#D97706'}:{t:'Crítico',c:'#C0392B'};
+    return`<div style="margin-bottom:10px">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
+        <span style="font-size:9px;font-weight:800;color:#fff;background:${d.col};padding:1px 6px;border-radius:3px">${d.sid}</span>
+        <span style="font-size:11px;font-weight:700;color:var(--navy)">${d.lbl}</span>
+        <span style="font-size:9px;color:${status.c};font-weight:600;margin-left:auto">${status.t}</span>
+      </div>
+      <div style="font-size:9px;color:var(--muted);margin-bottom:4px">${d.desc}</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="flex:1;height:18px;background:var(--sf2);border-radius:4px;overflow:hidden">
+          <div style="width:${w}%;height:100%;background:${d.col};border-radius:4px;display:flex;align-items:center;padding:0 6px;font-size:9px;font-weight:700;color:#fff">${w}%</div>
+        </div>
+        <span style="font-size:11px;font-weight:700;color:var(--navy);min-width:32px;text-align:right">${w}%</span>
+      </div>
+    </div>`;
+  }).join('');
+  document.getElementById(containerId).innerHTML=`
+    <div style="display:grid;grid-template-columns:260px 1fr;gap:20px;align-items:start">
+      <div>${svgPyramid}<div style="font-size:9px;color:var(--muted);text-align:center;margin-top:4px">Tamaño = cobertura del nivel</div></div>
+      <div>${barsHtml}</div>
+    </div>`;
+}
+
+function renderExperiencia(){
+  const avgM=avg(RAW,c=>c.maslow_gen)*100;
+  const pro=RAW.filter(c=>c.nps==='Promotor').length;
+  const det=RAW.filter(c=>c.nps==='Detractor').length;
+  const nps=Math.round((pro-det)/RAW.length*100);
+  const frust=pct(RAW,c=>c.frustracion==='SI');
+  document.getElementById('exp-kpis').innerHTML=[
+    {l:'NPS score',v:(nps>0?'+':'')+nps,cl:nps>=20?'g':nps>=0?'a':'r'},{l:'Score Maslow',v:avgM.toFixed(0)+'%',cl:'a'},{l:'Promotores',v:pro,cl:'g'},{l:'Tasa frustración',v:frust+'%',cl:frust<=15?'g':frust<=30?'a':'r'}
+  ].map(k=>`<div class="kpi-card ${k.cl}"><div class="kpi-label">${k.l}</div><div class="kpi-value ${k.cl}">${k.v}</div></div>`).join('');
+  renderMaslowPyramid('maslow-chart',RAW);
+  const byD2={};RAW.forEach(c=>{const d=c.fecha.slice(5);if(!byD2[d]){byD2[d]={p:0,d:0,n:0}}if(c.nps==='Promotor')byD2[d].p++;else if(c.nps==='Detractor')byD2[d].d++;byD2[d].n++;});
+  const ds=Object.keys(byD2).sort();
+  mkChart('npsEvolC',{type:'line',data:{labels:ds,datasets:[{label:'NPS',data:ds.map(d=>{const x=byD2[d];return Math.round((x.p-x.d)/x.n*100);}),borderColor:'#003B73',backgroundColor:'rgba(0,59,115,.06)',fill:true,tension:.4,pointBackgroundColor:'#DCA11D',pointRadius:2,borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{font:{size:9},callback:v=>v>0?'+'+v:v},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9},maxTicksLimit:8},grid:{display:false}}}}});
+  const motNPS={};MOTIVOS.forEach(m=>{const mc=RAW.filter(c=>c.motivo===m);motNPS[m]=mc.length?Math.round((mc.filter(c=>c.nps==='Promotor').length-mc.filter(c=>c.nps==='Detractor').length)/mc.length*100):0;});
+  mkChart('npsMotC',{type:'bar',data:{labels:MOTIVOS,datasets:[{data:MOTIVOS.map(m=>motNPS[m]),backgroundColor:MOTIVOS.map(m=>motNPS[m]>=20?'rgba(26,138,90,.7)':motNPS[m]>=0?'rgba(220,161,29,.7)':'rgba(192,57,43,.7)'),borderColor:MOTIVOS.map(m=>motNPS[m]>=20?'#1A8A5A':motNPS[m]>=0?'#DCA11D':'#C0392B'),borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9},maxRotation:30},grid:{display:false}}}}});
+  const eng={Alto:0,Medio:0,Bajo:0,'Muy Bajo':0};RAW.forEach(c=>{if(eng[c.engagement]!==undefined)eng[c.engagement]++;});
+  mkChart('engC',{type:'doughnut',data:{labels:Object.keys(eng),datasets:[{data:Object.values(eng),backgroundColor:['#1A8A5A','#DCA11D','#C0392B','#7f1d1d'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'bottom',labels:{font:{size:9},padding:6,boxWidth:10}}}}});
+  const fr=RAW.filter(c=>c.frustracion==='SI').length;const noFr=RAW.length-fr;
+  const tr=RAW.filter(c=>c.transferencia==='SI').length;
+  mkChart('frustC',{type:'bar',data:{labels:['Satisfecho','Con frustración','Sin transf.','Con transf.'],datasets:[{data:[noFr,fr,RAW.length-tr,tr],backgroundColor:['rgba(26,138,90,.7)','rgba(192,57,43,.7)','rgba(26,138,90,.7)','rgba(220,161,29,.7)']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9}},grid:{display:false}}}}});
+}
+
+function renderVentas(){
+  const avgVC=Math.round(avg(RAW,c=>c.vc_gen)*100);
+  const hiVC=RAW.filter(c=>c.vc_gen>=0.5).length;
+  document.getElementById('vc-kpis').innerHTML=[
+    {l:'Score VC promedio',v:avgVC+'%',cl:'a'},{l:'Alta propensión',v:hiVC,cl:'g'},{l:'Oportunidades ident.',v:RAW.length,cl:''},{l:'Tasa conversión est.',v:'—',cl:''}
+  ].map(k=>`<div class="kpi-card ${k.cl}"><div class="kpi-label">${k.l}</div><div class="kpi-value ${k.cl}">${k.v}</div></div>`).join('');
+  const vcMot={};MOTIVOS.forEach(m=>{const mc=RAW.filter(c=>c.motivo===m);vcMot[m]=mc.length?avg(mc,c=>c.vc_gen)*100:0;});
+  mkChart('vcMotC',{type:'bar',data:{labels:MOTIVOS,datasets:[{label:'Score VC %',data:MOTIVOS.map(m=>vcMot[m].toFixed(1)),backgroundColor:MOTIVOS.map(m=>vcMot[m]>=50?'rgba(26,138,90,.7)':'rgba(220,161,29,.7)'),borderColor:MOTIVOS.map(m=>vcMot[m]>=50?'#1A8A5A':'#DCA11D'),borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:80,ticks:{font:{size:9},callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9},maxRotation:30},grid:{display:false}}}}});
+  const vcRad=[avg(RAW,c=>c.vc_s1/3),avg(RAW,c=>c.vc_s2/3),avg(RAW,c=>c.vc_s3/3),avg(RAW,c=>c.vc_s4/3),avg(RAW,c=>c.vc_s5/3)].map(v=>(v*100).toFixed(0));
+  mkChart('vcRadarC',{type:'radar',data:{labels:['Propensión','Apertura','Timing','Relevancia','Seguimiento'],datasets:[{label:'Score VC',data:vcRad,backgroundColor:'rgba(220,161,29,.15)',borderColor:'#DCA11D',pointBackgroundColor:'#003B73',pointRadius:3,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:100,ticks:{font:{size:9},stepSize:25},pointLabels:{font:{size:9}},grid:{color:'rgba(0,0,0,.07)'},angleLines:{color:'rgba(0,0,0,.07)'}}},plugins:{legend:{display:false}}}});
+  const ants=['Cliente Nuevo','Cliente Reciente','Cliente Fiel','Cliente Premium'];
+  const vcAnt=ants.map(a=>{const ac=RAW.filter(c=>c.antiguedad===a);return ac.length?avg(ac,c=>c.vc_gen)*100:0;});
+  mkChart('vcAntC',{type:'bar',data:{labels:ants.map(a=>a.replace('Cliente ','')),datasets:[{label:'Score VC %',data:vcAnt.map(v=>v.toFixed(1)),backgroundColor:['rgba(0,59,115,.5)','rgba(0,59,115,.65)','rgba(0,59,115,.8)','#003B73'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:80,ticks:{font:{size:9},callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9}},grid:{display:false}}}}});
+  const vcGeo=GEOS.map(g=>{const gc=RAW.filter(c=>c.geo===g);return gc.length?avg(gc,c=>c.vc_gen)*100:0;});
+  mkChart('vcGeoC',{type:'bar',data:{labels:GEOS.map(g=>g.slice(0,4)),datasets:[{data:vcGeo.map(v=>v.toFixed(1)),backgroundColor:vcGeo.map(v=>v>=50?'rgba(26,138,90,.7)':v>=40?'rgba(220,161,29,.7)':'rgba(0,59,115,.5)'),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:80,ticks:{font:{size:9},callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9}},grid:{display:false}}}}});
+}
+
+function renderAudio(){
+  const avgSil=avg(RAW,c=>c.silencios).toFixed(1);
+  const withMus=RAW.filter(c=>c.musica>0).length;
+  const avgDur=Math.round(avg(RAW,c=>c.dur));
+  document.getElementById('aud-kpis').innerHTML=[
+    {l:'AHT promedio',v:avgDur+'s',cl:''},{l:'Avg silencios',v:avgSil+'s',cl:avgSil<=7?'g':'a'},{l:'Con música espera',v:withMus,cl:withMus<=5?'g':'a'},{l:'% música en espera',v:pct(RAW,c=>c.musica>0)+'%',cl:'r'}
+  ].map(k=>`<div class="kpi-card ${k.cl}"><div class="kpi-label">${k.l}</div><div class="kpi-value ${k.cl}">${k.v}</div></div>`).join('');
+  const bk2={'<90s':[0,90],'90-150s':[90,150],'150-210s':[150,210],'>210s':[210,Infinity]};
+  mkChart('ahtC',{type:'bar',data:{labels:Object.keys(bk2),datasets:[{label:'Llamadas',data:Object.values(bk2).map(([lo,hi])=>RAW.filter(c=>c.dur>=lo&&c.dur<hi).length),backgroundColor:['rgba(26,138,90,.7)','rgba(0,59,115,.6)','rgba(220,161,29,.7)','rgba(192,57,43,.6)'],borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9}},grid:{display:false}}}}});
+  const silMot=MOTIVOS.map(m=>{const mc=RAW.filter(c=>c.motivo===m);return mc.length?avg(mc,c=>c.silencios):0;});
+  mkChart('silC',{type:'bar',data:{labels:MOTIVOS,datasets:[{label:'Avg silencios (s)',data:silMot.map(v=>v.toFixed(1)),backgroundColor:'rgba(0,59,115,.15)',borderColor:'rgba(0,59,115,.5)',borderWidth:1.5}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}},y:{ticks:{font:{size:9}},grid:{display:false}}}}});
+  const musByM=MOTIVOS.map(m=>RAW.filter(c=>c.motivo===m&&c.musica>0).length);
+  mkChart('musC',{type:'bar',data:{labels:MOTIVOS,datasets:[{label:'Con música',data:musByM,backgroundColor:'rgba(192,57,43,.6)',borderColor:'#C0392B',borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9},maxRotation:30},grid:{display:false}}}}});
+  const ahtByMot=MOTIVOS.map(m=>{const mc=RAW.filter(c=>c.motivo===m);return{m,v:mc.length?Math.round(avg(mc,c=>c.dur)):0,n:mc.length};});
+  const maxAHT=Math.max(...ahtByMot.map(x=>x.v));
+  document.getElementById('aht-bars').innerHTML=ahtByMot.sort((a,b)=>b.v-a.v).map(({m,v,n})=>{
+    const w=(v/maxAHT*100).toFixed(0);
+    const col=v<120?'#1A8A5A':v<180?'#DCA11D':'#C0392B';
+    return`<div class="maslow-row"><div class="maslow-label">${m.slice(0,8)}</div><div class="maslow-bar"><div class="maslow-fill" style="width:${w}%;background:${col}">${v}s</div></div><div class="maslow-pct" style="font-size:9px;color:var(--muted)">${n} calls</div></div>`;
+  }).join('');
+}
+
+function renderGeo(){
+  const geoData=GEOS.map(g=>{
+    const gc=RAW.filter(c=>c.geo===g);
+    const fcr=gc.length?pct(gc,c=>c.fcr==='SI'):0;
+    const q=gc.length?Math.round(avg(gc,c=>c.eval_score/5)*100):0;
+    const ch=gc.length?pct(gc,c=>c.churn==='SI'):0;
+    const pro=gc.filter(c=>c.nps==='Promotor').length;
+    const det=gc.filter(c=>c.nps==='Detractor').length;
+    const nps=gc.length?Math.round((pro-det)/gc.length*100):0;
+    return{g,n:gc.length,fcr,q,ch,nps};
+  });
+  document.getElementById('geo-kpis').innerHTML=[
+    {l:'Total llamadas',v:RAW.length,cl:''},{l:'Ciudades activas',v:GEOS.length,cl:'g'},{l:'Mejor FCR',v:geoData.sort((a,b)=>b.fcr-a.fcr)[0].g,cl:'g'},{l:'Mayor churn',v:geoData.sort((a,b)=>b.ch-a.ch)[0].g,cl:'r'}
+  ].map(k=>`<div class="kpi-card ${k.cl}"><div class="kpi-label">${k.l}</div><div class="kpi-value ${k.cl}" style="font-size:${typeof k.v==='string'?'18px':'26px'}">${k.v}</div></div>`).join('');
+  const sorted=geoData.slice().sort((a,b)=>b.n-a.n);
+  const maxN=sorted[0].n;
+  document.getElementById('geo-ranking').innerHTML=sorted.map((d,i)=>{
+    const npsCol=d.nps>=20?'#1A8A5A':d.nps>=0?'#DCA11D':'#C0392B';
+    return`<div class="sparkline-row">
+      <div style="width:20px;font-size:10px;font-weight:700;color:var(--muted)">${i+1}</div>
+      <div style="width:70px;font-size:12px;font-weight:600;color:var(--navy)">${d.g}</div>
+      <div style="flex:1;height:16px;background:var(--sf2);border-radius:4px;overflow:hidden"><div style="height:100%;width:${(d.n/maxN*100).toFixed(0)}%;background:rgba(0,59,115,.3);border-radius:4px"></div></div>
+      <div style="width:32px;text-align:right;font-size:11px;font-weight:700;color:var(--navy)">${d.n}</div>
+      <div style="width:40px;text-align:right;font-size:10px;color:${npsCol};font-weight:700">NPS ${d.nps>0?'+':''}${d.nps}</div>
+    </div>`;
+  }).join('');
+
+  const cont=document.getElementById('geo-map-container');
+  cont.innerHTML='';
+  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('viewBox','0 0 500 340');svg.setAttribute('width','100%');svg.setAttribute('height','100%');
+  cont.appendChild(svg);
+  const cities={Madrid:{x:248,y:190},Barcelona:{x:385,y:130},Valencia:{x:345,y:220},Sevilla:{x:165,y:270},Málaga:{x:215,y:300},Zaragoza:{x:310,y:140},Bilbao:{x:255,y:90}};
+  const spainPaths=[
+    'M155,65 L205,55 L255,50 L305,55 L355,60 L395,75 L425,100 L435,130 L415,160 L405,190 L390,210 L375,235 L350,255 L330,275 L310,295 L285,305 L255,310 L225,305 L195,290 L170,275 L145,255 L120,230 L105,205 L100,175 L110,145 L120,115 L135,90 Z'
+  ];
+  const spainBg=document.createElementNS('http://www.w3.org/2000/svg','path');
+  spainBg.setAttribute('d',spainPaths[0]);spainBg.setAttribute('fill','#EEF2F7');spainBg.setAttribute('stroke','#DDE3EC');spainBg.setAttribute('stroke-width','1');
+  svg.appendChild(spainBg);
+  const maxCalls=Math.max(...Object.values(cities).map((_,i)=>geoData[i]?.n||0));
+  Object.entries(cities).forEach(([city,pos])=>{
+    const d=geoData.find(x=>x.g===city);
+    if(!d)return;
+    const r=8+d.n/maxCalls*18;
+    const col=d.nps>=20?'#1A8A5A':d.nps>=0?'#003B73':'#C0392B';
+    const g2=document.createElementNS('http://www.w3.org/2000/svg','g');
+    g2.style.cursor='pointer';
+    const c2=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c2.setAttribute('cx',pos.x);c2.setAttribute('cy',pos.y);c2.setAttribute('r',r);
+    c2.setAttribute('fill',col);c2.setAttribute('fill-opacity','0.75');c2.setAttribute('stroke',col);c2.setAttribute('stroke-width','1.5');
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',pos.x);t.setAttribute('y',pos.y-r-4);t.setAttribute('text-anchor','middle');
+    t.setAttribute('font-size','9');t.setAttribute('fill','#1A2636');t.setAttribute('font-weight','600');t.textContent=city;
+    const t2=document.createElementNS('http://www.w3.org/2000/svg','text');
+    t2.setAttribute('x',pos.x);t2.setAttribute('y',pos.y+3);t2.setAttribute('text-anchor','middle');
+    t2.setAttribute('font-size','10');t2.setAttribute('fill','#fff');t2.setAttribute('font-weight','800');t2.textContent=d.n;
+    g2.appendChild(c2);g2.appendChild(t);g2.appendChild(t2);
+    g2.addEventListener('mouseenter',()=>{c2.setAttribute('fill-opacity','1');});
+    g2.addEventListener('mouseleave',()=>{c2.setAttribute('fill-opacity','0.75');});
+    svg.appendChild(g2);
+  });
+  const legend=document.createElementNS('http://www.w3.org/2000/svg','g');
+  [{col:'#1A8A5A',lbl:'NPS positivo'},{col:'#003B73',lbl:'NPS neutro'},{col:'#C0392B',lbl:'NPS negativo'}].forEach(({col,lbl},i)=>{
+    const ci=document.createElementNS('http://www.w3.org/2000/svg','circle');ci.setAttribute('cx',30);ci.setAttribute('cy',20+i*18);ci.setAttribute('r',6);ci.setAttribute('fill',col);ci.setAttribute('fill-opacity','.75');
+    const ti=document.createElementNS('http://www.w3.org/2000/svg','text');ti.setAttribute('x',42);ti.setAttribute('y',24+i*18);ti.setAttribute('font-size','9');ti.setAttribute('fill','#6B7A8E');ti.textContent=lbl;
+    legend.appendChild(ci);legend.appendChild(ti);
+  });
+  svg.appendChild(legend);
+  mkChart('geoFcrC',{type:'bar',data:{labels:GEOS.map(g=>g.slice(0,4)),datasets:[{data:geoData.map(d=>d.fcr),backgroundColor:geoData.map(d=>d.fcr>=75?'rgba(26,138,90,.7)':d.fcr>=60?'rgba(220,161,29,.7)':'rgba(192,57,43,.6)'),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:100,ticks:{font:{size:9},callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9}},grid:{display:false}}}}});
+  mkChart('geoQC',{type:'bar',data:{labels:GEOS.map(g=>g.slice(0,4)),datasets:[{data:geoData.map(d=>d.q),backgroundColor:'rgba(0,59,115,.5)',borderColor:'#003B73',borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,max:100,ticks:{font:{size:9},callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9}},grid:{display:false}}}}});
+  mkChart('geoChurnC',{type:'bar',data:{labels:GEOS.map(g=>g.slice(0,4)),datasets:[{data:geoData.map(d=>d.ch),backgroundColor:geoData.map(d=>d.ch<=8?'rgba(26,138,90,.6)':d.ch<=15?'rgba(220,161,29,.7)':'rgba(192,57,43,.7)'),borderWidth:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{min:0,ticks:{font:{size:9},callback:v=>v+'%'},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9}},grid:{display:false}}}}});
+}
+
+function renderRiesgos(){
+  const churnL=RAW.filter(c=>c.churn==='SI');
+  const det=RAW.filter(c=>c.nps==='Detractor').length;
+  const inc=RAW.filter(c=>c.motivo==='Incidencia').length;
+  const transNoRes=RAW.filter(c=>c.transferencia==='SI').length;
+  document.getElementById('risk-kpis').innerHTML=[
+    {l:'Riesgo churn',v:churnL.length,cl:'r'},{l:'Detractores NPS',v:det,cl:'r'},{l:'Incidencias totales',v:inc,cl:'a'},{l:'Transf. sin resolución',v:transNoRes,cl:'a'}
+  ].map(k=>`<div class="kpi-card ${k.cl}"><div class="kpi-label">${k.l}</div><div class="kpi-value ${k.cl}">${k.v}</div></div>`).join('');
+  document.getElementById('churn-tbody').innerHTML=churnL.map(c=>`<tr onclick="openModal(${c.id})" style="cursor:pointer"><td>${c.id}</td><td>${c.fecha.slice(5)}</td><td>${c.motivo}</td><td>${c.geo}</td><td style="font-size:10px">${c.antiguedad}</td><td><span class="badge badge-det">Detractor</span></td></tr>`).join('');
+  const byD3={};RAW.forEach(c=>{const d=c.fecha.slice(5);if(!byD3[d]){byD3[d]={p:0,d:0}}if(c.nps==='Promotor')byD3[d].p++;if(c.nps==='Detractor')byD3[d].d++;});
+  const ds3=Object.keys(byD3).sort();
+  mkChart('riskC',{type:'line',data:{labels:ds3,datasets:[{label:'Promotores',data:ds3.map(d=>byD3[d].p),borderColor:'#1A8A5A',backgroundColor:'transparent',tension:.35,pointRadius:2,borderWidth:1.5},{label:'Detractores',data:ds3.map(d=>byD3[d].d),borderColor:'#C0392B',backgroundColor:'rgba(192,57,43,.08)',fill:true,tension:.35,pointRadius:2,borderWidth:1.5}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:9},boxWidth:10}}},scales:{y:{ticks:{font:{size:9}},grid:{color:'rgba(0,0,0,.05)'}},x:{ticks:{font:{size:9},maxTicksLimit:8},grid:{display:false}}}}});
+  const incT={};RAW.filter(c=>c.motivo==='Incidencia').forEach(c=>{incT[c.submotivo]=(incT[c.submotivo]||0)+1;});
+  mkChart('incC',{type:'doughnut',data:{labels:Object.keys(incT),datasets:[{data:Object.values(incT),backgroundColor:['#C0392B','#DCA11D','#003B73','#7f1d1d'],borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'right',labels:{font:{size:9},padding:8,boxWidth:10}}}}});
+  const trf=RAW.filter(c=>c.transferencia==='SI').slice(0,8);
+  document.getElementById('transfer-alerts').innerHTML=trf.map(c=>`<div class="alert-row" onclick="openModal(${c.id})"><div class="alert-dot" style="background:${c.churn==='SI'?'#C0392B':'#DCA11D'}"></div><div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--text)">${c.motivo} — ${c.geo}</div><div style="font-size:10px;color:var(--muted)">${c.fecha} · ${c.dur}s · ${c.antiguedad}</div></div><span class="badge ${c.churn==='SI'?'badge-n':'badge-det'}" style="margin-left:8px">${c.churn==='SI'?'Churn':'Trans.'}</span></div>`).join('');
+}
+
+function openModal(id){
+  const c=RAW.find(x=>x.id===id);if(!c)return;
+  document.getElementById('modal-content').innerHTML=`
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+    <div><div style="font-size:16px;font-weight:700;color:var(--navy)">${c.motivo} — ${c.submotivo}</div>
+    <div style="font-size:11px;color:var(--muted);margin-top:3px">${c.fecha} · ${c.geo} · ${c.dur}s · ${c.antiguedad}</div></div>
+    <button onclick="document.getElementById('modal-overlay').classList.remove('open')" style="background:none;border:none;cursor:pointer;font-size:18px;color:var(--muted)">✕</button>
+  </div>
+  <div style="background:var(--sf2);border-radius:8px;padding:12px;margin-bottom:14px;font-size:12px;line-height:1.6">${c.resumen}</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px">
+    ${[['FCR',c.fcr,c.fcr==='SI'?'badge-y':'badge-n'],['NPS',c.nps,c.nps==='Promotor'?'badge-pro':c.nps==='Detractor'?'badge-det':'badge-pas'],['Churn',c.churn,c.churn==='SI'?'badge-n':'badge-y'],['Frustración',c.frustracion,c.frustracion==='SI'?'badge-det':'badge-pas'],['Transferencia',c.transferencia,c.transferencia==='SI'?'badge-det':'badge-pas'],['Engagement',c.engagement,'badge-pas']].map(([l,v,cls])=>`<div style="background:var(--sf2);border-radius:6px;padding:8px;text-align:center"><div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px">${l}</div><span class="badge ${cls}">${v}</span></div>`).join('')}
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:11px">
+    <div style="background:var(--sf2);border-radius:6px;padding:10px"><div style="font-weight:700;color:var(--navy);margin-bottom:6px;font-size:10px;text-transform:uppercase;letter-spacing:.6px">Calidad</div>Score: ${(c.eval_score/5*100).toFixed(0)}%<br>Maslow: ${(c.maslow_gen*100).toFixed(0)}%</div>
+    <div style="background:var(--sf2);border-radius:6px;padding:10px"><div style="font-weight:700;color:var(--navy);margin-bottom:6px;font-size:10px;text-transform:uppercase;letter-spacing:.6px">Audio</div>Duración: ${c.dur}s<br>Silencios: ${c.silencios}s · Música: ${c.musica}s</div>
+  </div>`;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModalEv(e){if(e.target===document.getElementById('modal-overlay'))document.getElementById('modal-overlay').classList.remove('open');}
+function exportCSV(){const h=['ID','Fecha','Motivo','Geo','FCR','NPS','Churn','Score','Dur'];const csv=[h,...RAW.map(c=>[c.id,c.fecha,c.motivo,c.geo,c.fcr,c.nps,c.churn,c.eval_score,c.dur])].map(r=>r.join(',')).join('\n');const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);a.download='grupo_seguros.csv';a.click();}
+
+renderHero();
+setTimeout(()=>{renderResumenCharts();},100);
+</script>
+
+<!-- ============================================================
+     VERA ANALYTICS — CES Google Chat Widget
+     Patrón SCA probado: position:fixed en chat-messenger + container
+     ============================================================ -->
+
+<!-- SDK -->
+<script defer src="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/chat-messenger.js"></script>
+<link rel="stylesheet" href="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/themes/chat-messenger-default.css">
+<link rel="stylesheet" href="https://www.gstatic.com/chat-messenger/sdk/prod/v1.16/themes/chat-messenger-layout.css">
+
+<style>
+/* Patrón SCA: fixed directamente en los custom elements */
+chat-messenger,
+chat-messenger-container {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  z-index: 9999 !important;
+  width: 320px !important;
+  max-width: 320px !important;
+  height: calc(100vh - 82px) !important;
+  max-height: calc(100vh - 82px) !important;
+}
+
+/* Paleta Grupo Seguros navy/amber */
+chat-messenger {
+  --chat-messenger-fab-background:           #003B73;
+  --chat-messenger-fab-color:                #F0B500;
+  --chat-messenger-fab-border-radius:        28px;
+  --chat-messenger-header-background:        #003B73;
+  --chat-messenger-header-color:             #ffffff;
+  --chat-messenger-header-border-color:      transparent;
+  --chat-messenger-bot-message-background:   #EFF4FB;
+  --chat-messenger-bot-message-color:        #003B73;
+  --chat-messenger-bot-message-border-color: #C8D8EE;
+  --chat-messenger-human-message-background: #003B73;
+  --chat-messenger-human-message-color:      #ffffff;
+  --chat-messenger-input-background:         #F4F6FA;
+  --chat-messenger-input-border-color:       #C8D8EE;
+  --chat-messenger-input-color:              #1A2636;
+  --chat-messenger-send-icon-color:          #003B73;
+  --chat-messenger-focus-color:              #DCA11D;
+  --chat-messenger-chip-background:          #EFF4FB;
+  --chat-messenger-chip-color:               #003B73;
+  --chat-messenger-chip-border-color:        #1a5fa8;
+  --chat-messenger-background:               #ffffff;
+  --chat-messenger-border-radius:            0px;
+  --chat-messenger-box-shadow:               2px 0 12px rgba(0,59,115,0.12);
+}
+</style>
+
+<!-- Deployment + shadow DOM theme -->
+<script>
+window.addEventListener("chat-messenger-loaded", function () {
+  chatSdk.registerContext(
+    chatSdk.prebuilts.ces.createContext({
+      deploymentName: "projects/414797991238/locations/us/apps/42279199-4b4b-4ab5-813d-df99d4b20eea/deployments/d7fc3687-ecf9-4445-8810-8b8336efcb95",
+      tokenBroker: { enableTokenBroker: true, enableRecaptcha: false }
+    })
+  );
+
+  function injectVeraStyles() {
+    var css = `
+      /* Header */
+      .titlebar-wrapper, .titlebar-content {
+        background: #003B73 !important;
+        border-bottom: 2px solid #DCA11D !important;
+      }
+      #titlebar-title, .title-text, .title-text h2 {
+        color: #ffffff !important; font-weight: 600 !important;
+      }
+      .title-button {
+        color: #ffffff !important;
+        background: rgba(255,255,255,0.12) !important;
+        border-radius: 6px !important;
+        border: 1px solid rgba(255,255,255,0.25) !important;
+      }
+      .title-button:hover { background: rgba(255,255,255,0.25) !important; }
+      .title-button svg, .title-button svg * {
+        fill: #ffffff !important; stroke: #ffffff !important;
+      }
+      /* Messages */
+      .message-list-wrapper, #message-list {
+        background: #F4F6FA !important;
+        overflow-y: auto !important;
+      }
+      .message.bot-message {
+        background: #EFF4FB !important; color: #003B73 !important;
+        border: 1px solid #C8D8EE !important;
+        border-radius: 14px 14px 14px 2px !important;
+      }
+      .message.bot-message p { color: #003B73 !important; }
+      .message.user-message {
+        background: #003B73 !important; color: #ffffff !important;
+        border-radius: 14px 14px 2px 14px !important;
+      }
+      /* Input */
+      .input-container {
+        background: #ffffff !important;
+        border-top: 1px solid #C8D8EE !important;
+      }
+      .input-box-wrapper {
+        background: #F4F6FA !important;
+        border: 1.5px solid #C8D8EE !important;
+        border-radius: 12px !important;
+      }
+      .input-box { background: transparent !important; color: #1A2636 !important; }
+      .input-box::placeholder { color: #6B7A8E !important; }
+      #send-icon-button:not([disabled]) {
+        background: #DCA11D !important; border-radius: 50% !important;
+      }
+      #send-icon-button:not([disabled]) svg,
+      #send-icon-button:not([disabled]) svg * {
+        fill: #ffffff !important; stroke: #ffffff !important;
+      }
+      .scroll-to-bottom-button {
+        background: #003B73 !important; color: #ffffff !important;
+        border-radius: 20px !important;
+      }
+      /* Scrollbar fina */
+      .message-list-wrapper {
+        scrollbar-width: thin !important;
+        scrollbar-color: #C8D8EE #F4F6FA !important;
+      }
+      .message-list-wrapper::-webkit-scrollbar { width: 5px !important; }
+      .message-list-wrapper::-webkit-scrollbar-thumb {
+        background: #C8D8EE !important; border-radius: 4px !important;
+      }
+      .message-list-wrapper::-webkit-scrollbar-track {
+        background: #F4F6FA !important;
+      }
+    `;
+
+    function injectIntoShadow(el, depth) {
+      if (!el || depth > 8) return;
+      if (el.shadowRoot) {
+        if (!el.shadowRoot.querySelector('style[data-vera]')) {
+          var s = document.createElement('style');
+          s.setAttribute('data-vera', '1');
+          s.textContent = css;
+          el.shadowRoot.appendChild(s);
+        }
+        el.shadowRoot.querySelectorAll('*').forEach(function(c){ injectIntoShadow(c, depth+1); });
+      }
+      if (el.querySelectorAll) {
+        el.querySelectorAll('*').forEach(function(c){ injectIntoShadow(c, depth+1); });
+      }
+    }
+    var m = document.querySelector('chat-messenger');
+    if (m) injectIntoShadow(m, 0);
+  }
+
+  setTimeout(injectVeraStyles, 800);
+  setTimeout(injectVeraStyles, 2000);
+  setTimeout(injectVeraStyles, 4000);
+});
+</script>
+
+<!-- Widget markup — patrón SCA sin wrapper div -->
+<chat-messenger url-allowlist="*">
+  <chat-messenger-container
+    chat-title="Vera Analytics"
+    chat-title-icon="https://gstatic.com/dialogflow-console/common/assets/ccai-favicons/conversational_agents.png"
+    input-placeholder="Pregunta sobre el CC de junio 2026..."
+    enable-file-upload
+    enable-audio-input
+  >
+    <chat-reset-session-button
+      slot="titlebar-actions"
+      title-text="Nueva conversación"
+    ></chat-reset-session-button>
+    <chat-toggle-dialog-button
+      slot="titlebar-actions"
+      title-text-expanded="Minimizar"
+      title-text-collapsed="Abrir"
+    ></chat-toggle-dialog-button>
+    <chat-messenger-close-button
+      slot="titlebar-actions"
+      title-text="Cerrar"
+    ></chat-messenger-close-button>
+  </chat-messenger-container>
+</chat-messenger>
+
+</body>
+</html>
